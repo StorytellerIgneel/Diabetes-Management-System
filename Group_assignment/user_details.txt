@@ -1,0 +1,9 @@
+Name            : Kirigaya Kazuto
+Age             : 17
+Phone number    : +60143242668
+Home address    : Shiguya
+
+Name            : Yuki Asuna
+Age             : 18
+Phone number    : 000
+Home address    : Kyoto
