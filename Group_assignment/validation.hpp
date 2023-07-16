@@ -10,6 +10,29 @@
 #define ERROR       2 //technically can be any number other than 0 and 1
 //defined global variables to 
 
+void    success_message(unsigned int success_code, string username = "")
+{
+    string          success_message;
+    unsigned int    current_line = 1;
+    ifstream        in_file("success_message.txt");
+
+    cout << "\n";
+    while(current_line <= success_code)
+    {
+        getline(in_file, success_message);
+        current_line++;
+    }
+    cout << success_message;
+    if (username != "")
+        cout << username;
+    cout << "\nPress enter to contine";
+    cin.ignore();
+    cin.get();
+    system("clear");
+    in_file.close();
+    return;
+}
+
 void error_message(unsigned int error_code, string missing_file = "")
 {
     string          error_message;
@@ -19,14 +42,18 @@ void error_message(unsigned int error_code, string missing_file = "")
     cout << "\n";
     if (missing_file != "")
         cout << missing_file;
-    while(current_line < error_code)
+    while(current_line <= error_code)
     {
-        in_file >> error_message;
+        getline(in_file, error_message);
         current_line++;
     }
-    cout << error_message << "\nPress enter to contine";
+    cout << error_message << "\nPress enter to contine." << endl;
+    cin.clear();
+    cin.ignore();
     cin.get();
+    system("clear");
     in_file.close();
+    return;
 }
 
 int     check_file_present()
@@ -49,7 +76,7 @@ int     check_file_present()
     return ALL_PRESENT;
 }
 
-int    validation(string user_input, string exit_choice, string continue_choice = "")
+int    exit_validation(string user_input, string exit_choice, string continue_choice = "")
 {
     if (continue_choice != "") //there is an actual continue choice for user to select
     {
@@ -70,5 +97,7 @@ int    validation(string user_input, string exit_choice, string continue_choice 
         else
             return CONTINUE; // 0
     }
+    return 0;
 }
+
 #endif

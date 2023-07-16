@@ -1,3 +1,6 @@
 Please enter a valid input.
 Please enter a valid choice.
 missing! Please confirm that the file(s) exists before using the system.
+Password re-entered is not the same as the password set! Please confirm again.
+Username not found. Please confirm again.
+Password for username incorrect. Please confirm again.

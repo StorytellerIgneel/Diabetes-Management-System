@@ -7,6 +7,9 @@
 #include <cstdlib>
 #include <functional>
 #include <map>
+#define MAX_CAPACITY 100
+#define TRUE 1
+#define FALSE 0
 
 using namespace std; //not a good practice but judging that this assignment doesnt involve the use of other libraries that will cause clashes, namespace std is used.
 
