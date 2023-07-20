@@ -31,6 +31,10 @@ int main(void) //initial access control
         system("clear");
         cout << "Welcome to Diabetes Management System!\nPlease choose to login or to register:\n1. Login\n2. Register\n3. Exit System\n\nEnter choice: ";
         cin >> choice;
+        cout << "Choice: " << choice << endl;
+        cin.clear();
+        cin.get();
+        cin.ignore();
         if (option_list.find(choice) != option_list.end())
             option_list[choice](user_list, user_count);  // Call the selected function
         else if (choice == 3)
@@ -38,6 +42,8 @@ int main(void) //initial access control
             export_user_data(user_list);
             exit(0);
         }
+        else if (choice == 0)
+            error_message(2);
         else
             error_message(2);
     }
