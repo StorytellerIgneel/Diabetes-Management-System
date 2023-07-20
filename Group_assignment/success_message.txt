@@ -1,1 +1,2 @@
 Registration completed. Welcome, user 
+Welcome, user 

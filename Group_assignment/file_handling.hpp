@@ -22,7 +22,7 @@ void    read_user_data(user user_list[], int size)
     ifstream    in_file_details("user_details.txt", ios::in);
     ifstream    in_file_access("user_access.txt", ios::in);
     int      counter;
-    //for more users
+
     counter = 0;
     while(counter < size)
     {

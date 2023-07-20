@@ -2,10 +2,11 @@
 #ifndef GROUP_ASSIGNMENT_HPP
 #define GROUP_ASSIGNMENT_HPP
 
-#include <iostream>
-#include <fstream>
 #include <cstdlib>
+#include <ctime>
+#include <fstream>
 #include <functional>
+#include <iostream>
 #include <map>
 #define MAX_CAPACITY 100
 #define TRUE 1

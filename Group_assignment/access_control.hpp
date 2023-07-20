@@ -94,14 +94,7 @@ void    login(user  user_list[], int user_count)
     int     counter;
     int     found_username;
     int     login_validated;
-    int     testing_use = 0;
 
-    cout << "Current users: "<< endl;
-    while(user_list[testing_use].details.name != "")
-    {
-        cout << user_list[testing_use].details.name << endl;
-        testing_use++;
-    }
     cout << "Welcome to user login.\nPlease enter your username and password to login into your account." << endl << endl;
     while(1)
     {
@@ -117,7 +110,6 @@ void    login(user  user_list[], int user_count)
             if (username == user_list[counter].access.username)
             {
                 found_username = TRUE;
-                cout << "found user?: " << found_username;
                 break;
             }
             counter++;
@@ -132,7 +124,7 @@ void    login(user  user_list[], int user_count)
                     return;
                 if(password == user_list[counter].access.password)
                 {
-                    cout << "Welcome. User " << user_list[counter].access.username;
+                    success_message(2, user_list[counter].access.username);
                     login_validated = TRUE;
                     break;
                 }
@@ -143,6 +135,7 @@ void    login(user  user_list[], int user_count)
         else//username not found
             error_message(5);
         if(login_validated == TRUE)
+            //user_menu(user_list, user_list[counter].access.username);
             break;
     }
     //call user function

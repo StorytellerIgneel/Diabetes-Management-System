@@ -3,6 +3,7 @@
 #define VALIDATION_HPP
 
 #include "headers.hpp"
+#include "template.hpp"
 #define ALL_PRESENT 0
 #define CONTINUE    0
 #define MISSING     1
@@ -22,12 +23,12 @@ void    success_message(unsigned int success_code, string username = "")
         getline(in_file, success_message);
         current_line++;
     }
-    cout << success_message;
     if (username != "")
-        cout << username;
+        success_message += username;
+    notification(success_message);
     cout << "\nPress enter to contine";
-    cin.ignore();
     cin.get();
+    cin.ignore();
     system("clear");
     in_file.close();
     return;
@@ -40,17 +41,18 @@ void error_message(unsigned int error_code, string missing_file = "")
     ifstream        in_file("error_message.txt");
 
     cout << "\n";
-    if (missing_file != "")
-        cout << missing_file;
     while(current_line <= error_code)
     {
         getline(in_file, error_message);
         current_line++;
     }
-    cout << error_message << "\nPress enter to contine." << endl;
+    if (missing_file != "")
+        error_message = missing_file + error_message;
+    notification(error_message);
+    cout << "\nPress enter to contine.";
     cin.clear();
-    cin.ignore();
     cin.get();
+    cin.ignore();
     system("clear");
     in_file.close();
     return;

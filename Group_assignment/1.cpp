@@ -2,6 +2,7 @@
 #include "validation.hpp"
 #include "access_control.hpp"
 #include "file_handling.hpp"
+
 /*
 Act as the initial starter of the entire programme (main) and as the initial access control.
 Pre:
@@ -16,8 +17,6 @@ int main(void) //initial access control
     int     user_count;
     int     choice;
 
-    user_count   = 0;
-
     user    user_list[MAX_CAPACITY];
     map < int, function < void(user[], int) >> option_list;
     option_list[1] = login;
@@ -26,6 +25,7 @@ int main(void) //initial access control
     read_user_data(user_list, 50);
     while(1)
     {
+        user_count   = 0;
         while(user_list[user_count].details.name != "")
             user_count++;
         system("clear");
@@ -36,7 +36,7 @@ int main(void) //initial access control
         else if (choice == 3)
         {
             export_user_data(user_list);
-            exit(1);
+            exit(0);
         }
         else
             error_message(2);
