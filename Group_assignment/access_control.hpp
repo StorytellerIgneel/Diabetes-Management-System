@@ -3,33 +3,82 @@
 #define ACCESS_CONTROL_HPP
 
 #include "headers.hpp"
+#include "validation.hpp"
+
+void    change_detail(user user_list[], string detail,int new_user = FALSE, int new_user_count = 0, string username = "")
+{
+    int     user_count;
+    string  new_detail;
+
+    map < string, string user_details::* > user_details_list =
+    {
+        {"name", &user_details::name},
+        {"age", &user_details::age},
+        {"phone  number", &user_details::phone_number},
+        {"home address", &user_details::home_address}
+    };
+
+    map < string, string access_control::* > access_control_list = 
+    {
+        {"username", &access_control::username},
+        {"password", &access_control::password}
+    };
+
+    auto details_iterator = user_details_list.find(detail);
+    auto access_iterator = access_control_list.find(detail);
+    user_count = 0;
+
+    if (new_user == FALSE)
+    {
+        while(user_list[user_count].access.username != username)
+            user_count++;
+    }
+    else
+        user_count = new_user_count;
+
+    if (details_iterator != user_details_list.end())//the detail to be changed is in the user_detail struct
+    {
+        if (new_user == FALSE)
+            cout << "Old detail\t\t: " << (user_list[user_count].details.*details_iterator->second) << endl;
+        cout << "Please enter your new" << detail << ": ";
+        cin >> new_detail;
+        if (new_detail == (user_list[user_count].details.*details_iterator->second))
+            error_message(7);
+        else
+            (user_list[user_count].details.*details_iterator->second) = new_detail;
+    }
+    else
+    {
+        if (new_user == FALSE)
+            cout << "Old detail\t\t: " << (user_list[user_count].access.*access_iterator->second) << endl;
+        cout << "Please enter your new" << detail << ": ";
+        cin >> new_detail;
+        if (new_detail == (user_list[user_count].access.*access_iterator->second))
+            error_message(7);
+        else
+            (user_list[user_count].access.*access_iterator->second) = new_detail;
+    }
+    return;
+}
 
 void    registration(user user_list[], int user_count)
 {
     user            new_user;
     string          choice;
     string          confirm_pw;
+    string          details_list[] = {"name", "age", "phone number", "home address"};
+    int             details_list_count;
 
-    cout << "\nPlease enter your name (Enter 0 to quit)\t\t: ";
-    cin >> new_user.details.name;
-    if (exit_validation(new_user.details.name, "0") == EXIT)
-        return;
-    cout << "\nPlease enter your age (Enter 0 to quit)\t\t\t: ";
-    cin >> new_user.details.age;
-    if (exit_validation(new_user.details.age, "0") == EXIT)
-        return;
-    cout << "\nPlease enter your phone number (Enter 0 to quit)\t: ";
-    cin >> new_user.details.phone_number;
-    if (exit_validation(new_user.details.phone_number, "0") == EXIT)
-        return;
-    cout << "\nPlease enter your home address (Enter 0 to quit)\t: ";
-    cin >> new_user.details.home_address;
-    if (exit_validation(new_user.details.home_address, "0") == EXIT)
-        return;
+    while(details_list[details_list_count] != "")
+    {
+        change_detail(user_list, details_list[details_list_count], 1, user_count);
+        details_list_count++;
+    }
+    //validation for exit 
 
     while(1)
     {
-        system("clear"); //remember to cchange for windows
+        system("cls"); //remember to cchange for windows
         cout << "Thank you for registering your details.\nPlease check if your details are as follows: \nName\t\t: " << new_user.details.name << "\nAge\t\t: " << new_user.details.age << "\nPhone number\t: " << new_user.details.phone_number << "\nHome Address\t: " << new_user.details.home_address << "\n\nDo you wish to proceed with these details? Press y for yes and n for no: ";
         cin >> choice;
         if (exit_validation(choice, "n", "y") == CONTINUE)
@@ -39,14 +88,9 @@ void    registration(user user_list[], int user_count)
         else
             error_message(2);
     }
-    cout << "\nPlease enter your username (Enter 0 to quit)\t: " << endl;
-    cin >> new_user.access.username;
-    if (exit_validation(new_user.access.username, "0") == EXIT)
-        return;
-    cout << "\nPlease enter your password (Enter 0 to quit)\t: " << endl;
-    cin >> new_user.access.password;
-    if (exit_validation(new_user.access.password, "0") == EXIT)
-        return;
+
+    change_detail(user_list, "username", 1, user_count);
+    change_detail(user_list, "password", 1, user_count);
     while(1)
     {
         cout << "Please re-enter your password to confirm password set(Enter 0 to quit)\t: ";

@@ -28,13 +28,8 @@ int main(void) //initial access control
         user_count   = 0;
         while(user_list[user_count].details.name != "")
             user_count++;
-        system("clear");
-        cout << "Welcome to Diabetes Management System!\nPlease choose to login or to register:\n1. Login\n2. Register\n3. Exit System\n\nEnter choice: ";
+        menu(user_list, "LOGIN", "Guest", "Welcome to Diabetes Management System!\nPlease choose to login or to register:\n1. Login\n2. Register\n3. Exit System", "Enter choice: ");
         cin >> choice;
-        cout << "Choice: " << choice << endl;
-        cin.clear();
-        cin.get();
-        cin.ignore();
         if (option_list.find(choice) != option_list.end())
             option_list[choice](user_list, user_count);  // Call the selected function
         else if (choice == 3)
@@ -49,4 +44,3 @@ int main(void) //initial access control
     }
     return 0;
 }
-

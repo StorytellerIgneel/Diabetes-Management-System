@@ -6,8 +6,10 @@
 #include <ctime>
 #include <fstream>
 #include <functional>
+#include <iomanip>
 #include <iostream>
 #include <map>
+#include <string>
 #define MAX_CAPACITY 100
 #define TRUE 1
 #define FALSE 0
