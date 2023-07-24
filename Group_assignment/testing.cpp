@@ -10,20 +10,14 @@ int main(void) //initial access control
 
     while(1)
     {
-        try
+        cout << "Enter the fucking choice: ";
+        cin >> choice;
+        if (cin.fail())
+            error_message(1);
+        else
         {
-            cin >> choice;
             cout << details_list[choice];
             break;
         }
-        catch(const invalid_argument& e)
-        {
-            cout << "u gay";
-        }
-        catch(const exception& e)
-        {
-            cout << "u ultra gaycl";
-        }
     }
-    
 }

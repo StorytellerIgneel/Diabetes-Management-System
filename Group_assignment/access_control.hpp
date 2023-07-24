@@ -145,7 +145,7 @@ void    login(user  user_list[], int user_count)
         counter = 0;
         found_username = FALSE;
         login_validated = FALSE;
-        cout << "Username (Press 0 to quit)\t\t: ";
+        menu(user_list, "USER LOGIN", "Guest", "Welcome to user login.\nPlease enter your username and password to login into your account.", "Username (Press 0 to quit)\t\t: ");
         cin >> username;
         if (exit_validation(username, "0") == EXIT)
             return;

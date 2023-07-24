@@ -51,9 +51,9 @@ void error_message(unsigned int error_code, string missing_file = "")
     notification(error_message);
     cout << "\nPress enter to contine.";
     cin.clear();
-    cin.get();
     cin.ignore();
-    system("clear");
+    cin.get();
+    system("cls");
     in_file.close();
     return;
 }
