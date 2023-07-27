@@ -5,7 +5,7 @@
 #include "headers.hpp"
 #include "validation.hpp"
 
-void    change_detail(user *target_user_ptr, string detail,int new_user = FALSE)
+void    change_detail(user *target_user_ptr, string detail, bool new_user = false)
 {
     string  new_detail;
 
@@ -56,19 +56,21 @@ void    change_detail(user *target_user_ptr, string detail,int new_user = FALSE)
 
 void    registration(user user_list[], int user_count)
 {
-    user            new_user;
-    string          choice;
-    string          confirm_pw;
-    string          details_list[] = {"name", "age", "phone number", "home address"};
+    user        new_user;
+    string      choice;
+    string      confirm_pw;
+    string      details_list[] = {"name", "age", "phone number", "home address"};
+    string      for_menu;    
     
     for(int details_list_count = 0; details_list_count < 4; details_list_count++)
-        change_detail(&new_user, details_list[details_list_count], 1);
+        change_detail(&new_user, details_list[details_list_count], true);
     //validation for exit 
 
     while(1)
     {
         system("cls"); //remember to cchange for windows
-        cout << "Thank you for registering your details.\nPlease check if your details are as follows: \nName\t\t: " << new_user.details.name << "\nAge\t\t: " << new_user.details.age << "\nPhone number\t: " << new_user.details.phone_number << "\nHome Address\t: " << new_user.details.home_address << "\n\nDo you wish to proceed with these details? Press y for yes and n for no: ";
+        for_menu =  "Thank you for registering your details.\nPlease check if your details are as follows: \nName\t\t: " + new_user.details.name + "\nAge\t\t: " + new_user.details.age + "\nPhone number\t: " + new_user.details.phone_number + "\nHome Address\t: " + new_user.details.home_address;
+        menu(user_list, "REGISTRATION", "Guest", for_menu, "Do you wish to proceed with these details? Press y for yes and n for no: ");
         cin >> choice;
         if (exit_validation(choice, "n", "y") == CONTINUE)
             break;
@@ -78,8 +80,8 @@ void    registration(user user_list[], int user_count)
             error_message(2);
     }
 
-    change_detail(&new_user, "username", 1);
-    change_detail(&new_user, "password", 1);
+    change_detail(&new_user, "username", true);
+    change_detail(&new_user, "password", true);
     while(1)
     {
         cout << "Please re-enter your password to confirm password set(Enter 0 to quit)\t: ";

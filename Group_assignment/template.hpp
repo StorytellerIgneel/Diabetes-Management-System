@@ -22,7 +22,7 @@ void    notification(string notification)
     return;
 }
 
-void    display_user_details(user   user_list[], string   username)
+void    display_user_details(user   user_list[], string   username, bool    registration = 0)
 {
     int user_count;
 
@@ -32,13 +32,16 @@ void    display_user_details(user   user_list[], string   username)
     cout << "Name: " << user_list[user_count].details.name << endl
         << "Age\t:" << user_list[user_count].details.age << endl
         << "Phone number: " << user_list[user_count].details.phone_number << endl
-        << "Home address: " << user_list[user_count].details.home_address << endl
-        << "Username\t: " << user_list[user_count].access.username << endl
-        << "Password\t: " << user_list[user_count].access.password << endl << endl;
+        << "Home address: " << user_list[user_count].details.home_address << endl;
+    if (registration == true)
+    {
+        cout << "Username\t: " << user_list[user_count].access.username << endl
+            << "Password\t: " << user_list[user_count].access.password << endl << endl;
+    }
     return;
 }
 
-void    menu(user   user_list[], string stage, string username, string content, string prompt = "", int display_details = 0) //for selections
+void    menu(user   user_list[], string stage, string username, string content, string prompt = "", bool display_details = false) //for selections
 {
     time_t  current_time = time(nullptr);
     string  string_time;
@@ -56,7 +59,7 @@ void    menu(user   user_list[], string stage, string username, string content, 
     cout << left << username << right << setw(TERMINAL_WIDTH - username.length()) << string_time
          << LINE << endl;
     if(display_details == 1)
-        display_user_details(user_list, username);
+        display_user_details(user_list, username, true);
     cout << content << endl << endl
          << LINE
          << prompt;
