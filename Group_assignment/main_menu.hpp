@@ -15,7 +15,9 @@ void    user_menu(user user_list[], string username)
 
         menu(user_list, "MAIN MENU", username, "Please choose one of the following functions to use: \n1. Update health condition.\n2. Make appointment\n3. Update account details\n4. Exit", "Enter your choice: ");
         cin >> choice;
-        if (choice == 4)
+        if (cin.fail())
+            error_message(1);
+        else if (choice == 4)
             break;
         else if (option_list.find(choice) != option_list.end())
             option_list[choice](user_list, username);  // Call the selected function
@@ -26,7 +28,7 @@ void    user_menu(user user_list[], string username)
 
 void    update_condition(user   user_list[], string username)
 {
-    ///menu("UPDATE CONDITION")
+    
     return;
 }
 
@@ -39,7 +41,11 @@ void    update_account(user   user_list[], string username)
 {
     string  details_list[] = {"name", "age", "phone number", "home address", "username", "password"};
     int     choice;
+    int     user_count;
 
+    user_count = 0;
+    while(user_list[user_count].access.username != username)
+        user_count++;
 
     while(1)
     {
@@ -47,7 +53,7 @@ void    update_account(user   user_list[], string username)
         {
             menu(user_list, "UPDATE ACCOUNT DETAILS", username, "Please choose which detail you wish to change: \n1. Name\n2. Age\n3. Phone number\n4. Home address\n5. Username\n6. Password", "Enter your choice: ", 1);
             cin >> choice;
-            change_detail(user_list, details_list[choice], 0, 0, username);
+            change_detail(&user_list[user_count], details_list[choice]);
             break;
         }
         catch(const invalid_argument& e)

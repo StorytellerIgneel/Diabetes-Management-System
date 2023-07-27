@@ -30,15 +30,15 @@ int main(void) //initial access control
             user_count++;
         menu(user_list, "LOGIN", "Guest", "Welcome to Diabetes Management System!\nPlease choose to login or to register:\n1. Login\n2. Register\n3. Exit System", "Enter choice: ");
         cin >> choice;
-        if (option_list.find(choice) != option_list.end())
+        if (cin.fail())
+            error_message(1);
+        else if (choice == 1 || choice == 2)
             option_list[choice](user_list, user_count);  // Call the selected function
         else if (choice == 3)
         {
             export_user_data(user_list);
             exit(0);
         }
-        else if (choice == 0)
-            error_message(2);
         else
             error_message(2);
     }

@@ -14,7 +14,7 @@ string    banner(string to_print)
 
 void    notification(string notification)
 {   
-    system("clear");
+    system("cls");
     cout << LINE << endl
          << banner("Notification")
          << LINE << endl << endl
