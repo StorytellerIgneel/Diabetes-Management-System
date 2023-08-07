@@ -22,30 +22,27 @@ void    notification(string notification)
     return;
 }
 
-void    display_user_details(user   user_list[], string   username, bool    registration = 0)
+void    display_user_details(user   target_user, bool    registration = 0)
 {
-    int user_count;
-
-    user_count = 0;
-    while(user_list[user_count].access.username != username)
-        user_count++;
-    cout << "Name: " << user_list[user_count].details.name << endl
-        << "Age\t:" << user_list[user_count].details.age << endl
-        << "Phone number: " << user_list[user_count].details.phone_number << endl
-        << "Home address: " << user_list[user_count].details.home_address << endl;
+    cout << "Name: " << target_user.details.name << endl
+        << "Age\t:" << target_user.details.age << endl
+        << "Phone number: " << target_user.details.phone_number << endl
+        << "Home address: " << target_user.details.home_address << endl;
     if (registration == true)
     {
-        cout << "Username\t: " << user_list[user_count].access.username << endl
-            << "Password\t: " << user_list[user_count].access.password << endl << endl;
+        cout << "Username\t: " << target_user.access.username << endl
+            << "Password\t: " << target_user.access.password << endl << endl;
     }
     return;
 }
 
-void    menu(user   user_list[], string stage, string username, string content, string prompt = "", bool display_details = false) //for selections
+void    menu(user   target_user, string stage, string content, string prompt = "", bool display_details = false) //for selections
 {
     time_t  current_time = time(nullptr);
     string  string_time;
+    string  username;
 
+    username = target_user.access.username;
     current_time = time(nullptr);
     string_time  = ctime(&current_time);
     system("cls");
@@ -53,13 +50,15 @@ void    menu(user   user_list[], string stage, string username, string content, 
          << banner(stage)
          << LINE;
 
-    if (username != "Guest")
+    if (username != "")
         cout << "User: ";
+    else
+        username = "Guest";
         
     cout << left << username << right << setw(TERMINAL_WIDTH - username.length()) << string_time
          << LINE << endl;
     if(display_details == 1)
-        display_user_details(user_list, username, true);
+        display_user_details(target_user, true);
     cout << content << endl << endl
          << LINE
          << prompt;

@@ -6,3 +6,5 @@ Username not found. Please confirm again.
 Password for username incorrect. Please confirm again.
 New detail is same with the old detail. Please confirm again.
 An error has occured.
+Venous Plasma Glucose value should not be lower than 7, please confirm again.
+Something went wrong, please confirm again.

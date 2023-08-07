@@ -1,0 +1,4 @@
+Please enter your venous plasma glucose value (mmol/L) (Press 0 to quit):
+if (vpg < 7.00)
+            error_message(9);
+        else if (vpg >= 7.00 && vpg )

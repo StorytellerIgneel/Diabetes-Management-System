@@ -40,14 +40,14 @@ void    read_user_data(user user_list[], int size)
     return;
 }
 
-void    export_user_data(user user_list[])
+void    export_user_data(user user_list[], int size)
 {
     ofstream    out_file_details("user_details.txt", ios::out);
     ofstream    out_file_access("user_access.txt", ios::out);
     int         counter;
 
     counter = 0;
-    while(counter < MAX_CAPACITY)
+    while(counter < size)
     {
         out_file_details << user_list[counter].details.name << endl;
         out_file_details << user_list[counter].details.age << endl;

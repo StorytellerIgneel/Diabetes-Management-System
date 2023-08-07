@@ -41,6 +41,7 @@ void error_message(unsigned int error_code, string missing_file = "")
     ifstream        in_file("error_message.txt");
     unsigned int    current_line = 1;
 
+    
     cout << "\n";
     while(current_line <= error_code)
     {
@@ -53,7 +54,6 @@ void error_message(unsigned int error_code, string missing_file = "")
     cout << "\nPress enter to contine.";
     cin.clear();
     cin.ignore();
-    cin.get();
     in_file.close();
     return;
 }

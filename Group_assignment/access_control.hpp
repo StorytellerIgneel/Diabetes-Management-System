@@ -65,12 +65,12 @@ void    registration(user user_list[], int user_count)
     for(int details_list_count = 0; details_list_count < 4; details_list_count++)
         change_detail(&new_user, details_list[details_list_count], true);
     //validation for exit 
-
+    
     while(1)
     {
         system("cls"); //remember to cchange for windows
         for_menu =  "Thank you for registering your details.\nPlease check if your details are as follows: \nName\t\t: " + new_user.details.name + "\nAge\t\t: " + new_user.details.age + "\nPhone number\t: " + new_user.details.phone_number + "\nHome Address\t: " + new_user.details.home_address;
-        menu(user_list, "REGISTRATION", "Guest", for_menu, "Do you wish to proceed with these details? Press y for yes and n for no: ");
+        menu(new_user, "REGISTRATION", for_menu, "Do you wish to proceed with these details? Press y for yes and n for no: ");
         cin >> choice;
         if (exit_validation(choice, "n", "y") == CONTINUE)
             break;
@@ -104,10 +104,11 @@ void    registration(user user_list[], int user_count)
 void    registration_control(user user_list[], int user_count)
 {
     char    choice;
+    user    dummy;
 
     while(1)
     {
-        menu(user_list, "REGISTRATION", "Guest", "Welcome to registration.\nYou will be required to register to the diabetes management system with your name, age, contact number, and home address.", "Press y if you wish to continue or n to exit: ");
+        menu(dummy, "REGISTRATION", "Welcome to registration.\nYou will be required to register to the diabetes management system with your name, age, contact number, and home address.", "Press y if you wish to continue or n to exit: ");
         cin >> choice;
         if (choice == 'y' || choice == 'Y')
         {
@@ -123,6 +124,7 @@ void    registration_control(user user_list[], int user_count)
 
 void    login(user  user_list[], int user_count)
 {
+    user    dummy;
     string  username;
     string  password;
     int     counter;
@@ -134,7 +136,7 @@ void    login(user  user_list[], int user_count)
         counter = 0;
         found_username = FALSE;
         login_validated = FALSE;
-        menu(user_list, "USER LOGIN", "Guest", "Welcome to user login.\nPlease enter your username and password to login into your account.", "Username (Press 0 to quit)\t\t: ");
+        menu(dummy, "USER LOGIN", "Welcome to user login.\nPlease enter your username and password to login into your account.", "Username (Press 0 to quit)\t\t: ");
         cin >> username;
         if (exit_validation(username, "0") == EXIT)
             return;

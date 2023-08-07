@@ -30,11 +30,14 @@ typedef struct
     string          username;
     string          password;
 }access_control;
-
 typedef struct
 {
-    user_details    details;
-    access_control  access;
+    bool    diabetic_patient;
+}medical_condition;
+typedef struct
+{
+    user_details        details;
+    access_control      access;
+    medical_condition   medical;   
 }user;
-
 #endif

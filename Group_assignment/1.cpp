@@ -16,27 +16,29 @@ int main(void) //initial access control
 {
     int     user_count;
     int     choice;
-
+    user    dummy;
     user    user_list[MAX_CAPACITY];
     map < int, function < void(user[], int) >> option_list;
     option_list[1] = login;
     option_list[2] = registration_control;
 
-    read_user_data(user_list, 50);
+    read_user_data(user_list, MAX_CAPACITY);
     while(1)
     {
         user_count   = 0;
         while(user_list[user_count].details.name != "")
             user_count++;
-        menu(user_list, "LOGIN", "Guest", "Welcome to Diabetes Management System!\nPlease choose to login or to register:\n1. Login\n2. Register\n3. Exit System", "Enter choice: ");
+        menu(dummy, "LOGIN", "Welcome to Diabetes Management System!\nPlease choose to login or to register:\n1. Login\n2. Register\n3. Exit System", "Enter choice: ");
         cin >> choice;
-        if (cin.fail())
+        if (!cin)
+        {
             error_message(1);
+        }
         else if (choice == 1 || choice == 2)
             option_list[choice](user_list, user_count);  // Call the selected function
         else if (choice == 3)
         {
-            export_user_data(user_list);
+            export_user_data(user_list, user_count);
             exit(0);
         }
         else
