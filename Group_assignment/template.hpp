@@ -3,7 +3,7 @@
 #define TEMPLATE_HPP
 
 #include "headers.hpp"
-#define TERMINAL_WIDTH 80
+#define TERMINAL_WIDTH 100
 #define LINE string(TERMINAL_WIDTH, '-') + '\n'
 
 string    banner(string to_print)
@@ -22,12 +22,12 @@ void    notification(string notification)
     return;
 }
 
-void    display_user_details(user   target_user, bool    registration = 0)
+void    display_user_details(user   target_user, bool    registration = false)
 {
-    cout << "Name: " << target_user.details.name << endl
-        << "Age\t:" << target_user.details.age << endl
-        << "Phone number: " << target_user.details.phone_number << endl
-        << "Home address: " << target_user.details.home_address << endl;
+    cout << "Name\t\t: " << target_user.details.name << endl
+        << "Age\t\t:" << target_user.details.age << endl
+        << "Phone number\t: " << target_user.details.phone_number << endl
+        << "Home address\t: " << target_user.details.home_address << endl;
     if (registration == true)
     {
         cout << "Username\t: " << target_user.access.username << endl

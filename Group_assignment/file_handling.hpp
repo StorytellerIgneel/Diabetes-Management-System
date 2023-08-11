@@ -44,6 +44,7 @@ void    export_user_data(user user_list[], int size)
 {
     ofstream    out_file_details("user_details.txt", ios::out);
     ofstream    out_file_access("user_access.txt", ios::out);
+    ofstream    out_file_medical("user_medical.txt", ios::out);
     int         counter;
 
     counter = 0;
@@ -55,6 +56,10 @@ void    export_user_data(user user_list[], int size)
         out_file_details << user_list[counter].details.home_address << endl;
         out_file_access << user_list[counter].access.username << endl;
         out_file_access << user_list[counter].access.password << endl;
+        out_file_access << user_list[counter].medical.diabetic_patient << endl;
+        out_file_access << user_list[counter].medical.vpg << endl;
+        out_file_access << user_list[counter].medical.hba1c << endl;
+        out_file_access << user_list[counter].medical.ogtt << endl;
         counter++;
     }
     return;

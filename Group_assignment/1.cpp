@@ -15,7 +15,7 @@ iv. libary "file_handling.hpp" is included
 int main(void) //initial access control
 {
     int     user_count;
-    int     choice;
+    int  choice;
     user    dummy;
     user    user_list[MAX_CAPACITY];
     map < int, function < void(user[], int) >> option_list;
@@ -30,10 +30,8 @@ int main(void) //initial access control
             user_count++;
         menu(dummy, "LOGIN", "Welcome to Diabetes Management System!\nPlease choose to login or to register:\n1. Login\n2. Register\n3. Exit System", "Enter choice: ");
         cin >> choice;
-        if (!cin)
-        {
+        if (cin.fail())
             error_message(1);
-        }
         else if (choice == 1 || choice == 2)
             option_list[choice](user_list, user_count);  // Call the selected function
         else if (choice == 3)
@@ -42,7 +40,12 @@ int main(void) //initial access control
             exit(0);
         }
         else
+        {
             error_message(2);
+            cin.clear();
+            cin.ignore();
+        }
+            
     }
     return 0;
 }

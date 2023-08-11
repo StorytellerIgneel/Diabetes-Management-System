@@ -4,55 +4,12 @@
 
 #include "headers.hpp"
 #include "validation.hpp"
+#include "user_menu.hpp"
 
-void    change_detail(user *target_user_ptr, string detail, bool new_user = false)
-{
-    string  new_detail;
-
-    map < string, string user_details::* > user_details_list =
-    {
-        {"name", &user_details::name},
-        {"age", &user_details::age},
-        {"phone number", &user_details::phone_number},
-        {"home address", &user_details::home_address}
-    };
-
-    map < string, string access_control::* > access_control_list = 
-    {
-        {"username", &access_control::username},
-        {"password", &access_control::password}
-    };
-
-    auto details_iterator = user_details_list.find(detail);
-    auto access_iterator = access_control_list.find(detail);
-
-    if (details_iterator != user_details_list.end())//the detail to be changed is in the user_detail struct
-    {
-        if (new_user == FALSE)
-            cout << "Old detail\t\t: " << ((*target_user_ptr).details.*details_iterator->second) << endl;
-        cout << "Please enter your ";
-        if (new_user == TRUE)
-            cout << "new ";
-        cout << detail << ": ";
-        cin >> new_detail;
-        if (new_detail == ((*target_user_ptr).details.*details_iterator->second))
-            error_message(7);
-        else
-            ((*target_user_ptr).details.*details_iterator->second) = new_detail;
-    }
-    else
-    {
-        if (new_user == FALSE)
-            cout << "Old detail\t\t: " << ((*target_user_ptr).access.*access_iterator->second) << endl;
-        cout << "Please enter your new " << detail << ": ";
-        cin >> new_detail;
-        if (new_detail == ((*target_user_ptr).access.*access_iterator->second))
-            error_message(7);
-        else
-            ((*target_user_ptr).access.*access_iterator->second) = new_detail;
-    }
-    return;
-}
+void    change_detail(user *target_user_ptr, string detail, bool new_user);
+void    registration(user user_list[], int user_count);
+void    registration_control(user user_list[], int user_count);
+void    login(user  user_list[], int user_count);
 
 void    registration(user user_list[], int user_count)
 {
@@ -170,8 +127,10 @@ void    login(user  user_list[], int user_count)
         else//username not found
             error_message(5);
         if(login_validated == TRUE)
-            //user_menu(user_list, user_list[counter].access.username);
+        {
+            user_menu(user_list[counter]);
             break;
+        }
     }
     //call user function
     return;

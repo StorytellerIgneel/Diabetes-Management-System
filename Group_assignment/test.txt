@@ -1,0 +1,5 @@
+"HbA1c TEST"
+"Welcome to HbA1c test for pre-diabetes and T2DM patients.\nYou are required to choose to enter your HbA1c value in either unit percentage or mmol/mol.\nEnter 1 for percentage and 2 for mmol/mol.\n(Press Ctrl + Z to quit)", "Please enter your choice of unit input: "
+"HbA1c TEST"
+"You have chosen the fasting state", "Please enter your HbA1c value (%) (Press Ctrl + Z to quit): "
+5.97

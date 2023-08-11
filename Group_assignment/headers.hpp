@@ -2,6 +2,7 @@
 #ifndef GROUP_ASSIGNMENT_HPP
 #define GROUP_ASSIGNMENT_HPP
 
+#include <cctype>
 #include <cstdlib>
 #include <ctime>
 #include <fstream>
@@ -32,7 +33,10 @@ typedef struct
 }access_control;
 typedef struct
 {
-    bool    diabetic_patient;
+    bool    diabetic_patient = false;
+    double  vpg = 0;
+    double  hba1c = 0;
+    double  ogtt = 0;
 }medical_condition;
 typedef struct
 {

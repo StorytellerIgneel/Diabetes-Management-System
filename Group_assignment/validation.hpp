@@ -11,6 +11,16 @@
 #define ERROR       2 //technically can be any number other than 0 and 1
 //defined global variables to 
 
+bool    is_number(const string  target)
+{
+    for (char c : target)
+    {
+        if (!isdigit(c))
+            return false;
+    }
+    return true;
+}
+
 void    success_message(unsigned int success_code, string username = "")
 {
     string          success_message;
@@ -27,8 +37,6 @@ void    success_message(unsigned int success_code, string username = "")
         success_message += username;
     notification(success_message);
     cout << "\nPress enter to contine";
-    cin.get();
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     system("cls");
     in_file.close();
     return;
@@ -41,7 +49,8 @@ void error_message(unsigned int error_code, string missing_file = "")
     ifstream        in_file("error_message.txt");
     unsigned int    current_line = 1;
 
-    
+    cin.clear();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "\n";
     while(current_line <= error_code)
     {
@@ -52,8 +61,8 @@ void error_message(unsigned int error_code, string missing_file = "")
         error_message = missing_file + error_message;
     notification(error_message);
     cout << "\nPress enter to contine.";
-    cin.clear();
-    cin.ignore();
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     in_file.close();
     return;
 }
