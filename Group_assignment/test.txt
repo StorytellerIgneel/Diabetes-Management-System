@@ -3,3 +3,4 @@
 "HbA1c TEST"
 "You have chosen the fasting state", "Please enter your HbA1c value (%) (Press Ctrl + Z to quit): "
 5.97
+6.3

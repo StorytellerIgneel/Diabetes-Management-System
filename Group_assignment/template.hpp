@@ -36,13 +36,13 @@ void    display_user_details(user   target_user, bool    registration = false)
     return;
 }
 
-void    menu(user   target_user, string stage, string content, string prompt = "", bool display_details = false) //for selections
+void    menu(user   patient, admin target_admin, string stage, string content, string prompt = "", bool display_details = false) //for selections
 {
     time_t  current_time = time(nullptr);
     string  string_time;
     string  username;
 
-    username = target_user.access.username;
+    username = patient.access.username;
     current_time = time(nullptr);
     string_time  = ctime(&current_time);
     system("cls");
@@ -58,8 +58,8 @@ void    menu(user   target_user, string stage, string content, string prompt = "
     cout << left << username << right << setw(TERMINAL_WIDTH - username.length()) << string_time
          << LINE << endl;
     if(display_details == 1)
-        display_user_details(target_user, true);
-    cout << content << endl << endl
+        display_user_details(patient, true);
+    cout << content << endl << endl << "(Press Ctrl + Z together and enter to quit)" << endl
          << LINE
          << prompt;
     return;

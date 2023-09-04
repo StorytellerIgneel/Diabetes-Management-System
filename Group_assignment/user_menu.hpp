@@ -5,17 +5,267 @@
 #include "template.hpp"
 #include "validation.hpp"
 
-void    change_detail(user *target_user_ptr, string detail, bool new_user);
-void    user_menu(user   target_user);
-void    update_condition(user   target_user);
-void    make_appointment(user   target_user);
-void    update_account(user   target_user);
-void    vpg_test(user *user_ptr);
-void    hba1c_test(user *user_ptr);
-void    ogtt_test(user *user_ptr);
-void    update_diabetic_condition(user   target_user);
+void    user_menu                   (user *target_user);
+void    update_condition            (user *target_user);
+void    update_diabetic_condition   (user *target_user);
+void    vpg_test                    (user *user_ptr, admin);
+void    hba1c_test                  (user *user_ptr, admin);
+void    make_appointment            (user *target_user);
+void    update_account              (user *target_user);
+void    change_detail               (user *target_user_ptr, string detail, bool new_user = false);
+void    target_for_control          (user *target_user);
+void    receive_medication          (user *target_user);
 
-void    change_detail(user *target_user_ptr, string detail, bool new_user = false)
+//user main menu
+void    user_menu(user  *target_user)
+{
+    while(1)
+    {
+        int choice;
+        map < int, function < void(user*) >> option_list;
+        option_list[1] = update_condition;
+        option_list[2] = make_appointment;
+        option_list[3] = update_account;
+        option_list[4] = target_for_control;
+        option_list[5] = receive_medication;
+
+        if ((*target_user).medical.medication_received == true)
+            notification("You have received a medication prescription from your doctor. Please proceed to the section 'receive medication' to view the details.");
+        menu(*target_user, admin(), "MAIN MENU", "Please choose one of the following functions to use: \n1. Update health condition.\n2. Make appointment\n3. Update account details\n4. Recommendations and suggestions on target for control (T2DM patient only)\n5. Receive medication (T2DM patient only)", "Enter your choice: ");
+        cin >> choice;
+        if (!cin)
+        {
+            cin.clear();
+            return;
+        }
+        else if (choice == 4)
+            break;
+        else if (option_list.find(choice) != option_list.end())
+            option_list[choice](target_user);  // Call the selected function
+        else if (cin.fail())
+            error_message(1);
+        else
+            error_message(2);
+    }
+}
+
+//update condition section
+void    update_condition(user   *target_user)
+{
+    menu(*target_user, admin(), "UPDATE MEDICAL CONDITION", "You can update your medical conditions here.\nPlease select which medical condition to update: \n1. Diabetic patient confirmation", "Please enter your choice: ", false);
+    map < int, function < void(user *) >> option_list;
+    //option_list[1] = update_diabetic_condition;
+    
+    return;
+}
+
+void    update_diabetic_condition(user   *target_user)
+{
+    int choice;
+    map < int, function < void(user *, admin) >> option_list;
+    option_list[1] = vpg_test;
+    option_list[2] = hba1c_test;
+    //option_list[3] = ogtt_test;
+    while(1)
+    {
+        menu(*target_user, admin(), "UPDATE DIABETIC CONDITION", "Please choose which diagnostic value would you like to use to determine your diabetic condition: \n1. Venous plasma glucose\n2. HbA1c\n3. OGTT", "Please enter your choice (Press Ctrl + Z to quit): ");
+        cin >> choice;
+        if (!cin)
+        {
+            cin.clear();
+            return;
+        }
+        else if (option_list.find(choice) != option_list.end())
+            option_list[choice](target_user, admin());  // Call the selected function
+        else if (cin.fail())
+            error_message(1);
+        else
+            error_message(2);
+    }
+}
+
+void    vpg_test(user *user_ptr, admin target_admin)
+{
+    int     state;
+    double  vpg;
+    bool    is_user;
+
+    is_user = false;
+    if (user_ptr->access.username != "")
+        is_user = true;
+    while(1)
+    {
+        if (is_user)
+            menu(*user_ptr, admin(), "VENOUS PLASMA GLUCOSE TEST", "Welcome to Venous Plasma Glucose test for T2DM. \nPlease choose your current state, whether you are doing the test under fasting or random conditions.Press 1 for fasting and 2 for random.", "Please enter your choice: ");
+        else
+            menu(user(), target_admin, "VENOUS PLASMA GLUCOSE TEST", "Welcome to Venous Plasma Glucose condition update for T2DM patients.\nPlease choose the patient's current state, whether under fasting or random conditions.Press 1 for fasting and 2 for random.", "Please enter your choice: ");
+        cin >> state;
+        if (state == 1)
+        {
+            if(is_user)
+                menu(*user_ptr, admin(), "VENOUS PLASMA GLUCOSE TEST", "You have chosen the fasting state", "Please enter your venous plasma glucose value (mmol/L): ");
+            else
+                menu(user(), target_admin, "VENOUS PLASMA GLUCOSE TEST", "You have chosen the fasting state", "Please enter the patient's venous plasma glucose value (mmol/L): ");
+            cin >> vpg;
+            if (!cin)
+            {
+                cin.clear();
+                return;
+            }
+            else if (vpg < 7.00 && vpg > 0)
+            {
+                if(is_user)
+                    cout << "Congradulations! You are not diagnosed as a T2DM patient.";
+                else
+                    success_message(5);
+                user_ptr->medical.diabetic_patient = false;
+                break;
+            }
+            else if (vpg >= 7.00)
+            {
+                if (is_user)
+                    cout << "You are diagnosed as a T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.";
+                else
+                    success_message(5);
+                user_ptr->medical.diabetic_patient = true;
+                break;
+            }
+            else if (cin.fail())
+                error_message(1);
+            else
+                error_message(1);
+        }
+        else if (state == 2)
+        {
+            if (is_user)
+                menu(*user_ptr, admin(), "VENOUS PLASMA GLUCOSE TEST", "You have chosen the random state", "Please enter your venous plasma glucose value (mmol/L): ");
+            else
+                menu(user(), target_admin, "VENOUS PLASMA GLUCOSE TEST", "You have chosen the random state", "Please enter the patient's venous plasma glucose value (mmol/L): ");
+            cin >> vpg;
+            if (!cin)
+            {
+                cin.clear();
+                return;
+            }
+            else if (vpg < 11.1)
+            {
+                if(is_user)
+                    cout << "Congradulations! You are not diagnosed as a T2DM patient.";
+                else
+                    success_message(5);
+                user_ptr->medical.diabetic_patient = false;
+                break;
+            }
+            else if (vpg >= 11.1)
+            {
+                if(is_user)
+                    cout << "You are diagnosed as a T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.";
+                else
+                    success_message(5);
+                user_ptr->medical.diabetic_patient = true;
+                break;
+            }
+            else if (cin.fail())
+                error_message(1);
+            else
+                error_message(10);
+        }
+    }
+    return;
+}
+
+void    hba1c_test(user *user_ptr, admin target_admin)
+{
+    int     mode;
+    double  hba1c;
+    bool    is_user;
+
+    is_user = false;
+    if (user_ptr->access.username != "")
+        is_user = true;
+    while(1)
+    {
+        if(is_user)
+            menu(*user_ptr, admin(), "HbA1c TEST", "Welcome to HbA1c test for pre-diabetes and T2DM patients.\nYou are required to enter your HbA1c value in unit percentage.\n", "Please enter your HbA1c value: ");
+        else
+            menu(user(), target_admin, "HbA1c TEST", "Welcome to update for pre-diabetes and T2DM patient HbA1c value. \nYou are required to enter the patient's HbA1c value in unit percentage.\n", "Please enter the patient's HbA1c value: ");
+        cin >> mode;
+        if (mode == 1)
+        {
+            menu(*user_ptr, admin(), "HbA1c TEST", "You have chosen to enter your HbA1c value in unit percentage.", "Please enter your HbA1c value (%) (Press Ctrl + Z to quit): ");
+            cin >> hba1c;
+            if (!cin)
+            {
+                cin.clear();
+                return;
+            }
+            else if (hba1c < 5.7 && hba1c > 0)
+            {
+                cout << "Congradulations! You are not diagnosed as a T2DM patient.";
+                user_ptr->medical.diabetic_patient = false;
+                break;
+            }
+            else if (hba1c >= 5.7 && hba1c < 6.3)
+            {
+                cout << "You are diagnosed as a pre-T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.";
+                user_ptr->medical.diabetic_patient = true;
+                break;
+            }
+            else if (hba1c >= 6.3)
+            {
+                cout << "You are diagnosed as a T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.";
+                user_ptr->medical.diabetic_patient = true;
+                break;
+            }
+            else if (cin.fail())
+                error_message(1);
+            else
+                error_message(1);
+        }
+        else if (mode == 2)
+        {
+            menu(*user_ptr, admin(), "HbA1c TEST", "You have chosen to enter your HbA1c value in unit mmol/mol.", "Please enter your HbA1c value (mmol/mol) (Press CTRL + Z to quit): ");
+            cin >> hba1c;
+            if (!cin)
+            {
+                cin.clear();
+                return;
+            }
+            else if (hba1c < 39 && hba1c > 0)
+            {
+                cout << "Congradulations! You are not diagnosed as a T2DM patient.";
+                user_ptr->medical.diabetic_patient = false;
+                break;
+            }
+            else if (hba1c >= 39 && hba1c < 45)
+            {
+                cout << "You are diagnosed as a pre-T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.";
+                user_ptr->medical.diabetic_patient = true;
+                break;
+            }
+            else if (hba1c >= 45)
+            {
+                cout << "You are diagnosed as a T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.";
+                user_ptr->medical.diabetic_patient = true;
+                break;
+            }
+            else if (cin.fail())
+                error_message(1);
+            else
+                error_message(10);
+        }
+    }
+}
+
+//make appointment section
+void    make_appointment(user   *target_user)
+{
+    cout << (target_user->access.username);
+    return;
+}
+
+//update account section
+void    change_detail(user *target_user_ptr, string detail, bool new_user)
 {
     string  new_detail;
 
@@ -46,7 +296,10 @@ void    change_detail(user *target_user_ptr, string detail, bool new_user = fals
         cout << detail << " (Press Ctrl + Z to quit): ";
         cin >> new_detail;
         if (!cin)
+        {
+            cin.clear();
             return;
+        }
         else if (new_detail == ((*target_user_ptr).details.*details_iterator->second))
             error_message(7);
         else
@@ -59,207 +312,20 @@ void    change_detail(user *target_user_ptr, string detail, bool new_user = fals
         cout << "Please enter your new " << detail << " (Press Ctrl + Z to quit): ";
         cin >> new_detail;
         if (!cin)
+        {
+            cin.clear();
             return;
+        }
         else if (new_detail == ((*target_user_ptr).access.*access_iterator->second))
             error_message(7);
         else
             ((*target_user_ptr).access.*access_iterator->second) = new_detail;
     }
+    success_message(3);
     return;
 }
 
-void    user_menu(user  target_user)
-{
-    while(1)
-    {
-        int choice;
-        map < int, function < void(user) >> option_list;
-        option_list[1] = update_condition;
-        option_list[2] = make_appointment;
-        option_list[3] = update_account;
-        //option_list[4] = target_for_control;
-
-        menu(target_user, "MAIN MENU", "Please choose one of the following functions to use: \n1. Update health condition.\n2. Make appointment\n3. Update account details\n4. Check targets for control (T2DM patients).", "Enter your choice: ");
-        cin >> choice;
-        if (!cin)
-            return;
-        else if (choice == 4)
-            break;
-        else if (option_list.find(choice) != option_list.end())
-            option_list[choice](target_user);  // Call the selected function
-        else if (cin.fail())
-            error_message(1);
-        else
-            error_message(2);
-    }
-}
-
-void    update_condition(user   target_user)
-{
-    menu(target_user, "UPDATE MEDICAL CONDITION", "You can update your medical conditions here.\nPlease select which medical condition to update: \n1. Diabetic patient confirmation", "Please enter your choice: ", false);
-    map < int, function < void(user) >> option_list;
-    option_list[1] = update_diabetic_condition;
-    
-    return;
-}
-
-void    vpg_test(user *user_ptr)
-{
-    int     state;
-    double  vpg;
-
-    while(1)
-    {
-        menu(*user_ptr, "VENOUS PLASMA GLUCOSE TEST", "Welcome to Venous Plasma Glucose test for T2DM. \nPlease choose confirm your current state, whether you are doing the test under fasting or random conditions.Press 1 for fasting and 2 for random.", "Please enter your choice: ");
-        cin >> state;
-        if (state == 1)
-        {
-            menu(*user_ptr, "VENOUS PLASMA GLUCOSE TEST", "You have chosen the fasting state", "Please enter your venous plasma glucose value (mmol/L) (Press 0 to quit): ");
-            cin >> vpg;
-            if (vpg == 0)
-                break;
-            else if (vpg < 7.00 && vpg > 0)
-            {
-                cout << "Congradulations! You are not diagnosed as a T2DM patient.";
-                user_ptr->medical.diabetic_patient = false;
-                break;
-            }
-            else if (vpg >= 7.00)
-            {
-                cout << "You are diagnosed as a T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.";
-                user_ptr->medical.diabetic_patient = true;
-                break;
-            }
-            else if (cin.fail())
-                error_message(1);
-            else
-                error_message(1);
-        }
-        else if (state == 2)
-        {
-            menu(*user_ptr, "VENOUS PLASMA GLUCOSE TEST", "You have chosen the random state", "Please enter your venous plasma glucose value (mmol/L) (Press CTRL + Z to quit): ");
-            cin >> vpg;
-            if (!cin)
-                break;
-            else if (vpg < 11.1)
-            {
-                cout << "Congradulations! You are not diagnosed as a T2DM patient.";
-                user_ptr->medical.diabetic_patient = false;
-                break;
-            }
-            else if (vpg >= 11.1)
-            {
-                cout << "You are diagnosed as a T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.";
-                user_ptr->medical.diabetic_patient = true;
-                break;
-            }
-            else if (cin.fail())
-                error_message(1);
-            else
-                error_message(10);
-        }
-    }
-}
-
-void    hba1c_test(user *user_ptr)
-{
-    int     mode;
-    double  hba1c;
-
-    while(1)
-    {
-        menu(*user_ptr, "HbA1c TEST", "Welcome to HbA1c test for pre-diabetes and T2DM patients.\nYou are required to choose to enter your HbA1c value in either unit percentage or mmol/mol.\nEnter 1 for percentage and 2 for mmol/mol.\n(Press Ctrl + Z to quit)", "Please enter your choice of unit input: ");
-        cin >> mode;
-        if (mode == 1)
-        {
-            menu(*user_ptr,  "HbA1c TEST", "You have chosen the fasting state", "Please enter your HbA1c value (%) (Press Ctrl + Z to quit): ");
-            cin >> hba1c;
-            if (!cin)
-                break;
-            else if (hba1c < 5.97 && hba1c > 0)
-            {
-                cout << "Congradulations! You are not diagnosed as a T2DM patient.";
-                user_ptr->medical.diabetic_patient = false;
-                break;
-            }
-            else if (hba1c >= 5.7 && hba1c < 6.3)
-            {
-                cout << "You are diagnosed as a pre-T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.";
-                user_ptr->medical.diabetic_patient = true;
-                break;
-            }
-            else if (hba1c >= 6.3)
-            {
-                cout << "You are diagnosed as a T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.";
-                user_ptr->medical.diabetic_patient = true;
-                break;
-            }
-            else if (cin.fail())
-                error_message(1);
-            else
-                error_message(1);
-        }
-        else if (mode == 2)
-        {
-            menu(*user_ptr, "VENOUS PLASMA GLUCOSE TEST", "You have chosen the random state", "Please enter your venous plasma glucose value (mmol/L) (Press CTRL + Z to quit): ");
-            cin >> hba1c;
-            if (!cin)
-                break;
-            else if (hba1c < 39 && hba1c > 0)
-            {
-                cout << "Congradulations! You are not diagnosed as a T2DM patient.";
-                user_ptr->medical.diabetic_patient = false;
-                break;
-            }
-            else if (hba1c >= 39 && hba1c < 45)
-            {
-                cout << "You are diagnosed as a pre-T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.";
-                user_ptr->medical.diabetic_patient = true;
-                break;
-            }
-            else if (hba1c >= 45)
-            {
-                cout << "You are diagnosed as a T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.";
-                user_ptr->medical.diabetic_patient = true;
-                break;
-            }
-            else if (cin.fail())
-                error_message(1);
-            else
-                error_message(10);
-        }
-    }
-}
-
-void    update_diabetic_condition(user   target_user)
-{
-    int choice;
-    map < int, function < void(user *) >> option_list;
-    option_list[1] = vpg_test;
-    option_list[2] = hba1c_test;
-    option_list[3] = ogtt_test;
-    while(1)
-    {
-        menu(target_user, "UPDATE DIABETIC CONDITION", "Please choose which diagnostic value would you like to use to determine your diabetic condition: \n1. Venous plasma glucose\n2. HbA1c\n3. OGTT", "Please enter your choice (Press Ctrl + Z to quit): ");
-        cin >> choice;
-        if (!cin)
-            break;
-        else if (option_list.find(choice) != option_list.end())
-            option_list[choice](&target_user);  // Call the selected function
-        else if (cin.fail())
-            error_message(1);
-        else
-            error_message(2);
-    }
-}
-
-void    make_appointment(user   target_user)
-{
-    cout << (target_user.access.username);
-    return;
-}
-
-void    update_account(user   target_user)
+void    update_account(user   *target_user)
 {
     string  details_list[] = {"filler(ignore this)", "name", "age", "phone number", "home address", "username", "password"};
     int     choice;
@@ -268,9 +334,14 @@ void    update_account(user   target_user)
     {
         try
         {
-            menu(target_user, "UPDATE ACCOUNT DETAILS", "Please choose which detail you wish to change: \n1. Name\n2. Age\n3. Phone number\n4. Home address\n5. Username\n6. Password", "Enter your choice: ", 1);
+            menu(*target_user, admin(), "UPDATE ACCOUNT DETAILS", "Please choose which detail you wish to change: \n1. Name\n2. Age\n3. Phone number\n4. Home address\n5. Username\n6. Password", "Enter your choice: ", 1);
             cin >> choice;
-            change_detail(&target_user, details_list[choice]);
+            if (!cin)
+            {
+                cin.clear();
+                return;
+            }
+            change_detail(target_user, details_list[choice]);
             break;
         }
         catch(const invalid_argument& e)
@@ -284,19 +355,85 @@ void    update_account(user   target_user)
     }
 }
 
-void    target_for_control(user target_user)
+//target for control section
+void    target_for_control(user *target_user)
 {
     string content;
+    int     choice;
 
-    if(target_user.medical.diabetic_patient == false)
+    if(target_user->medical.diabetic_patient == false)
     {
         error_message(11);
         return;
     }
-    content = "GLYCAEMIC CONTROL\n1. Fasting or pre-pandial: 4.4 mmol/L-7.0 mmol/L\n2. ";//change ltr
-    menu(target_user, "TARGET FOR CONTROL", content, "Press enter to continue: ");
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    while(1)
+    {
+        menu(*target_user, admin(), "TARGET FOR CONTROL", "You can see a variety of suggestions and recommendations for your diabetes control here.\nPlease choose one of the following to see:\n\n1. Target levels for various medical parameters\n2. Individualised HbA1c targets based on patient profile\n3. Principal recommendation\n0. Exit", "Press enter your choice: ");
+        cin >> choice;
+        if (!cin)
+        {
+            cin.clear();
+            return;
+        }
+        else if (choice == 1)
+        {
+            //
+        }
+        else if (choice == 2)
+        {
+            if(stoi(target_user->details.age) < 40)
+            {
+                cout << "Your HbA1c target is <= 6.5% (Tight)";
+            }
+        }
+        else if (cin.fail())
+            error_message(1);
+        else
+            error_message(2);
+    }
     return;
 }
 
+//receive medication section
+void    receive_medication (user *patient)
+{
+    if (patient->medical.medication_received == false)
+    {
+        error_message(13);
+        return;
+    }
+    char        choice;
+    string      filename = patient->details.name + "_medication.txt";
+    string      for_menu;
+    ofstream    out_file_medication(filename, ios::in);
+
+    for_menu = "You can view your medications here.\nThe following is the medication prescribed to you by your doctor:\n\n" + patient->medical.medication;
+    while(1)
+    {
+        menu(*patient, admin(), "RECEIVE MEDICATION", for_menu, "Would you like to print this out?\nPress y for yes and n for no: ");
+        cin >> choice;
+        if (!cin)
+        {
+            cin.clear();
+            return;
+        }
+        else if (choice == 'Y' || choice == 'y')
+        {
+            out_file_medication << patient->medical.medication;
+            patient->medical.medication = "\n";
+            patient->medical.medication_received = false;
+            success_message(4);
+            return;
+        }
+        else if (choice == 'N' || choice == 'n')
+        {
+            patient->medical.medication = "\n";
+            patient->medical.medication_received = false;
+            return;
+        }
+        else
+            error_message(1);
+    }
+    return;
+}
 #endif

@@ -15,37 +15,39 @@ iv. libary "file_handling.hpp" is included
 int main(void) //initial access control
 {
     int     user_count;
-    int  choice;
-    user    dummy;
+    int     admin_count;
+    int     choice;
     user    user_list[MAX_CAPACITY];
-    map < int, function < void(user[], int) >> option_list;
-    option_list[1] = login;
+    admin   admin_list[MAX_CAPACITY];
+    map < int, function < void(user[], int, admin[]) >> option_list;
+    option_list[1] = user_login;
     option_list[2] = registration_control;
 
-    read_user_data(user_list, MAX_CAPACITY);
+    user_count = get_user_num("user");
+    admin_count = get_user_num("admin");
+    read_admin_data(admin_list, admin_count);
+    read_user_data(user_list, user_count);
     while(1)
     {
-        user_count   = 0;
-        while(user_list[user_count].details.name != "")
-            user_count++;
-        menu(dummy, "LOGIN", "Welcome to Diabetes Management System!\nPlease choose to login or to register:\n1. Login\n2. Register\n3. Exit System", "Enter choice: ");
+        menu(user(), admin(), "LOGIN", "Welcome to Diabetes Management System!\nPlease choose to login or to register:\n1. User login\n2. Register\n3. Admin login", "Enter choice: ");
         cin >> choice;
-        if (cin.fail())
-            error_message(1);
-        else if (choice == 1 || choice == 2)
-            option_list[choice](user_list, user_count);  // Call the selected function
-        else if (choice == 3)
+        if (!cin)
         {
-            export_user_data(user_list, user_count);
+            export_user_data(user_list, admin_list);
             exit(0);
         }
+        else if (choice == 1 || choice == 2)
+            option_list[choice](user_list, user_count, admin_list);  // Call the selected function
+        else if (choice == 3)
+            admin_login(user_list, 1, admin_list);
+        else if (cin.fail())
+            error_message(1);
         else
         {
             error_message(2);
             cin.clear();
             cin.ignore();
         }
-            
     }
     return 0;
 }

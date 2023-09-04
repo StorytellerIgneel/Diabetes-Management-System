@@ -27,6 +27,7 @@ void    success_message(unsigned int success_code, string username = "")
     unsigned int    current_line = 1;
     ifstream        in_file("success_message.txt");
 
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "\n";
     while(current_line <= success_code)
     {
@@ -37,7 +38,7 @@ void    success_message(unsigned int success_code, string username = "")
         success_message += username;
     notification(success_message);
     cout << "\nPress enter to contine";
-    system("cls");
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     in_file.close();
     return;
 }
@@ -61,7 +62,6 @@ void error_message(unsigned int error_code, string missing_file = "")
         error_message = missing_file + error_message;
     notification(error_message);
     cout << "\nPress enter to contine.";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     in_file.close();
     return;
@@ -109,6 +109,17 @@ int    exit_validation(string user_input, string exit_choice, string continue_ch
             return CONTINUE; // 0
     }
     return 0;
+}
+
+int exit_check(istream *cin)
+{
+    if (!(*cin))
+    {
+        (*cin).clear();
+        return 1;
+    }
+    else
+        return 0;
 }
 
 #endif

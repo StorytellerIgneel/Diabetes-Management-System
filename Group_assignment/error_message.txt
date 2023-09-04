@@ -9,3 +9,5 @@ An error has occured.
 Venous Plasma Glucose value should not be lower than 7, please confirm again.
 Something went wrong, please confirm again.
 You are not diagnosed with T2DM, hence you do not have targets for control.
+The patient you chose does not exist. Please confirm that you have entered the correct patient name.
+You have no medications prescribed by your doctor currently.
