@@ -465,13 +465,23 @@ void    reminder(user patient)
                 reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
             if (patient.medical.insulin == true)
                 reason += "\nInsulin treatment";
-            notification("Good Morning. You are required to do the Self Monitoring Blood Glucose (SMBG) and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.");
+            notification("Good Morning. You are required to do a Self Monitoring Blood Glucose (SMBG) test both BEFORE and AFTER your breakfast and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.");
         }
     }
-    else if (current_hour >= 12 && current_hour < 18) 
+    else if (current_hour >= 12 && current_hour < 18) //afternnoon (lunch)
     {
-        std::cout << "Good afternoon!" << std::endl;
-    } 
+        if (patient.medical.diet == true || patient.medical.medication != "No precription")
+        {
+            if (patient.medical.diet == true)
+                reason += "\nDiet treatment";
+            if (patient.medical.medication != "No precription")
+                reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
+            if (patient.medical.insulin == true)
+                reason += "\nInsulin treatment";
+            notification("Good Morning. You are required to do the Self Monitoring Blood Glucose (SMBG) and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.");
+        }
+        else if (patient.medical.insulin == true)
+    }
     else {
         std::cout << "Good night!" << std::endl;
     }
