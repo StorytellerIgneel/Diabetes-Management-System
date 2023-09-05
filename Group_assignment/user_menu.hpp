@@ -100,75 +100,78 @@ void    vpg_test(user *user_ptr, admin target_admin)
         else
             menu(user(), target_admin, "VENOUS PLASMA GLUCOSE TEST", "Welcome to Venous Plasma Glucose condition update for T2DM patients.\nPlease choose the patient's current state, whether under fasting or random conditions.Press 1 for fasting and 2 for random.", "Please enter your choice: ");
         cin >> state;
+        if(exit_check(&cin))
+            return;
         if (state == 1)
         {
-            if(is_user)
-                menu(*user_ptr, admin(), "VENOUS PLASMA GLUCOSE TEST", "You have chosen the fasting state", "Please enter your venous plasma glucose value (mmol/L): ");
-            else
-                menu(user(), target_admin, "VENOUS PLASMA GLUCOSE TEST", "You have chosen the fasting state", "Please enter the patient's venous plasma glucose value (mmol/L): ");
-            cin >> vpg;
-            if (!cin)
-            {
-                cin.clear();
-                return;
-            }
-            else if (vpg < 7.00 && vpg > 0)
+            while(1)
             {
                 if(is_user)
-                    cout << "Congradulations! You are not diagnosed as a T2DM patient.";
+                    menu(*user_ptr, admin(), "VENOUS PLASMA GLUCOSE TEST", "You have chosen the fasting state", "Please enter your venous plasma glucose value (mmol/L): ");
                 else
-                    success_message(5);
-                user_ptr->medical.diabetic_patient = false;
-                break;
-            }
-            else if (vpg >= 7.00)
-            {
-                if (is_user)
-                    cout << "You are diagnosed as a T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.";
+                    menu(user(), target_admin, "VENOUS PLASMA GLUCOSE TEST", "You have chosen the fasting state", "Please enter the patient's venous plasma glucose value (mmol/L): ");
+                cin >> vpg;
+                if(exit_check(&cin))
+                    break;
+                else if (vpg < 7.00 && vpg > 0)
+                {
+                    if(is_user)
+                        cout << "Congradulations! You are not diagnosed as a T2DM patient.";
+                    else
+                        success_message(5);
+                    user_ptr->medical.diabetic_patient = false;
+                    return;
+                }
+                else if (vpg >= 7.00)
+                {
+                    if (is_user)
+                        cout << "You are diagnosed as a T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.";
+                    else
+                        success_message(5);
+                    user_ptr->medical.diabetic_patient = true;
+                    return;
+                }
+                else if (cin.fail())
+                    error_message(1);
                 else
-                    success_message(5);
-                user_ptr->medical.diabetic_patient = true;
-                break;
+                    error_message(1);
             }
-            else if (cin.fail())
-                error_message(1);
-            else
-                error_message(1);
+            
         }
         else if (state == 2)
         {
-            if (is_user)
-                menu(*user_ptr, admin(), "VENOUS PLASMA GLUCOSE TEST", "You have chosen the random state", "Please enter your venous plasma glucose value (mmol/L): ");
-            else
-                menu(user(), target_admin, "VENOUS PLASMA GLUCOSE TEST", "You have chosen the random state", "Please enter the patient's venous plasma glucose value (mmol/L): ");
-            cin >> vpg;
-            if (!cin)
+            while(1)
             {
-                cin.clear();
-                return;
-            }
-            else if (vpg < 11.1)
-            {
-                if(is_user)
-                    cout << "Congradulations! You are not diagnosed as a T2DM patient.";
+                if (is_user)
+                    menu(*user_ptr, admin(), "VENOUS PLASMA GLUCOSE TEST", "You have chosen the random state", "Please enter your venous plasma glucose value (mmol/L): ");
                 else
-                    success_message(5);
-                user_ptr->medical.diabetic_patient = false;
-                break;
-            }
-            else if (vpg >= 11.1)
-            {
-                if(is_user)
-                    cout << "You are diagnosed as a T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.";
+                    menu(user(), target_admin, "VENOUS PLASMA GLUCOSE TEST", "You have chosen the random state", "Please enter the patient's venous plasma glucose value (mmol/L): ");
+                cin >> vpg;
+                if(exit_check(&cin))
+                    break;
+                else if (vpg < 11.1)
+                {
+                    if(is_user)
+                        cout << "Congradulations! You are not diagnosed as a T2DM patient.";
+                    else
+                        success_message(5);
+                    user_ptr->medical.diabetic_patient = false;
+                    return;
+                }
+                else if (vpg >= 11.1)
+                {
+                    if(is_user)
+                        cout << "You are diagnosed as a T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.";
+                    else
+                        success_message(5);
+                    user_ptr->medical.diabetic_patient = true;
+                    return;
+                }
+                else if (cin.fail())
+                    error_message(1);
                 else
-                    success_message(5);
-                user_ptr->medical.diabetic_patient = true;
-                break;
+                    error_message(10);
             }
-            else if (cin.fail())
-                error_message(1);
-            else
-                error_message(10);
         }
     }
     return;
@@ -321,7 +324,8 @@ void    change_detail(user *target_user_ptr, string detail, bool new_user)
         else
             ((*target_user_ptr).access.*access_iterator->second) = new_detail;
     }
-    success_message(3);
+    if(new_user == false)
+        success_message(3);
     return;
 }
 
@@ -435,5 +439,41 @@ void    receive_medication (user *patient)
             error_message(1);
     }
     return;
+}
+
+//incomplete
+void    reminder(user patient)
+{
+    auto    now = chrono::system_clock::now();
+    int     current_hour;
+    time_t  current_time;
+    tm*     time_info;
+    string  reason;
+
+    current_time = chrono::system_clock::to_time_t(now);
+    time_info    = localtime(&current_time);
+    current_hour = time_info->tm_hour;
+    reason = "This is because u are under: ";
+
+    if (current_hour >= 5 && current_hour < 12) //morning (breakfast)
+    {
+        if (patient.medical.diet == true || patient.medical.medication != "No precription" || patient.medical.insulin == true)
+        {
+            if (patient.medical.diet == true)
+                reason += "\nDiet treatment";
+            if (patient.medical.medication != "No precription")
+                reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
+            if (patient.medical.insulin == true)
+                reason += "\nInsulin treatment";
+            notification("Good Morning. You are required to do the Self Monitoring Blood Glucose (SMBG) and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.");
+        }
+    }
+    else if (current_hour >= 12 && current_hour < 18) 
+    {
+        std::cout << "Good afternoon!" << std::endl;
+    } 
+    else {
+        std::cout << "Good night!" << std::endl;
+    }
 }
 #endif

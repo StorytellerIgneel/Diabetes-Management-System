@@ -1,8 +1,18 @@
 false
-0
-0
-No prescription
+Normal
+false
 false
 0
 0
+0
 No prescription
+No extra note
+false
+Normal
+false
+false
+0
+0
+0
+No prescription
+No extra note

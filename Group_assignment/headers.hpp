@@ -4,6 +4,7 @@
 
 #include <algorithm>
 #include <cctype>
+#include <chrono>
 #include <cstdlib>
 #include <ctime>
 #include <cstdio>
@@ -22,8 +23,8 @@
 using namespace std; //not a good practice but judging that this assignment doesnt involve the use of other libraries that will cause clashes, namespace std is used.
 struct user_details
 {
-    string          age;
     string          name;
+    string          age;
     string          phone_number;
     string          home_address;
 };
@@ -36,11 +37,16 @@ struct access_control
 struct medical_condition
 {
     bool    diabetic_patient = false;
+    string  current_state = "Normal";
+    bool    diet = false;
+    bool    insulin = false;
+    
     double  vpg = 0;
     double  hba1c = 0;
     double  ogtt = 0;
     string  medication;
-    bool    medication_received = false;
+    string  medication_note;
+    bool    medication_received = false; //equivalent to ogld
 };
 struct user
 {

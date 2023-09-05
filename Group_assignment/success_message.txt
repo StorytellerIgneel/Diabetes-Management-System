@@ -1,6 +1,9 @@
-Registration completed. Welcome, user 
+Registration completed.\nPlease proceed to user login using the new account username and password.
 Welcome, user 
 Detail changed successfully!
 Your medication file is successfully generated in the system with your name as the filename.\nPlease confirm it in the system.
 Patient Venous Plasma Glucose value successfully updated!
 Patient HbA1c value successfully updated!
+Patient Oral Glucose Tolerance Test value successfully updated!
+Diet control has been issued successfully!
+Medication prescribed successfully!

@@ -23,12 +23,12 @@ int main(void) //initial access control
     option_list[1] = user_login;
     option_list[2] = registration_control;
 
-    user_count = get_user_num("user");
-    admin_count = get_user_num("admin");
-    read_admin_data(admin_list, admin_count);
-    read_user_data(user_list, user_count);
     while(1)
     {
+        user_count = get_user_num("user");
+        admin_count = get_user_num("admin");
+        read_admin_data(admin_list, admin_count);
+        read_user_data(user_list, user_count);
         menu(user(), admin(), "LOGIN", "Welcome to Diabetes Management System!\nPlease choose to login or to register:\n1. User login\n2. Register\n3. Admin login", "Enter choice: ");
         cin >> choice;
         if (!cin)
@@ -39,7 +39,7 @@ int main(void) //initial access control
         else if (choice == 1 || choice == 2)
             option_list[choice](user_list, user_count, admin_list);  // Call the selected function
         else if (choice == 3)
-            admin_login(user_list, 1, admin_list);
+            admin_login(user_list, admin_count, admin_list);
         else if (cin.fail())
             error_message(1);
         else
@@ -48,6 +48,7 @@ int main(void) //initial access control
             cin.clear();
             cin.ignore();
         }
+        export_user_data(user_list, admin_list);
     }
     return 0;
 }
