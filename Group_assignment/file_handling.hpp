@@ -116,6 +116,7 @@ void    read_user_data(user user_list[], int size)
     }   
     in_file_details.close();
     in_file_access.close();
+    in_file_medical.close();
     return;
 }
 
@@ -145,15 +146,15 @@ void    export_user_data(user user_list[], admin admin_list[])
         out_file_access << user_list[counter].access.username << endl;
         out_file_access << user_list[counter].access.password;
         //medication section
-        out_file_medical << (user_list[counter].medical.diabetic_patient == true)? "true\n" : "false\n";
+        out_file_medical << ((user_list[counter].medical.diabetic_patient == true)? "true\n" : "false\n");
         out_file_medical << user_list[counter].medical.current_state << endl;
-        out_file_medical << (user_list[counter].medical.diet == true)? "true\n" : "false\n";
-        out_file_medical << (user_list[counter].medical.insulin == true)? "true\n" : "false\n";
+        out_file_medical << ((user_list[counter].medical.diet == true)? "true\n" : "false\n");
+        out_file_medical << ((user_list[counter].medical.insulin == true)? "true\n" : "false\n");
         out_file_medical << user_list[counter].medical.vpg << endl;
         out_file_medical << user_list[counter].medical.hba1c << endl;
         out_file_medical << user_list[counter].medical.ogtt << endl;
-        out_file_medical << (user_list[counter].medical.medication == "No prescription")? "No prescription\n": user_list[counter].medical.medication;
-        out_file_medical << (user_list[counter].medical.medication == "No extra note")? "No extra note\n": user_list[counter].medical.medication_note;
+        out_file_medical << user_list[counter].medical.medication << endl;
+        out_file_medical << user_list[counter].medical.medication_note;
         counter++;
     }
     counter = 0;

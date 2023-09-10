@@ -7,3 +7,6 @@ Patient HbA1c value successfully updated!
 Patient Oral Glucose Tolerance Test value successfully updated!
 Diet control has been issued successfully!
 Medication prescribed successfully!
+Patient selected successfully!
+Congradulations! You are not diagnosed as a T2DM patient.
+Your meal record has been added into the system successfully.

@@ -16,7 +16,8 @@ int main(void) //initial access control
 {
     int     user_count;
     int     admin_count;
-    int     choice;
+    int     choice_int;
+    string  choice_str;
     user    user_list[MAX_CAPACITY];
     admin   admin_list[MAX_CAPACITY];
     map < int, function < void(user[], int, admin[]) >> option_list;
@@ -30,25 +31,24 @@ int main(void) //initial access control
         read_admin_data(admin_list, admin_count);
         read_user_data(user_list, user_count);
         menu(user(), admin(), "LOGIN", "Welcome to Diabetes Management System!\nPlease choose to login or to register:\n1. User login\n2. Register\n3. Admin login", "Enter choice: ");
-        cin >> choice;
+        getline(cin, choice_str);
         if (!cin)
         {
             export_user_data(user_list, admin_list);
             exit(0);
         }
-        else if (choice == 1 || choice == 2)
-            option_list[choice](user_list, user_count, admin_list);  // Call the selected function
-        else if (choice == 3)
-            admin_login(user_list, admin_count, admin_list);
-        else if (cin.fail())
-            error_message(1);
-        else
+        if(is_number(choice_str, &choice_int))
         {
-            error_message(2);
-            cin.clear();
-            cin.ignore();
+            if (choice_int == 1 || choice_int == 2)
+                option_list[choice_int](user_list, user_count, admin_list);  // Call the selected function
+            else if (choice_int == 3)
+                admin_login(user_list, admin_count, admin_list);
+            else
+                error_message(2);
+            export_user_data(user_list, admin_list);
         }
-        export_user_data(user_list, admin_list);
+        else
+            error_message(1);
     }
     return 0;
 }

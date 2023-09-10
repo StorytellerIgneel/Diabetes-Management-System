@@ -30,7 +30,7 @@ void    notification(string notification)
 void    display_user_details(user   target_user, bool    registration = false)
 {
     cout << "Name\t\t: " << target_user.details.name << endl
-        << "Age\t\t:" << target_user.details.age << endl
+        << "Age\t\t: " << target_user.details.age << endl
         << "Phone number\t: " << target_user.details.phone_number << endl
         << "Home address\t: " << target_user.details.home_address << endl;
     if (registration == true)
@@ -43,10 +43,12 @@ void    display_user_details(user   target_user, bool    registration = false)
 
 void    menu(user   patient, admin target_admin, string stage, string content, string prompt = "", bool display_details = false, string file = "") //for selections
 {
-    time_t  current_time = time(nullptr);
-    string  string_time;
-    string  username;
-    string  patient_name;
+    
+    time_t      current_time = time(nullptr);
+    string      string_time;
+    string      username;
+    string      patient_name;
+    string      line;
 
     current_time = time(nullptr);
     string_time  = ctime(&current_time);
@@ -75,9 +77,22 @@ void    menu(user   patient, admin target_admin, string stage, string content, s
     cout << LINE << endl;
     if(display_details == 1)
         display_user_details(patient, true);
-    cout << content << endl << endl << "(Press Ctrl + Z together and enter to quit)" << endl
+    if (file == "")
+    {
+        cout << content << endl << endl << "(Press Ctrl + Z together and enter to quit)" << endl
          << LINE
          << prompt;
+    }
+    else
+    {
+        ifstream    print_file(file, ios::in);
+
+        cout << content << endl << endl;
+        while(getline(print_file, line))
+            cout << line;
+        cout << endl << LINE << prompt;
+        print_file.close();
+    }
     return;
 }
 

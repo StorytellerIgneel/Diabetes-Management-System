@@ -14,21 +14,18 @@ void    admin_login(user  user_list[], int user_count, admin admin_list[]);
 
 void    registration_control(user user_list[], int user_count, admin admin_list[])
 {
-    char    choice;
+    string    choice;
 
     while(1)
     {
         menu(user(), admin(), "REGISTRATION", "Welcome to registration.\nYou will be required to register to the diabetes management system with your name, age, contact number, and home address.", "Press y if you wish to continue or n to exit: ");
-        cin >> choice;
+        getline(cin, choice);
         if(exit_check(&cin))
             return;
-        if (choice == 'y' || choice == 'Y')
-        {
+        if (choice == "y" || choice == "Y")
             registration(user_list, user_count);
-            break;
-        }
-        else if (!cin || choice == 'n' || choice == 'N')
-            break;
+        else if (choice == "n" || choice == "N")
+            return;
         else
             error_message(1);
     }
@@ -37,38 +34,60 @@ void    registration_control(user user_list[], int user_count, admin admin_list[
 
 void    registration(user user_list[], int user_count)
 {
+    bool        continue_step;
     user        new_user;
     string      choice;
     string      confirm_pw;
     string      details_list[] = {"name", "age", "phone number", "home address"};
     string      for_menu;    
     
+    continue_step = false;
     for(int details_list_count = 0; details_list_count < 4; details_list_count++)
-        change_detail(&new_user, details_list[details_list_count], true);
-    //validation for exit 
-    
+    {
+        if (change_detail(&new_user, details_list[details_list_count], true) == EXIT)
+        {
+            details_list_count -= 2;
+            if (details_list_count == -2)
+                return;
+        }    
+    }
+        
+    //validation for exit    
     while(1)
     {
         system("cls"); //remember to cchange for windows
         for_menu =  "Thank you for registering your details.\nPlease check if your details are as follows: \nName\t\t: " + new_user.details.name + "\nAge\t\t: " + new_user.details.age + "\nPhone number\t: " + new_user.details.phone_number + "\nHome Address\t: " + new_user.details.home_address;
         menu(new_user, admin(), "REGISTRATION", for_menu, "Do you wish to proceed with these details? Press y for yes and n for no: ");
-        cin >> choice;
+        getline(cin, choice);
         if(exit_check(&cin))
             return;
-        if (exit_validation(choice, "n", "y") == CONTINUE)
-            break;
-        else if (exit_validation(choice, "n", "y") == EXIT)
+        if (choice == "y" || choice == "Y")
+        {
+            while(1)
+            {
+                if (change_detail(&new_user, "username", true) != EXIT)
+                {
+                    if (change_detail(&new_user, "password", true) != EXIT)
+                    {
+                        continue_step = true;
+                        break;
+                    }     
+                }
+                else
+                    break;
+            }
+            if (continue_step == true)
+                break;
+        }
+        else if (choice == "n" || choice == "N")
             return;
         else
             error_message(2);
     }
-
-    change_detail(&new_user, "username", true);
-    change_detail(&new_user, "password", true);
     while(1)
     {
         cout << "Please re-enter your password to confirm password set (Enter Ctrl + Z to quit)\t: ";
-        cin >> confirm_pw;
+        getline(cin, confirm_pw);
         if(exit_check(&cin))
             return;
         if (confirm_pw == new_user.access.password)
@@ -98,7 +117,7 @@ void    user_login(user  user_list[], int user_count, admin admin_list[])
         found_username = FALSE;
         login_validated = FALSE;
         menu(user(), admin(), "USER LOGIN", "Welcome to user login.\nPlease enter your username and password to login into your account.", "Username\t\t\t: ");
-        cin >> username;
+        getline(cin, username);
         if(exit_check(&cin))
             return;
         while(counter < user_count)
@@ -114,9 +133,9 @@ void    user_login(user  user_list[], int user_count, admin admin_list[])
         {
             while(1)
             {
-                cout << "Enter your password (Press 0 to quit)\t: ";
-                cin >> password;
-                if (exit_validation(password, "0") == EXIT)
+                cout << "Enter your password\t: ";
+                getline(cin, password);
+                if(exit_check(&cin))
                     return;
                 if(password == user_list[counter].access.password)
                 {
@@ -144,7 +163,7 @@ void    admin_login(user user_list[], int admin_count ,admin  admin_list[])
     string  admin_name;
     string  password;
     bool    found_admin;
-    bool     login_validated;
+    bool    login_validated;
     int     counter;
 
     while(1)
@@ -153,7 +172,7 @@ void    admin_login(user user_list[], int admin_count ,admin  admin_list[])
         found_admin = false;
         login_validated = false;
         menu(user(), admin(), "ADMIN LOGIN", "Welcome to admin login.\nPlease enter your username and password to login into your account.", "Admin name\t\t\t: ");
-        cin >> admin_name;
+        getline(cin, admin_name);
         if(exit_check(&cin))
             return;
         while(counter < admin_count)
@@ -169,9 +188,9 @@ void    admin_login(user user_list[], int admin_count ,admin  admin_list[])
         {
             while(1)
             {
-                cout << "Enter your password (Press 0 to quit)\t: ";
-                cin >> password;
-                if (exit_validation(password, "0") == EXIT)
+                cout << "Enter your password\t: ";
+                getline(cin, password);
+                if(exit_check(&cin))
                     return;
                 if(password == admin_list[counter].password)
                 {

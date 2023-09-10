@@ -5,20 +5,45 @@
 #include "headers.hpp"
 #include "template.hpp"
 #define ALL_PRESENT 0
-#define CONTINUE    0
 #define MISSING     1
-#define EXIT        1
 #define ERROR       2 //technically can be any number other than 0 and 1
 //defined global variables to 
 
-bool    is_number(const string  target)
+bool    is_number(string  target, int    *converted)
 {
     for (char c : target)
     {
         if (!isdigit(c))
             return false;
     }
+    *converted = stoi(target);
     return true;
+}
+
+bool    is_double(string  target, double    *converted)
+{
+    int dot;
+
+    dot = 0;
+    for (char current_char : target)
+    {
+        if (!isdigit(current_char))
+        {
+            if (current_char == '.' && dot == 0) // only allow 1 dot to be in the double variable
+                dot += 1;
+            return false;
+        }
+    }
+    *converted = stod(target);
+    return true;
+}
+
+string  remove_trail(string input)
+{
+    if(isspace(input[input.length() - 1]))
+        return (input.substr(0, input.length() - 1));
+    else
+        return input;
 }
 
 void    success_message(unsigned int success_code, string username = "")
@@ -27,7 +52,6 @@ void    success_message(unsigned int success_code, string username = "")
     unsigned int    current_line = 1;
     ifstream        in_file("success_message.txt");
 
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "\n";
     while(current_line <= success_code)
     {
@@ -38,6 +62,7 @@ void    success_message(unsigned int success_code, string username = "")
         success_message += username;
     notification(success_message);
     cout << "\nPress enter to contine";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     in_file.close();
     return;
@@ -51,7 +76,6 @@ void error_message(unsigned int error_code, string missing_file = "")
     unsigned int    current_line = 1;
 
     cin.clear();
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cout << "\n";
     while(current_line <= error_code)
     {
@@ -62,6 +86,7 @@ void error_message(unsigned int error_code, string missing_file = "")
         error_message = missing_file + error_message;
     notification(error_message);
     cout << "\nPress enter to contine.";
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     in_file.close();
     return;
@@ -92,9 +117,9 @@ int    exit_validation(string user_input, string exit_choice, string continue_ch
     if (continue_choice != "") //there is an actual continue choice for user to select
     {
         if (user_input == continue_choice)
-            return CONTINUE; //0
+            return 0;
         else if (user_input == exit_choice)
-            return EXIT; //1
+            return 1; 
         else
         {
             error_message(2);
@@ -104,9 +129,9 @@ int    exit_validation(string user_input, string exit_choice, string continue_ch
     else if (continue_choice == "") // there is no correct choice 
     {
         if (user_input == exit_choice)
-            return EXIT; // 1
+            return 1; 
         else
-            return CONTINUE; // 0
+            return 0;
     }
     return 0;
 }

@@ -5,55 +5,51 @@
 #include "headers.hpp"
 #include "template.hpp"
 #include "validation.hpp"
+#include "user_menu.hpp"
 
 void    admin_menu                      (admin admin, user user_list[]);
-void    find_patient                    (user *patient, user user_list[], admin target_admin);
+void    find_patient                    (user **patient, user user_list[], admin target_admin);
 void    update_patient_condition        (user *patient, admin target_admin);
-void    ogtt_update                     (user *user_ptr, admin target_admin);
+void    ogtt_update                     (user *patient, admin target_admin);
 void    prescribe_medication_control    (user *patient, admin target_admin);
 void    prescribe_medication            (user *patient, admin target_admin);
 void    medication_guide                (admin target_admin);
 bool    get_medication                  (int *step, string prompt, string *medication, admin target_admin);
 void    set_diet_control                (user   *patient, admin target_admin);
+void    check_medical_guides            (user* patient, admin target_admin);
 //admin main menu
 void    admin_menu(admin target_admin, user user_list[])
 {
     while(1)
     {
-        int     choice;
+        int     choice_int;
+        string  choice_str;
         user    *patient;
         map < int, function < void(user*, admin) >> option_list;
         option_list[1] = update_patient_condition;
         option_list[2] = prescribe_medication_control;
+        option_list[5] = check_medical_guides;
         //option_list[3] = target_for_control;
 
         patient = nullptr;
-        find_patient(patient, user_list, target_admin);
-        cout << "Problem: " << patient->details.name;
-        cin >> choice;
-        
-        if (patient == nullptr)
-        {
-            cin >> choice;
-            return;
-        }
-            
-        cout << "Entered";
-        cin >> choice;
-        menu(user(), target_admin, "MAIN MENU", "Please choose one of the following functions to use: \n1. Update patient health condition.\n2. Check and approve appointment\n3. Provide Medication\n4. Check patient profile", "Enter your choice: ");
-        cin >> choice;
+        find_patient(&patient, user_list, target_admin);
+        menu(*patient, target_admin, "MAIN MENU", "Please choose one of the following functions to use: \n1. Update patient health condition.\n2. Check and approve appointment\n3. Provide Medication\n4. Check patient profile\n5. Check medical guides", "Enter your choice: ");
+        getline(cin, choice_str);
         if(exit_check(&cin))
             return;
-        else if (option_list.find(choice) != option_list.end())
-            option_list[choice](patient, target_admin);  // Call the selected function
-        else if (cin.fail())
-            error_message(1);
+        if (is_number(choice_str, &choice_int))
+        {
+            if (option_list.find(choice_int) != option_list.end())
+                option_list[choice_int](patient, target_admin);  // Call the selected function
+            else
+                error_message(2);
+        }
         else
-            error_message(2);
+            error_message(1);
     }
 }
 
-void    find_patient(user *patient, user   user_list[], admin target_admin)
+void    find_patient(user **patient, user   user_list[], admin target_admin)
 {
     int             i;
     user            dummy;
@@ -63,7 +59,6 @@ void    find_patient(user *patient, user   user_list[], admin target_admin)
     content = "Which patient would you like to choose?\n\n";
     for(int i = 0; user_list[i].details.name != ""; i++)
         content = content + to_string(i+1) + ". " + user_list[i].details.name + "\n";
-        
     while(1)
     {
         menu(user(), target_admin, "Patient selection", content, "Enter the patient name you wish to view: ");
@@ -76,7 +71,8 @@ void    find_patient(user *patient, user   user_list[], admin target_admin)
             {
                 if(target_patient == user_list[i].details.name)
                 {
-                    patient = &user_list[i];
+                    success_message(10);
+                    *patient = &user_list[i];
                     return;
                 }
             }
@@ -89,7 +85,8 @@ void    find_patient(user *patient, user   user_list[], admin target_admin)
 //update_patient_condition section
 void    update_patient_condition(user *patient, admin target_admin)
 {
-    char choice;
+    string  choice_str;
+    int     choice_int;
 
     map <int, function <void(user*, admin)> > update_list;
     update_list[1] = vpg_test;
@@ -99,102 +96,120 @@ void    update_patient_condition(user *patient, admin target_admin)
     while(1)
     {
         menu(*patient, target_admin, "UPDATE PATIENT CONDITION", "Here, you can update the medical condition of patients. Please choose one of the following conditions to update:\n1. vpg\n2. hba1c\n3. ogtt", "Enter the choice of medical condition to update: ");
-        cin >> choice;
+        getline(cin, choice_str);
         if(exit_check(&cin))
             return;
-        else if (isdigit(choice))
+        if (is_number(choice_str, &choice_int))
         {
-            choice = (int)choice;
-            if (choice >= 1 && choice <= 3)
-                update_list[choice](patient, target_admin);
+            if (update_list.find(choice_int) != update_list.end())
+                update_list[choice_int](patient, target_admin);
             else
                 error_message(2);
         }
-        else if (cin.fail())
-            error_message(1);
         else
             error_message(1);
     }
     return;
 }
 
-void    ogtt_update(user* user_ptr, admin target_admin)
+//8/9
+void    ogtt_update(user* patient, admin target_admin)
 {
-    int     mode;
-    double  ogtt;
+    string  mode_str;
+    string  ogtt_str;
+    int     mode_int;
+    double  ogtt_double;
+
 
     while(1)
     {
-        menu(user(), target_admin, "Oral Glucose Tolerance Test (OGTT)", "Welcome to update for patient ogtt value. \nYou are required to choose the time period of the OGTT test done\n1.0 hours (immediate)\n2. 2 hours", "Please enter the patient's ogtt value: ");
-        cin >> mode;
-        if (mode == 1)
+        menu(*patient, target_admin, "Oral Glucose Tolerance Test (OGTT)", "Welcome to update for patient ogtt value. \nYou are required to choose the time period of the OGTT test done\n1.0 hours (immediate)\n2. 2 hours", "Please enter the patient's ogtt value: ");
+        getline(cin, mode_str);
+        if (is_number(mode_str, &mode_int))
         {
-            while(1)
+            if (mode_int == 1)
             {
-                menu(user(), target_admin, "Oral Glucose Tolerance Test (OGTT)", "You have chosen the immediate (0 hour) time period.", "Please enter the patient's ogtt value (mmol/L): ");
-                cin >> ogtt;
-                if(exit_check(&cin))
-                    break;
-                if (ogtt < 6.1 && ogtt > 0)
+                while(1)
                 {
-                    success_message(7);
-                    user_ptr->medical.diabetic_patient = false;
-                    return;
+                    menu(*patient, target_admin, "Oral Glucose Tolerance Test (OGTT)", "You have chosen the immediate (0 hour) time period.", "Please enter the patient's ogtt value (mmol/L): ");
+                    getline(cin, ogtt_str);
+                    if(exit_check(&cin))
+                        break;
+                    if (is_double(ogtt_str, &ogtt_double))
+                    {
+                        if (ogtt_double < 6.1 && ogtt_double > 0)
+                        {
+                            success_message(7);
+                            patient->medical.ogtt = ogtt_double;
+                            patient->medical.diabetic_patient = false;
+                            return;
+                        }
+                        else if (ogtt_double >= 6.1 && ogtt_double <= 6.9 || ogtt_double >= 7.0)
+                        {
+                            success_message(7);
+                            patient->medical.current_state = "IMPAIRED GLUCOSE (IFG)";
+                            patient->medical.ogtt = ogtt_double;
+                            patient->medical.diabetic_patient = true;
+                            return;
+                        }
+                        else if (ogtt_double >= 7.0)
+                        {
+                            success_message(7);
+                            patient->medical.current_state = "DIABETES MELLITUS (DM)";
+                            patient->medical.ogtt = ogtt_double;
+                            patient->medical.diabetic_patient = true;
+                            return;
+                        }
+                        else
+                            error_message(1);
+                    }
+                    else
+                        error_message(1);
                 }
-                else if (ogtt >= 6.1 && ogtt <= 6.9 || ogtt >= 7.0)
+            }
+            else if (mode_int == 2)
+            {
+                while(1)
                 {
-                    success_message(7);
-                    user_ptr->medical.current_state = "IMPAIRED GLUCOSE (IFG)";
-                    user_ptr->medical.diabetic_patient = true;
-                    return;
+                    menu(*patient, target_admin, "Oral Glucose Tolerance Test (OGTT)", "You have chosen the 2hours time period.", "Please enter the patient's ogtt value (mmol/mol): ");
+                    getline(cin, ogtt_str);
+                    if(exit_check(&cin))
+                        break;
+                    if (is_double(ogtt_str, &ogtt_double))
+                    {
+                        if (ogtt_double < 7.8 && ogtt_double > 0)
+                        {
+                            success_message(7);
+                            patient->medical.ogtt = ogtt_double;
+                            patient->medical.diabetic_patient = false;
+                            return;
+                        }
+                        else if (ogtt_double >= 7.8 && ogtt_double <= 11.0)
+                        {
+                            success_message(7);
+                            patient->medical.current_state = "IMPAIRED GLUCOSE TOLERANCE (IGT)";
+                            patient->medical.ogtt = ogtt_double;
+                            patient->medical.diabetic_patient = true;
+                            return;
+                        }
+                        else if (ogtt_double >= 11.1)
+                        {
+                            success_message(7);
+                            patient->medical.current_state = "DIABETES MELLITUS (DM)";
+                            patient->medical.ogtt = ogtt_double;
+                            patient->medical.diabetic_patient = true;
+                            return;
+                        }
+                        else
+                            error_message(10);
+                    }
+                    else
+                        error_message(1);
                 }
-                else if (ogtt >= 7.0)
-                {
-                    success_message(7);
-                    user_ptr->medical.current_state = "DIABETES MELLITUS (DM)";
-                    user_ptr->medical.diabetic_patient = true;
-                    return;
-                }
-                else if (cin.fail())
-                    error_message(1);
-                else
-                    error_message(1);
             }
         }
-        else if (mode == 2)
-        {
-            while(1)
-            {
-                menu(user(), target_admin, "Oral Glucose Tolerance Test (OGTT)", "You have chosen the 2hours time period.", "Please enter the patient's ogtt value (mmol/mol): ");
-                cin >> ogtt;
-                if(exit_check(&cin))
-                    break;
-                else if (ogtt < 7.8 && ogtt > 0)
-                {
-                    success_message(7);
-                    user_ptr->medical.diabetic_patient = false;
-                    return;
-                }
-                else if (ogtt >= 7.8 && ogtt <= 11.0)
-                {
-                    success_message(7);
-                    user_ptr->medical.current_state = "IMPAIRED GLUCOSE TOLERANCE (IGT)";
-                    user_ptr->medical.diabetic_patient = true;
-                    return;
-                }
-                else if (ogtt >= 11.1)
-                {
-                    success_message(7);
-                    user_ptr->medical.current_state = "DIABETES MELLITUS (DM)";
-                    user_ptr->medical.diabetic_patient = true;
-                    return;
-                }
-                else if (cin.fail())
-                    error_message(1);
-                else
-                    error_message(10);
-            }
-        }
+        else
+            error_message(1);
     }
 }
 
@@ -202,23 +217,27 @@ void    ogtt_update(user* user_ptr, admin target_admin)
 //prescribe_medication section
 void    prescribe_medication_control(user   *patient, admin target_admin) //control access to the actual function
 {
-    int choice;
+    string  choice_str;
+    int     choice_int;
     map <int, function<void(user* , admin)>> option_list;
     option_list[1] = set_diet_control;
     option_list[2] = prescribe_medication;
 
     while(1)
     {
-        menu(user(), target_admin, "ISSUE MEDICATION ", "Choose one of the following to issue/prescriibe:\n1. Diet control\n2. Medications (OGLDs) \n3. Insulin", "Press y to continue and n to quit.");
-        cin >> choice;
+        menu(*patient, target_admin, "ISSUE MEDICATION ", "Choose one of the following to issue/prescriibe:\n1. Diet control\n2. Medications (OGLDs) \n3. Insulin", "Press y to continue and n to quit.");
+        getline(cin, choice_str);
         if(exit_check(&cin))
             return;
-        else if (choice <= 3  && choice >= 1)
-            option_list[choice](patient, target_admin);
-        else if (cin.fail())
-            error_message(1);
+        if (is_number(choice_str, &choice_int))
+        {
+            if (option_list.find(choice_int) != option_list.end())
+                option_list[choice_int](patient, target_admin);
+            else
+                error_message(2);
+        }
         else
-            error_message(2);
+            error_message(1);
     }
     return;
 }
@@ -236,7 +255,7 @@ void    prescribe_medication(user   *patient, admin target_admin)
     int     *step;
 
     *step = 1;
-    menu(user(), target_admin, "MEDICATION PRESCRIPTION", "Enter the details of the medication prescription for the patient here.\nYou can press g or G to show the guide for the medication prescription.\nYou can also press B or b to go back to the previous step.");
+    menu(*patient, target_admin, "MEDICATION PRESCRIPTION", "Enter the details of the medication prescription for the patient here.\nYou can press g or G to show the guide for the medication prescription.\nYou can also press B or b to go back to the previous step.");
     while(1)
     {
         if (*step == 1)
@@ -264,8 +283,8 @@ void    prescribe_medication(user   *patient, admin target_admin)
         for_menu = medication;
     while(1)
     {
-        menu(user(), target_admin, "Medication Prescription", "The medication you have prescribed is:\n" + for_menu, "Are you sure that you want to prescribe this medication for the patient? Do double check before confirming,\nPress y for yes and n to quit: ");
-        cin >> choice;
+        menu(*patient, target_admin, "Medication Prescription", "The medication you have prescribed is:\n" + for_menu, "Are you sure that you want to prescribe this medication for the patient? Do double check before confirming,\nPress y for yes and n to quit: ");
+        getline(cin, choice);
         if(!cin || choice == "n" || choice == "N")
             return;
         else if (choice == "y" || choice == "Y")
@@ -336,8 +355,8 @@ void set_diet_control(user   *patient, admin target_admin)
     string  choice;
     while(1)
     {
-        menu(user(), target_admin, "Issue Diet Control", "You are about to issue a diet for the patient, continue?", "Press \"y\" to continue or \"n\" to cancel : ");
-        cin >> choice;
+        menu(*patient, target_admin, "Issue Diet Control", "You are about to issue a diet for the patient, continue?", "Press \"y\" to continue or \"n\" to cancel : ");
+        getline(cin, choice);
         if(!cin || choice == "n" || choice == "N")
         {
             cin.clear();
@@ -356,4 +375,43 @@ void set_diet_control(user   *patient, admin target_admin)
     }
 }
 
+//check medical guide
+void    check_medical_guides(user* patient, admin target_admin)
+{
+    string  filename_list[] = {"filler", "t2dm_management.txt", "control_targets.txt", "individualised_hba1c_target.txt", "principle_recommend.txt", "SMBG_recommendation.txt", "medication_guide.txt", "newly_diagnosed_treatment.txt", "clinic_followup_treatment.txt"};
+    string  choice_str;
+    int     choice_int;
+
+    while(1)
+    {
+        menu(*patient, target_admin, "Medical Guides Checking", "Please choose one of the following medical guides to check on: \n1. Management of T2DM\n2. T2DM: Targets for control\n3. Individualised HbA1c targets based on patient profile\n4. Principal recommendation: Medical nutrition therapy & lifestyle modification\n5. Recommendations for SMBG\n6. OGLD prescription guide\n7. Treatment algorithm: Newly diagnosed T2DM\n8. Treatment recommendations: Clinic follow-up", "Enter your choice: ");
+        getline(cin, choice_str);
+        if(exit_check(&cin))
+            return;
+        if (is_number(choice_str, &choice_int))
+        {
+            if (choice_int >= 1 && choice_int <= 8)
+            {
+                while(1)
+                {
+                    menu(*patient, target_admin, "Medical Guides Checking", "The medical guide is as follows: ", "Would you like to change the content of the guide?\nPress y for yes and n for no: ", false, filename_list[choice_int]);
+                    getline(cin, choice_str);
+                    if (choice_str == "Y" || choice_str == "y")
+                    {
+                        cout << "Please open the current directory and enter the new content of the medical guide in the text file with the name: " << filename_list[choice_int];
+                        cout << "If you are done, please type 'ok': ";
+                        getline(cin, choice_str);
+                        return;
+                    }
+                    else
+                        return;
+                }   
+            }
+            else
+                error_message(2);
+        }
+        else
+            error_message(1);
+    }   
+}
 #endif

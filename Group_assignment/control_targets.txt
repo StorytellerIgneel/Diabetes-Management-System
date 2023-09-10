@@ -1,0 +1,26 @@
+Targets for Control
+
+Glycaemic control :			                                       mmol/L = VPG	
+Venous Plasma Glucose :                                     mmol/mol or % = HbA-1c
+•	4.4 mmol/L – 7.0 mmol/L (pre-prandial/fasting) 
+•	4.4 mmol/L – 8.5 mmol/L (post-prandial)
+
+HbA-1c :
+•	< 7.0 % (for most)
+•	≤ 6.5 % (for young, healthy, short duration of T2DM and no/minimal risk of hypoglycaemia)
+
+Lipids :
+•	Triglycerides = ≤ 1.7 mmol/L
+•	HDL-C 
+    o	Male = > 1.0 mmol/L
+    o	Female = > 1.2 mmol/L
+•	LDL-C = ≤ 2.6 mmol/L
+
+Blood pressure :
+•	130 – 139/70 – 79 mmHg (under normal circumstances)
+
+Lifestyle changes :
+•	150 mins/week of moderate-intensity exercise
+•	75 mins/week of high-intensity exercise
+•	Weight loss of ≥7%-10% of initial body weight within 6 months if BMI ≥ 25
+•	Proper diet with foods with low GI (glycaemic index) 
