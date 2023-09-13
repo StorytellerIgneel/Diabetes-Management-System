@@ -506,8 +506,6 @@ void    add_new_admin (admin target_admin, admin admin_list[])
     admin_count = 0;
     for (int i = 0; admin_list[i].admin_name != ""; i++)
         admin_count++;
-    cout << "Admin count: " << admin_count;
-    cin.get();
     while(1)
     {
         menu(user(), target_admin, "NEW ADMIN REGISTRATION", "You can add a new admin to the system here. Continue?\n", "Press Y for yes and N for no: ");
@@ -520,7 +518,7 @@ void    add_new_admin (admin target_admin, admin admin_list[])
             getline(cin, new_admin.admin_name);
             cout << "Enter the new admin password: ";
             getline(cin, new_admin.password);
-
+            admin_list[admin_count];
             success_message(19);
             return;
         }
