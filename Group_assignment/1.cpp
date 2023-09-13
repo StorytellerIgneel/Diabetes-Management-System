@@ -32,23 +32,29 @@ int main(void) //initial access control
         read_user_data(user_list, user_count);
         menu(user(), admin(), "LOGIN", "Welcome to Diabetes Management System!\nPlease choose to login or to register:\n1. User login\n2. Register\n3. Admin login", "Enter choice: ");
         getline(cin, choice_str);
+        choice_str = remove_trail(choice_str);
         if (!cin)
         {
             export_user_data(user_list, admin_list);
             exit(0);
         }
-        if(is_number(choice_str, &choice_int))
+        if (choice_str != "")
         {
-            if (choice_int == 1 || choice_int == 2)
-                option_list[choice_int](user_list, user_count, admin_list);  // Call the selected function
-            else if (choice_int == 3)
-                admin_login(user_list, admin_count, admin_list);
+            if(is_number(choice_str, &choice_int))
+            {
+                if (choice_int == 1 || choice_int == 2)
+                    option_list[choice_int](user_list, user_count, admin_list);  // Call the selected function
+                else if (choice_int == 3)
+                    admin_login(user_list, admin_count, admin_list);
+                else
+                    error_message(2);
+                export_user_data(user_list, admin_list);
+            }
             else
-                error_message(2);
-            export_user_data(user_list, admin_list);
+                error_message(1);
         }
         else
-            error_message(1);
+            error_message(17);
     }
     return 0;
 }

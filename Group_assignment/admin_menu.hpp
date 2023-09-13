@@ -7,37 +7,38 @@
 #include "validation.hpp"
 #include "user_menu.hpp"
 
-void    admin_menu                      (admin admin, user patient_list[]);
+void    admin_menu                      (admin target_admin, user patient_list[], admin admin_list[]);
 void    find_patient                    (user **patient, user patient_list[], admin target_admin);
 void    update_patient_condition        (user *patient, admin target_admin);
 void    ogtt_update                     (user *patient, admin target_admin);
+bool    find_hyper_hypo                 (user patient_list[], string *);
+void    check_hyper_hypo                (string hyper_hypo_list, admin target_admin);
 void    prescribe_medication_control    (user *patient, admin target_admin);
 void    prescribe_medication            (user *patient, admin target_admin);
 void    medication_guide                (admin target_admin);
 bool    get_medication                  (int *step, string prompt, string *medication, admin target_admin);
 void    set_diet_control                (user *patient, admin target_admin);
 void    check_medical_guides            (user *patient, admin target_admin);
+void    add_new_admin                   (admin target_admin, admin admin_list[]);
 //admin main menu
-void    admin_menu(admin target_admin, user patient_list[])
+void    admin_menu(admin target_admin, user patient_list[],  admin admin_list[])
 {
+    bool    hyper_hypo;
+    int     choice_int;
+    string  choice_str;
+    string  checked_hyper_hypo;
+    string  hyper_hypo_list;
+    user    *patient;
+    map < int, function < void(user*, admin) >> option_list;
+    option_list[1] = update_patient_condition;
+    option_list[3] = prescribe_medication_control;
+    option_list[5] = check_medical_guides;
+    //option_list[3] = target_for_control;
+    hyper_hypo = find_hyper_hypo(patient_list, &hyper_hypo_list);
+    find_patient(&patient, patient_list, target_admin);
     while(1)
     {
-        bool    hyper_hypo;
-        int     choice_int;
-        string  choice_str;
-        string  checked_hyper_hypo;
-        string  *hyper_hypo_list;
-        user    *patient;
-        map < int, function < void(user*, admin) >> option_list;
-        option_list[1] = update_patient_condition;
-        option_list[2] = 
-        option_list[3] = prescribe_medication_control;
-        option_list[5] = check_medical_guides;
-        //option_list[3] = target_for_control;
-        hyper_hypo = find_hyper_hypo(patient_list, &checked_hyper_hypo);
-        patient = nullptr;
-        find_patient(&patient, patient_list, target_admin);
-        menu(*patient, target_admin, "MAIN MENU", "Please choose one of the following functions to use: \n1. Update patient health condition.\n2. Check hyperglycaemia and hypoglycaemia patients\n3. Provide Medication\n4. Check patient profile\n5. Check medical guides", "Enter your choice: ");
+        menu(*patient, target_admin, "MAIN MENU", "Please choose one of the following functions to use: \n1. Update patient health condition.\n2. Check hyperglycaemia and hypoglycaemia patients\n3. Provide Medication\n4. Check patient profile\n5. Check medical guides\n6. Add a new admin", "Enter your choice: ");
         getline(cin, choice_str);
         if(exit_check(&cin))
         {
@@ -59,9 +60,16 @@ void    admin_menu(admin target_admin, user patient_list[])
         {
             if (choice_int == 2)
             {
-                
-                hyper_hypo = false;
+                if (hyper_hypo == true)
+                {
+                    check_hyper_hypo(hyper_hypo_list, target_admin);
+                    hyper_hypo = false;
+                }
+                else
+                    error_message(18);
             }
+            if (choice_int == 6)
+                add_new_admin(target_admin, admin_list);
             if (option_list.find(choice_int) != option_list.end())
                 option_list[choice_int](patient, target_admin);  // Call the selected function
             else
@@ -275,9 +283,16 @@ bool    find_hyper_hypo(user patient_list[], string *)
 
 void    check_hyper_hypo(string hyper_hypo_list, admin target_admin)
 {
-    menu(user(), target_admin, "HYPOGLYCAEMIA/HYPERGLYCAEMIA PATIENTS LIST ", "Choose one of the following to issue/prescriibe:\n1. Diet control\n2. Medications (OGLDs) \n3. Insulin", "Press y to continue and n to quit.");
-    if(exit_check(&cin))
-        return;
+    size_t firstNewlinePos;
+    size_t lastNewlinePos;
+
+    firstNewlinePos = hyper_hypo_list.find('\n');
+    lastNewlinePos = hyper_hypo_list.rfind('\n');
+    if (firstNewlinePos != std::string::npos && lastNewlinePos != std::string::npos)// Extract the content between the first and last newlines
+        hyper_hypo_list = hyper_hypo_list.substr(firstNewlinePos + 1, lastNewlinePos - firstNewlinePos - 1);
+    menu(user(), target_admin, "HYPOGLYCAEMIA/HYPERGLYCAEMIA PATIENTS LIST ", hyper_hypo_list, "Press Enter to continue.");
+    cin.get();
+    return;
 }
 //////HAVENT COMPLETE
 //prescribe_medication section
@@ -479,5 +494,41 @@ void    check_medical_guides(user* patient, admin target_admin)
         else
             error_message(1);
     }   
+}
+
+//add a new admin
+void    add_new_admin (admin target_admin, admin admin_list[])
+{
+    string  choice_str;
+    admin   new_admin;
+    int     admin_count;
+
+    admin_count = 0;
+    for (int i = 0; admin_list[i].admin_name != ""; i++)
+        admin_count++;
+    cout << "Admin count: " << admin_count;
+    cin.get();
+    while(1)
+    {
+        menu(user(), target_admin, "NEW ADMIN REGISTRATION", "You can add a new admin to the system here. Continue?\n", "Press Y for yes and N for no: ");
+        getline(cin, choice_str);
+        if(exit_check(&cin))
+            return;
+        if (choice_str == "Y" || choice_str == "y") 
+        {
+            cout << "Enter the new admin username: ";
+            getline(cin, new_admin.admin_name);
+            cout << "Enter the new admin password: ";
+            getline(cin, new_admin.password);
+
+            success_message(19);
+            return;
+        }
+        else if (choice_str == "N" || choice_str == "n")
+            return;
+        else
+            error_message(1);
+    }
+    return;
 }
 #endif

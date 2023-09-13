@@ -14,3 +14,5 @@ You have no medications prescribed by your doctor currently.
 Admin name not found. Please confirm again.
 Password for admin name incorrect. Please confirm again.
 Please check on the conditions of the hypoglycaemia and hyperglycaemia patients before quitting!
+Please enter something. You have entered nothing.
+There are no patients in risk of hyperglycaemia and hypoglycaemia right now.

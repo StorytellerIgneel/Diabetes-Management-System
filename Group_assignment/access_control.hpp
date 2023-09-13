@@ -206,7 +206,7 @@ void    admin_login(user user_list[], int admin_count ,admin  admin_list[])
             error_message(14);
         if(login_validated == true)
         {
-            admin_menu(admin_list[counter], user_list);
+            admin_menu(admin_list[counter], user_list, admin_list);
             break;
         }
     }

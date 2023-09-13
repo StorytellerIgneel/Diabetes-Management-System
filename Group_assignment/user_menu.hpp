@@ -9,9 +9,8 @@
 void    user_menu                   (user *patient);
 void    update_condition            (user *patient);
 void    update_diabetic_condition   (user *patient);
-void    vpg_test                    (user *patient, admin);
-void    hba1c_test                  (user *patient, admin);
-void    make_appointment            (user *patient);
+void    vpg_test                    (user *patient, admin target_admin);
+void    hba1c_test                  (user *patient, admin target_admin);
 void    update_account              (user *patient);
 void    target_for_control          (user *patient);
 void    receive_medication          (user *patient);
@@ -26,14 +25,13 @@ void    user_menu(user  *patient)
         int     choice_int;
         map < int, function < void(user*) >> option_list;
         option_list[1] = update_condition;
-        option_list[2] = make_appointment;
-        option_list[3] = update_account;
-        option_list[4] = target_for_control;
-        option_list[5] = receive_medication;
+        option_list[2] = update_account;
+        option_list[3] = target_for_control;
+        option_list[4] = receive_medication;
 
         if ((*patient).medical.medication_received == true)
             notification("You have received a medication prescription from your doctor. Please proceed to the section 'receive medication' to view the details.");
-        menu(*patient, admin(), "MAIN MENU", "Please choose one of the following functions to use: \n1. Update health condition.\n2. Make appointment\n3. Update account details\n4. Recommendations and suggestions on target for control (T2DM patient only)\n5. Receive medication (T2DM patient only)", "Enter your choice: ");
+        menu(*patient, admin(), "MAIN MENU", "Please choose one of the following functions to use: \n1. Update health condition\n2. Update account details\n3. Recommendations and suggestions on target for control (T2DM patient only)\n4. Receive medication (T2DM patient only)", "Enter your choice: ");
         getline(cin, choice_str);
         if(exit_check(&cin))
             return;
@@ -56,7 +54,7 @@ void    update_condition(user   *patient)
     int     choice_int;
     map < int, function < void(user *) >> option_list;
     option_list[1] = update_diabetic_condition;
-    option_list[2] = update_meal_record;
+    //option_list[2] = update_meal_record;
     
     while(1)
     {
@@ -346,8 +344,6 @@ bool    change_detail(user *patient, string detail, bool new_user)
         success_message(3);
     return CONTINUE;
 }
-
-///7/9
 
 void    update_account(user   *patient)
 {

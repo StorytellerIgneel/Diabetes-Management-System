@@ -16,3 +16,4 @@ You are diagnosed as a T2DM patient.\nPlease remain calm and seek medical advice
 Your blood glucose level is abnormally low!\nThis indicates that you are in risk of hypoglycaemia.\nPlease consume something high in sugar or any medications issued by a doctor\nIf any symptoms such as dizziness or a headache are showing, please consult a doctor immediately.
 Your blood glucose level is abnormally high!\nThis indicates that you are in risk of hyperglycaemia\nPlease ensure you are not skipping any insulin doses issued by the doctor\nIf any symptoms such as nausea and vomitting are occuring, please consult a doctor immediately.
 You are diagnosed as a pre-T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.
+New admin successfully added!

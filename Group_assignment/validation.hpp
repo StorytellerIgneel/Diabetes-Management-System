@@ -63,7 +63,6 @@ void    success_message(unsigned int success_code, string username = "")
     notification(success_message);
     cout << "\nPress enter to contine";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     in_file.close();
     return;
 }
@@ -86,7 +85,6 @@ void error_message(unsigned int error_code, string missing_file = "")
         error_message = missing_file + error_message;
     notification(error_message);
     cout << "\nPress enter to contine.";
-    cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     in_file.close();
     return;

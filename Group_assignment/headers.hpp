@@ -39,15 +39,17 @@ struct access_control
 struct medical_condition
 {
     bool    diabetic_patient = false;
+    string  current_state = "Normal";
     bool    hypoglycaemia = false;
     bool    hyperglycaemia = false;
-    string  current_state = "Normal";
     bool    diet = false;
     bool    insulin = false;
     double  vpg = 0;
-    string  vpg_time = "Null";
+    string  vpg_time = "No record";
     double  hba1c = 0;
+    string  hba1c_time = "No record";
     double  ogtt = 0;
+    string  ogtt_time = "No record";
     string  medication = "No prescription";
     string  medication_note = "No extra note";
     bool    medication_received = false; //equivalent to ogld
