@@ -6,12 +6,9 @@
 #include "template.hpp"
 #include "validation.hpp"
 
-void add_record(diet_record *breakfast, diet_record *lunch, diet_record *dinner);
-diet_record add_meal(diet_record meal, int count);
-void update_record(diet_record *breakfast, diet_record *lunch, diet_record *dinner);
-diet_record update_function(diet_record meal);
-void display_all(diet_record breakfast, diet_record lunch, diet_record dinner);
-void display_record(diet_record meal); 
+void    update_meal_record(user *patient);
+void add_record(user *patient);
+void add_meal(user *patient, string meal);
 
 void    update_meal_record(user *patient)
 {
@@ -42,7 +39,7 @@ void    update_meal_record(user *patient)
     }
 }
 
-void add_record(diet_record *breakfast, diet_record *lunch, diet_record *dinner)
+void add_record(user *patient)
 {
     string  choice_str;
     int     choice_int;
@@ -117,7 +114,7 @@ void add_meal(user *patient, string meal)
     return;
 }
 
-void display_record(diet_record meal)
+void display_record(user *patient)
 {
     if(meal.option)
         {

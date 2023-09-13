@@ -7,38 +7,61 @@
 #include "validation.hpp"
 #include "user_menu.hpp"
 
-void    admin_menu                      (admin admin, user user_list[]);
-void    find_patient                    (user **patient, user user_list[], admin target_admin);
+void    admin_menu                      (admin admin, user patient_list[]);
+void    find_patient                    (user **patient, user patient_list[], admin target_admin);
 void    update_patient_condition        (user *patient, admin target_admin);
 void    ogtt_update                     (user *patient, admin target_admin);
 void    prescribe_medication_control    (user *patient, admin target_admin);
 void    prescribe_medication            (user *patient, admin target_admin);
 void    medication_guide                (admin target_admin);
 bool    get_medication                  (int *step, string prompt, string *medication, admin target_admin);
-void    set_diet_control                (user   *patient, admin target_admin);
-void    check_medical_guides            (user* patient, admin target_admin);
+void    set_diet_control                (user *patient, admin target_admin);
+void    check_medical_guides            (user *patient, admin target_admin);
 //admin main menu
-void    admin_menu(admin target_admin, user user_list[])
+void    admin_menu(admin target_admin, user patient_list[])
 {
     while(1)
     {
+        bool    hyper_hypo;
         int     choice_int;
         string  choice_str;
+        string  checked_hyper_hypo;
+        string  *hyper_hypo_list;
         user    *patient;
         map < int, function < void(user*, admin) >> option_list;
         option_list[1] = update_patient_condition;
-        option_list[2] = prescribe_medication_control;
+        option_list[2] = 
+        option_list[3] = prescribe_medication_control;
         option_list[5] = check_medical_guides;
         //option_list[3] = target_for_control;
-
+        hyper_hypo = find_hyper_hypo(patient_list, &checked_hyper_hypo);
         patient = nullptr;
-        find_patient(&patient, user_list, target_admin);
-        menu(*patient, target_admin, "MAIN MENU", "Please choose one of the following functions to use: \n1. Update patient health condition.\n2. Check and approve appointment\n3. Provide Medication\n4. Check patient profile\n5. Check medical guides", "Enter your choice: ");
+        find_patient(&patient, patient_list, target_admin);
+        menu(*patient, target_admin, "MAIN MENU", "Please choose one of the following functions to use: \n1. Update patient health condition.\n2. Check hyperglycaemia and hypoglycaemia patients\n3. Provide Medication\n4. Check patient profile\n5. Check medical guides", "Enter your choice: ");
         getline(cin, choice_str);
         if(exit_check(&cin))
-            return;
+        {
+            while(1)
+            {
+                cout << "Have you checked the hyperglycaemia and hypoglycaemia patients out?\nPress y for yes and n for no.";
+                getline(cin, checked_hyper_hypo);
+                if(exit_check(&cin))
+                    return;
+                if (checked_hyper_hypo == "Y" || checked_hyper_hypo == "y")
+                    return;
+                else if (checked_hyper_hypo == "N" || checked_hyper_hypo == "n")
+                    error_message(16);
+                else
+                    error_message(2);
+            }
+        }
         if (is_number(choice_str, &choice_int))
         {
+            if (choice_int == 2)
+            {
+                
+                hyper_hypo = false;
+            }
             if (option_list.find(choice_int) != option_list.end())
                 option_list[choice_int](patient, target_admin);  // Call the selected function
             else
@@ -49,7 +72,7 @@ void    admin_menu(admin target_admin, user user_list[])
     }
 }
 
-void    find_patient(user **patient, user   user_list[], admin target_admin)
+void    find_patient(user **patient, user   patient_list[], admin target_admin)
 {
     int             i;
     user            dummy;
@@ -57,8 +80,8 @@ void    find_patient(user **patient, user   user_list[], admin target_admin)
     string          target_patient;
 
     content = "Which patient would you like to choose?\n\n";
-    for(int i = 0; user_list[i].details.name != ""; i++)
-        content = content + to_string(i+1) + ". " + user_list[i].details.name + "\n";
+    for(int i = 0; patient_list[i].details.name != ""; i++)
+        content = content + to_string(i+1) + ". " + patient_list[i].details.name + "\n";
     while(1)
     {
         menu(user(), target_admin, "Patient selection", content, "Enter the patient name you wish to view: ");
@@ -67,12 +90,12 @@ void    find_patient(user **patient, user   user_list[], admin target_admin)
             return;
         else
         {
-            for(int i = 0; user_list[i].details.name != ""; i++)
+            for(int i = 0; patient_list[i].details.name != ""; i++)
             {
-                if(target_patient == user_list[i].details.name)
+                if(target_patient == patient_list[i].details.name)
                 {
                     success_message(10);
-                    *patient = &user_list[i];
+                    *patient = &patient_list[i];
                     return;
                 }
             }
@@ -112,7 +135,6 @@ void    update_patient_condition(user *patient, admin target_admin)
     return;
 }
 
-//8/9
 void    ogtt_update(user* patient, admin target_admin)
 {
     string  mode_str;
@@ -213,6 +235,50 @@ void    ogtt_update(user* patient, admin target_admin)
     }
 }
 
+//hyper/hypo section
+bool    find_hyper_hypo(user patient_list[], string *)
+{
+    bool    hyper;
+    bool    hypo;
+    string  for_noti;
+
+    hyper = false;
+    hypo = false;
+    for_noti = "Attention!!\nThe following patients are in risk of hypoglycaemia:\n";
+    for(int i = 0; patient_list[i].details.name != ""; i++)
+    {
+        if(patient_list[i].medical.hypoglycaemia == true)
+        {
+            for_noti = for_noti + "\n" + to_string(i) + ". " + patient_list[i].details.name;
+            hypo = true;
+        }
+    }
+    for(int i = 0; patient_list[i].details.name != ""; i++)
+    {
+        if(patient_list[i].medical.hyperglycaemia == true)
+        {
+            if(hyper == false)
+                for_noti += "\n\nThe following patients are in risk of hyperglycaemia:\n";
+            for_noti = for_noti + "\n" + to_string(i) + ". " + patient_list[i].details.name;
+            hyper = true;
+        }
+    }
+    for_noti += "Please check on their conditions as soon as possible.";
+    if (hyper == true || hypo == true)
+    {
+        notification(for_noti);
+        return true;
+    }
+    else
+        return false;
+}
+
+void    check_hyper_hypo(string hyper_hypo_list, admin target_admin)
+{
+    menu(user(), target_admin, "HYPOGLYCAEMIA/HYPERGLYCAEMIA PATIENTS LIST ", "Choose one of the following to issue/prescriibe:\n1. Diet control\n2. Medications (OGLDs) \n3. Insulin", "Press y to continue and n to quit.");
+    if(exit_check(&cin))
+        return;
+}
 //////HAVENT COMPLETE
 //prescribe_medication section
 void    prescribe_medication_control(user   *patient, admin target_admin) //control access to the actual function

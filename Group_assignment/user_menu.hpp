@@ -146,7 +146,6 @@ void    vpg_test(user *patient, admin target_admin)
                             else
                                 success_message(5);
                             patient->medical.vpg = vpg_double;
-                            patient->medical.diabetic_patient = false;
                             return;
                         }
                         else if (vpg_double >= 7.00)
@@ -181,18 +180,38 @@ void    vpg_test(user *patient, admin target_admin)
                     {
                         if (vpg_double < 11.1)
                         {
-                            if(is_user)
-                                cout << "Congradulations! You are not diagnosed as a T2DM patient.";
-                            else
-                                success_message(5);
-                            patient->medical.vpg = vpg_double;
-                            patient->medical.diabetic_patient = false;
-                            return;
+                            if (vpg_double < 3.9) // hypoglycaemia
+                            {
+                                if(is_user)
+                                    success_message(16);
+                                else
+                                    success_message(13);
+                                patient->medical.vpg = vpg_double;
+                                patient->medical.hypoglycaemia = true;
+                            }
+                            else if (vpg_double >= 10 && vpg_double <= 11.1) // hyperglycaemia
+                            {
+                                if(is_user)
+                                    success_message(17);
+                                else
+                                    success_message(14);
+                                patient->medical.vpg = vpg_double;
+                                patient->medical.hyperglycaemia = true;
+                            }
+                            else // normal
+                            {
+                                if(is_user)
+                                    success_message(11);
+                                else
+                                    success_message(5);
+                                patient->medical.vpg = vpg_double;
+                                return;
+                            }
                         }
                         else if (vpg_double >= 11.1)
                         {
                             if(is_user)
-                                cout << "You are diagnosed as a T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.";
+                                success_message(15);
                             else
                                 success_message(5);
                             patient->medical.vpg = vpg_double;
@@ -231,30 +250,38 @@ void    hba1c_test(user *patient, admin target_admin)
         else
             menu(*patient, target_admin, "HbA1c TEST", "Welcome to update for pre-diabetes and T2DM patient HbA1c value. \nYou are required to enter the patient's HbA1c value in unit percentage.\n", "Please enter the patient's HbA1c value: ");
         getline(cin, hba1c_str);
-            if(exit_check(&cin))
-                return; 
+        if(exit_check(&cin))
+            return; 
         if(is_double(hba1c_str, &hba1c_double))
         {
             if (hba1c_double < 5.7 && hba1c_double > 0)
             {
-                cout << "Congradulations! You are not diagnosed as a T2DM patient.";
-                patient->medical.hba1c = hba1c_double;
-                patient->medical.diabetic_patient = false;
-                break;
+                if (hba1c_double < 4.1) //hypoglycaemia
+                {
+                    success_message(16);
+                    patient->medical.hba1c = hba1c_double;
+                    patient->medical.hypoglycaemia = true;
+                }
+                else // normal
+                {
+                    success_message(11);
+                    patient->medical.hba1c = hba1c_double;
+                    return;
+                }
             }
             else if (hba1c_double >= 5.7 && hba1c_double < 6.3)
             {
-                cout << "You are diagnosed as a pre-T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.";
+                success_message(18);
                 patient->medical.hba1c = hba1c_double;
                 patient->medical.diabetic_patient = true;
-                break;
+                return;
             }
             else if (hba1c_double >= 6.3)
             {
-                cout << "You are diagnosed as a T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.";
+                success_message(18);
                 patient->medical.hba1c = hba1c_double;
                 patient->medical.diabetic_patient = true;
-                break;
+                return;
             }
             else
                 error_message(2);
@@ -262,13 +289,6 @@ void    hba1c_test(user *patient, admin target_admin)
         else
             error_message(1);
     }
-}
-
-//make appointment section
-void    make_appointment(user   *patient)
-{
-    cout << (patient->access.username);
-    return;
 }
 
 //update account section

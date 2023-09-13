@@ -89,6 +89,12 @@ void    read_user_data(user user_list[], int size)
         //diabetic patient
         getline(in_file_medical, bool_getter);
         user_list[counter].medical.diabetic_patient = stob(bool_getter);
+        //hyperglycaemia
+        getline(in_file_medical, bool_getter);
+        user_list[counter].medical.hyperglycaemia = stob(bool_getter);
+        //hypoglycaemia
+        getline(in_file_medical, bool_getter);
+        user_list[counter].medical.hypoglycaemia = stob(bool_getter);
         //current state
         getline(in_file_medical, user_list[counter].medical.current_state);
         //diet
@@ -147,6 +153,8 @@ void    export_user_data(user user_list[], admin admin_list[])
         out_file_access << user_list[counter].access.password;
         //medication section
         out_file_medical << ((user_list[counter].medical.diabetic_patient == true)? "true\n" : "false\n");
+        out_file_medical << ((user_list[counter].medical.hyperglycaemia == true)? "true\n" : "false\n");
+        out_file_medical << ((user_list[counter].medical.hypoglycaemia == true)? "true\n" : "false\n");
         out_file_medical << user_list[counter].medical.current_state << endl;
         out_file_medical << ((user_list[counter].medical.diet == true)? "true\n" : "false\n");
         out_file_medical << ((user_list[counter].medical.insulin == true)? "true\n" : "false\n");

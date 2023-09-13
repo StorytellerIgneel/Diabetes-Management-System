@@ -13,3 +13,4 @@ The patient you chose does not exist. Please confirm that you have entered the c
 You have no medications prescribed by your doctor currently.
 Admin name not found. Please confirm again.
 Password for admin name incorrect. Please confirm again.
+Please check on the conditions of the hypoglycaemia and hyperglycaemia patients before quitting!

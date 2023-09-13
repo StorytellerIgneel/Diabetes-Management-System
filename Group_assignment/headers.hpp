@@ -39,10 +39,13 @@ struct access_control
 struct medical_condition
 {
     bool    diabetic_patient = false;
+    bool    hypoglycaemia = false;
+    bool    hyperglycaemia = false;
     string  current_state = "Normal";
     bool    diet = false;
     bool    insulin = false;
     double  vpg = 0;
+    string  vpg_time = "Null";
     double  hba1c = 0;
     double  ogtt = 0;
     string  medication = "No prescription";
