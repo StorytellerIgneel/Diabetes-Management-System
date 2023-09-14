@@ -5,7 +5,7 @@
 #include "headers.hpp"
 #include "validation.hpp"
 
-bool  stob(string target);
+bool    stob(string target);
 void    read_admin_data(admin admin_list[], int admin_count);
 int     get_user_num(string access_type);
 void    read_user_data(user user_list[], int size);
@@ -91,6 +91,9 @@ void    read_user_data(user user_list[], int size)
         user_list[counter].medical.diabetic_patient = stob(bool_getter);
         //current state
         getline(in_file_medical, user_list[counter].medical.current_state);
+        //fasting
+        getline(in_file_medical, bool_getter);
+        user_list[counter].medical.fasting = stob(bool_getter);
         //hypoglycaemia
         getline(in_file_medical, bool_getter);
         user_list[counter].medical.hypoglycaemia = stob(bool_getter);
@@ -106,12 +109,18 @@ void    read_user_data(user user_list[], int size)
         //vpg
         getline(in_file_medical, double_getter);
         user_list[counter].medical.vpg = stod(double_getter);
+        //vpg_time
+        getline(in_file_medical, user_list[counter].medical.vpg_time);
         //hba1c
         getline(in_file_medical, double_getter);
         user_list[counter].medical.hba1c = stod(double_getter);
+        //hba1c_time
+        getline(in_file_medical, user_list[counter].medical.hba1c_time);
         //ogtt
         getline(in_file_medical, double_getter);
         user_list[counter].medical.ogtt = stod(double_getter);
+        //ogtt_time
+        getline(in_file_medical, user_list[counter].medical.ogtt_time);
         //medication
         getline(in_file_medical, user_list[counter].medical.medication);
         //medication note
@@ -154,16 +163,17 @@ void    export_user_data(user user_list[], admin admin_list[])
         //medication section
         out_file_medical << ((user_list[counter].medical.diabetic_patient == true)? "true\n" : "false\n");
         out_file_medical << user_list[counter].medical.current_state << endl;
+        out_file_medical << ((user_list[counter].medical.fasting == true)? "true\n" : "false\n");
         out_file_medical << ((user_list[counter].medical.hypoglycaemia == true)? "true\n" : "false\n");
         out_file_medical << ((user_list[counter].medical.hyperglycaemia == true)? "true\n" : "false\n");
         out_file_medical << ((user_list[counter].medical.diet == true)? "true\n" : "false\n");
         out_file_medical << ((user_list[counter].medical.insulin == true)? "true\n" : "false\n");
         out_file_medical << user_list[counter].medical.vpg << endl;
-        //vpg_time
+        out_file_medical << user_list[counter].medical.vpg_time << endl;
         out_file_medical << user_list[counter].medical.hba1c << endl;
-        //hba1c_time
+        out_file_medical << user_list[counter].medical.hba1c_time << endl;
         out_file_medical << user_list[counter].medical.ogtt << endl;
-        //ogtt_time
+        out_file_medical << user_list[counter].medical.ogtt_time << endl;
         out_file_medical << user_list[counter].medical.medication << endl;
         out_file_medical << user_list[counter].medical.medication_note;
         counter++;

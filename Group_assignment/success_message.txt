@@ -12,8 +12,10 @@ Congradulations! You are not diagnosed as a T2DM patient.
 Your meal record has been added into the system successfully.
 Patient Venous Plasma Glucose value successfully updated.\nHowever, the patient is in risk of hypoglycaemia.\nPlease do pay extra attention and carry out necessary safety precautions.
 Patient Venous Plasma Glucose value successfully updated.\nHowever, the patient is in risk of hyperglycaemia.\nPlease do pay extra attention and carry out necessary safety precautions.
-You are diagnosed as a T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.
+You are in risk of Type 2 Diabetes Mellitus as your blood glucose level is abnormally high.\nPlease seek medical advices from our medical personnels as soon as possible.
 Your blood glucose level is abnormally low!\nThis indicates that you are in risk of hypoglycaemia.\nPlease consume something high in sugar or any medications issued by a doctor\nIf any symptoms such as dizziness or a headache are showing, please consult a doctor immediately.
 Your blood glucose level is abnormally high!\nThis indicates that you are in risk of hyperglycaemia\nPlease ensure you are not skipping any insulin doses issued by the doctor\nIf any symptoms such as nausea and vomitting are occuring, please consult a doctor immediately.
-You are diagnosed as a pre-T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.
+You are in risk of Pre-Type 2 Diabetes Mellitus as your blood glucose level is mildly.\nPlease seek medical advices from our medical personnels.
 New admin successfully added!
+Insulin has been cancelled successfully for the patient.
+Insulin has been issued successfully for the patient.

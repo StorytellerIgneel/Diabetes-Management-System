@@ -179,4 +179,76 @@ void add_meal(user *patient, string meal) //breakfast
     }
     return;
 }
+//cacat
+void display_meal(user *patient)
+{   
+    string choice_str;
+    string meal_choice;
+    string to_menu;
+    string meal_title;
+
+    while(1)
+    {
+        menu(*patient, admin(), "MEAL RECORDS", "You are about to view your meal record", "Press \"y\" to continue or \"n\" to cancel : ");
+        getline(cin, choice_str);
+        if(exit_check(&cin))
+            return;
+        if((choice_str == "y" || choice_str == "Y"))
+        {
+            menu(*patient, admin(), "MEAL RECORDS", "1. Breakfast\n2. Lunch\n3. Dinner", "Please choose your meal : ");
+            getline(cin, meal_choice);
+            if (meal_choice == "1")
+            {   
+                if (patient->breakfast.option = true)
+                {   
+                    to_menu = "The following is your breakfast record: "
+                            "\nCarbohydrates : " + patient->breakfast.carbohydrate +
+                            "\nProtein       : " + patient->breakfast.protein +
+                            "\nVegetables    : " + patient->breakfast.vegetable +
+                            "\nFruits        : " + patient->breakfast.fruit +
+                            "\nFats          : " + patient->breakfast.fats;
+                }
+                else
+                    to_menu = "No record";
+                menu(*patient, admin(), "MEAL RECORDS", to_menu, "Press enter to continue");
+            }
+            else if (meal_choice == "2")
+            {
+                meal_title = "Lunch Record";
+                if (patient->lunch.option = true)
+                {
+                    to_menu = "Carbohydrates : " + patient->lunch.carbohydrate +
+                            "\nProtein       : " + patient->lunch.protein +
+                            "\nVegetables    : " + patient->lunch.vegetable +
+                            "\nFruits        : " + patient->lunch.fruit +
+                            "\nFats          : " + patient->lunch.fats;
+                }
+                else
+                    to_menu = "No record";
+                menu(*patient, admin(), meal_title, to_menu, "Press enter to continue");
+            }
+            else if (meal_choice == "3")
+            {
+                meal_title = "Dinner Record";
+                if (patient->dinner.option = true)
+                {
+                    to_menu = "Carbohydrates : " + patient->dinner.carbohydrate +
+                        "\nProtein       : " + patient->dinner.protein +
+                        "\nVegetables    : " + patient->dinner.vegetable +
+                        "\nFruits        : " + patient->dinner.fruit +
+                        "\nFats          : " + patient->dinner.fats;
+                }
+                else
+                    to_menu = "No record";
+                //menu(*patient, admin(), meal_title, to_menu, "Press enter to continue");
+            }
+            else
+                error_message(1);
+        }
+        else if (choice_str == "n" || choice_str == "N")
+            return;
+        else
+            error_message(1); 
+    }
+}
 #endif

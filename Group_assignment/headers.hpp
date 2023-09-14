@@ -40,6 +40,7 @@ struct medical_condition
 {
     bool    diabetic_patient = false;
     string  current_state = "Normal";
+    bool    fasting = false;
     bool    hypoglycaemia = false;
     bool    hyperglycaemia = false;
     bool    diet = false;

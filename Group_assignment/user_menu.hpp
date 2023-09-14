@@ -46,7 +46,6 @@ void    user_menu(user  *patient)
             error_message(1);
     }
 }
-
 //update condition section
 void    update_condition(user   *patient)
 {
@@ -86,7 +85,7 @@ void    update_diabetic_condition(user   *patient)
     //ogtt not here as it is limited to the admin (doctor)
     while(1)
     {
-        menu(*patient, admin(), "UPDATE DIABETIC CONDITION", "Please choose which diagnostic value would you like to use to determine your diabetic condition: \n1. Venous plasma glucose\n2. HbA1c\n3. OGTT", "Please enter your choice (Press Ctrl + Z to quit): ");
+        menu(*patient, admin(), "UPDATE DIABETIC CONDITION", "Please choose which diabetes diagnostic value would you like to update: \n1. Venous plasma glucose\n2. HbA1c", "Please enter your choice (Press Ctrl + Z to quit): ");
         getline(cin, choice_str);            
         if(exit_check(&cin))
             return;
@@ -104,7 +103,8 @@ void    update_diabetic_condition(user   *patient)
 
 void    vpg_test(user *patient, admin target_admin)
 {
-    string  choice_str;;
+    time_t  current_time;
+    string  choice_str;
     string  vpg_str;
     int     choice_int;
     double  vpg_double;
@@ -143,15 +143,19 @@ void    vpg_test(user *patient, admin target_admin)
                                 success_message(11);
                             else
                                 success_message(5);
+                            current_time = time(nullptr);
+                            patient->medical.vpg_time = ctime(&current_time);
                             patient->medical.vpg = vpg_double;
                             return;
                         }
                         else if (vpg_double >= 7.00)
                         {
                             if (is_user)
-                                cout << "You are diagnosed as a T2DM patient.\nPlease remain calm and seek medical advices from our medical personnels.";
+                                success_message(15);
                             else
                                 success_message(5);
+                            current_time = time(nullptr);
+                            patient->medical.vpg_time = ctime(&current_time);
                             patient->medical.vpg = vpg_double;
                             patient->medical.diabetic_patient = true;
                             return;
@@ -184,6 +188,8 @@ void    vpg_test(user *patient, admin target_admin)
                                     success_message(16);
                                 else
                                     success_message(13);
+                                current_time = time(nullptr);
+                                patient->medical.vpg_time = ctime(&current_time);
                                 patient->medical.vpg = vpg_double;
                                 patient->medical.hypoglycaemia = true;
                             }
@@ -193,6 +199,8 @@ void    vpg_test(user *patient, admin target_admin)
                                     success_message(17);
                                 else
                                     success_message(14);
+                                current_time = time(nullptr);
+                                patient->medical.vpg_time = ctime(&current_time);
                                 patient->medical.vpg = vpg_double;
                                 patient->medical.hyperglycaemia = true;
                             }
@@ -202,6 +210,8 @@ void    vpg_test(user *patient, admin target_admin)
                                     success_message(11);
                                 else
                                     success_message(5);
+                                current_time = time(nullptr);
+                                patient->medical.vpg_time = ctime(&current_time);
                                 patient->medical.vpg = vpg_double;
                                 return;
                             }
@@ -212,6 +222,8 @@ void    vpg_test(user *patient, admin target_admin)
                                 success_message(15);
                             else
                                 success_message(5);
+                            current_time = time(nullptr);
+                            patient->medical.vpg_time = ctime(&current_time);
                             patient->medical.vpg = vpg_double;
                             patient->medical.diabetic_patient = true;
                             return;
@@ -232,6 +244,7 @@ void    vpg_test(user *patient, admin target_admin)
 
 void    hba1c_test(user *patient, admin target_admin)
 {
+    time_t  current_time;
     string  mode_str;
     string  hba1c_str;
     int     mode_int;
@@ -257,12 +270,16 @@ void    hba1c_test(user *patient, admin target_admin)
                 if (hba1c_double < 4.1) //hypoglycaemia
                 {
                     success_message(16);
+                    current_time = time(nullptr);
+                    patient->medical.hba1c_time = ctime(&current_time);
                     patient->medical.hba1c = hba1c_double;
                     patient->medical.hypoglycaemia = true;
                 }
                 else // normal
                 {
                     success_message(11);
+                    current_time = time(nullptr);
+                    patient->medical.hba1c_time = ctime(&current_time);
                     patient->medical.hba1c = hba1c_double;
                     return;
                 }
@@ -270,6 +287,8 @@ void    hba1c_test(user *patient, admin target_admin)
             else if (hba1c_double >= 5.7 && hba1c_double < 6.3)
             {
                 success_message(18);
+                current_time = time(nullptr);
+                patient->medical.hba1c_time = ctime(&current_time);
                 patient->medical.hba1c = hba1c_double;
                 patient->medical.diabetic_patient = true;
                 return;
@@ -277,6 +296,8 @@ void    hba1c_test(user *patient, admin target_admin)
             else if (hba1c_double >= 6.3)
             {
                 success_message(18);
+                current_time = time(nullptr);
+                patient->medical.hba1c_time = ctime(&current_time);
                 patient->medical.hba1c = hba1c_double;
                 patient->medical.diabetic_patient = true;
                 return;
@@ -288,7 +309,6 @@ void    hba1c_test(user *patient, admin target_admin)
             error_message(1);
     }
 }
-
 //update account section
 bool    change_detail(user *patient, string detail, bool new_user)
 {
@@ -369,7 +389,6 @@ void    update_account(user   *patient)
     }
     return;
 }
-
 //target for control section
 void    target_for_control(user *patient)
 {
@@ -408,7 +427,6 @@ void    target_for_control(user *patient)
     }
     return;
 }
-
 //receive medication section
 void    receive_medication (user *patient)
 {
@@ -448,7 +466,6 @@ void    receive_medication (user *patient)
     }
     return;
 }
-
 //incomplete
 void    reminder(user patient)
 {
@@ -466,17 +483,9 @@ void    reminder(user patient)
     if (current_hour >= 5 && current_hour < 12) //morning (breakfast)
     {
         if (patient.medical.diet == true || patient.medical.medication != "No precription" || patient.medical.insulin == true)
-        {
-            if (patient.medical.diet == true)
-                reason += "\nDiet treatment";
-            if (patient.medical.medication != "No precription")
-                reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
-            if (patient.medical.insulin == true)
-                reason += "\nInsulin treatment";
-            notification("Good Morning. You are required to do a Self Monitoring Blood Glucose (SMBG) test both BEFORE and AFTER your breakfast and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.");
-        }
+            notification("Good Morning. You are required to do a Self Monitoring Blood Glucose (SMBG) test both BEFORE and AFTER your breakfast and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.\n");
     }
-    else if (current_hour >= 12 && current_hour < 18) //afternnoon (lunch)
+    else if (current_hour >= 12 && current_hour < 18) //afternoon (lunch)
     {
         if (patient.medical.diet == true || patient.medical.medication != "No precription")
         {
@@ -484,14 +493,31 @@ void    reminder(user patient)
                 reason += "\nDiet treatment";
             if (patient.medical.medication != "No precription")
                 reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
-            if (patient.medical.insulin == true)
-                reason += "\nInsulin treatment";
-            notification("Good Morning. You are required to do the Self Monitoring Blood Glucose (SMBG) and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.");
+            notification("Good Afternoon. You are required to do the Self Monitoring Blood Glucose (SMBG) AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.");
         }
-        //else if (patient.medical.insulin == true)
+        else if (patient.medical.insulin == true)
+        {
+            reason += "\nInsulin treatment";
+            notification("Good Afternoon. You are required to do the Self Monitoring Blood Glucose (SMBG) both BEFORE and AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.");
+        }
     }
-    else {
-        std::cout << "Good night!" << std::endl;
+    else if (current_hour >= 18 && current_hour < 24) //evening (lunch)
+    {
+        if (patient.medical.diet == true || patient.medical.medication != "No precription")
+        {
+            if (patient.medical.diet == true)
+                reason += "\nDiet treatment";
+            if (patient.medical.medication != "No precription")
+                reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
+            notification("Good Evening. You are required to do the Self Monitoring Blood Glucose (SMBG) AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.");
+        }
+        else if (patient.medical.insulin == true)
+        {
+            reason += "\nInsulin treatment";
+            notification("Good Evening. You are required to do the Self Monitoring Blood Glucose (SMBG) both BEFORE and AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.");
+        }
     }
+    else
+        return;
 }
 #endif

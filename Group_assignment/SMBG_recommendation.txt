@@ -1,0 +1,7 @@
+Recommendation for SMBG (self monitoring of blood glucose)
+
+Mode of treatment	Breakfast	Lunch	    Dinner
+	                Pre	Post	Pre	Post	Pre	Post
+Diet only	        √	√	    -	√	    -	√
+OGLDs	            √	√	    -	√	    -	√
+Insulin	            √	√	    √	√	    √	√

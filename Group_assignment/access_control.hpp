@@ -51,11 +51,8 @@ void    registration(user user_list[], int user_count)
                 return;
         }    
     }
-        
-    //validation for exit    
     while(1)
     {
-        system("cls"); //remember to cchange for windows
         for_menu =  "Thank you for registering your details.\nPlease check if your details are as follows: \nName\t\t: " + new_user.details.name + "\nAge\t\t: " + new_user.details.age + "\nPhone number\t: " + new_user.details.phone_number + "\nHome Address\t: " + new_user.details.home_address;
         menu(new_user, admin(), "REGISTRATION", for_menu, "Do you wish to proceed with these details? Press y for yes and n for no: ");
         getline(cin, choice);
@@ -133,7 +130,7 @@ void    user_login(user  user_list[], int user_count, admin admin_list[])
         {
             while(1)
             {
-                cout << "Enter your password\t: ";
+                cout << "Enter your password\t\t: ";
                 getline(cin, password);
                 if(exit_check(&cin))
                     return;
@@ -188,7 +185,7 @@ void    admin_login(user user_list[], int admin_count ,admin  admin_list[])
         {
             while(1)
             {
-                cout << "Enter your password\t: ";
+                cout << "Enter your password\t\t: ";
                 getline(cin, password);
                 if(exit_check(&cin))
                     return;

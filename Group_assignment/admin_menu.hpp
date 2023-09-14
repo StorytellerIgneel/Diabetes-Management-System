@@ -33,14 +33,17 @@ void    admin_menu(admin target_admin, user patient_list[],  admin admin_list[])
     option_list[1] = update_patient_condition;
     option_list[3] = prescribe_medication_control;
     option_list[5] = check_medical_guides;
-    //option_list[3] = target_for_control;
+    
+    patient = nullptr;
     hyper_hypo = find_hyper_hypo(patient_list, &hyper_hypo_list);
     find_patient(&patient, patient_list, target_admin);
+    if (patient == nullptr) // chosen to quit in find_patient
+        return;
     while(1)
     {
         menu(*patient, target_admin, "MAIN MENU", "Please choose one of the following functions to use: \n1. Update patient health condition.\n2. Check hyperglycaemia and hypoglycaemia patients\n3. Provide Medication\n4. Check patient profile\n5. Check medical guides\n6. Add a new admin", "Enter your choice: ");
         getline(cin, choice_str);
-        if(exit_check(&cin))
+        if(exit_check(&cin) && hyper_hypo == true)
         {
             while(1)
             {
@@ -51,7 +54,10 @@ void    admin_menu(admin target_admin, user patient_list[],  admin admin_list[])
                 if (checked_hyper_hypo == "Y" || checked_hyper_hypo == "y")
                     return;
                 else if (checked_hyper_hypo == "N" || checked_hyper_hypo == "n")
+                {
                     error_message(16);
+                    break;
+                }
                 else
                     error_message(2);
             }
@@ -68,9 +74,9 @@ void    admin_menu(admin target_admin, user patient_list[],  admin admin_list[])
                 else
                     error_message(18);
             }
-            if (choice_int == 6)
+            else if (choice_int == 6)
                 add_new_admin(target_admin, admin_list);
-            if (option_list.find(choice_int) != option_list.end())
+            else if (option_list.find(choice_int) != option_list.end())
                 option_list[choice_int](patient, target_admin);  // Call the selected function
             else
                 error_message(2);
@@ -145,11 +151,11 @@ void    update_patient_condition(user *patient, admin target_admin)
 
 void    ogtt_update(user* patient, admin target_admin)
 {
+    time_t  current_time;
     string  mode_str;
     string  ogtt_str;
     int     mode_int;
     double  ogtt_double;
-
 
     while(1)
     {
@@ -170,6 +176,8 @@ void    ogtt_update(user* patient, admin target_admin)
                         if (ogtt_double < 6.1 && ogtt_double > 0)
                         {
                             success_message(7);
+                            current_time = time(nullptr);
+                            patient->medical.ogtt_time = ctime(&current_time);
                             patient->medical.ogtt = ogtt_double;
                             patient->medical.diabetic_patient = false;
                             return;
@@ -178,6 +186,8 @@ void    ogtt_update(user* patient, admin target_admin)
                         {
                             success_message(7);
                             patient->medical.current_state = "IMPAIRED GLUCOSE (IFG)";
+                            current_time = time(nullptr);
+                            patient->medical.ogtt_time = ctime(&current_time);
                             patient->medical.ogtt = ogtt_double;
                             patient->medical.diabetic_patient = true;
                             return;
@@ -186,6 +196,8 @@ void    ogtt_update(user* patient, admin target_admin)
                         {
                             success_message(7);
                             patient->medical.current_state = "DIABETES MELLITUS (DM)";
+                            current_time = time(nullptr);
+                            patient->medical.ogtt_time = ctime(&current_time);
                             patient->medical.ogtt = ogtt_double;
                             patient->medical.diabetic_patient = true;
                             return;
@@ -210,6 +222,8 @@ void    ogtt_update(user* patient, admin target_admin)
                         if (ogtt_double < 7.8 && ogtt_double > 0)
                         {
                             success_message(7);
+                            current_time = time(nullptr);
+                            patient->medical.ogtt_time = ctime(&current_time);
                             patient->medical.ogtt = ogtt_double;
                             patient->medical.diabetic_patient = false;
                             return;
@@ -218,6 +232,8 @@ void    ogtt_update(user* patient, admin target_admin)
                         {
                             success_message(7);
                             patient->medical.current_state = "IMPAIRED GLUCOSE TOLERANCE (IGT)";
+                            current_time = time(nullptr);
+                            patient->medical.ogtt_time = ctime(&current_time);
                             patient->medical.ogtt = ogtt_double;
                             patient->medical.diabetic_patient = true;
                             return;
@@ -226,6 +242,8 @@ void    ogtt_update(user* patient, admin target_admin)
                         {
                             success_message(7);
                             patient->medical.current_state = "DIABETES MELLITUS (DM)";
+                            current_time = time(nullptr);
+                            patient->medical.ogtt_time = ctime(&current_time);
                             patient->medical.ogtt = ogtt_double;
                             patient->medical.diabetic_patient = true;
                             return;
@@ -431,7 +449,7 @@ bool    get_medication(int *step, string prompt, string *medication, admin targe
     return 0;
 }
 
-void set_diet_control(user   *patient, admin target_admin)
+void    set_diet_control(user   *patient, admin target_admin)
 {
     string  choice;
     while(1)
@@ -456,6 +474,55 @@ void set_diet_control(user   *patient, admin target_admin)
     }
 }
 
+void    insulin_issue(user *patient, admin target_admin)
+{
+    string choice;
+    string cancel_choice;
+
+    while(1)
+    {
+        if (patient->medical.insulin == true)
+        {
+            menu(*patient, target_admin, "INSULIN ISSUING", "Patient is already issued with insulin.\nDo you wish to cancel the insulin issued?", "Press y to continue or n to return: ");
+            cin >> cancel_choice;
+            if (!cin || cancel_choice == "n" || cancel_choice == "N")
+            {
+                cin.clear();
+                return;
+            }
+            else if (cancel_choice == "y" || choice == "Y")
+            {
+                patient->medical.insulin == false;
+                success_message(20);
+                return;
+            }
+            else if (cin.fail())
+                error_message(1);
+            else
+                error_message(2);
+        } 
+        else
+        {   
+            menu(*patient, target_admin, "INSULIN ISSUING", "You are about to issue insulin for the patient, continue?", "Press y to continue or n to return: ");
+            cin >> choice;
+            if(!cin || choice == "n" || choice == "N")
+            {
+                cin.clear();
+                return;
+            }
+            else if (choice == "y" || choice == "Y")
+            {
+                patient->medical.insulin = true;
+                success_message(21);
+                return;
+            }
+            else if (cin.fail())
+                error_message(1);
+            else
+                error_message(2);
+        }    
+    }
+}
 //check medical guide
 void    check_medical_guides(user* patient, admin target_admin)
 {
@@ -484,8 +551,10 @@ void    check_medical_guides(user* patient, admin target_admin)
                         getline(cin, choice_str);
                         return;
                     }
-                    else
+                    else if (choice_str == "N" || choice_str == "n")
                         return;
+                    else
+                        error_message(2);
                 }   
             }
             else
@@ -495,7 +564,6 @@ void    check_medical_guides(user* patient, admin target_admin)
             error_message(1);
     }   
 }
-
 //add a new admin
 void    add_new_admin (admin target_admin, admin admin_list[])
 {
@@ -518,7 +586,7 @@ void    add_new_admin (admin target_admin, admin admin_list[])
             getline(cin, new_admin.admin_name);
             cout << "Enter the new admin password: ";
             getline(cin, new_admin.password);
-            admin_list[admin_count];
+            admin_list[admin_count] = new_admin;
             success_message(19);
             return;
         }

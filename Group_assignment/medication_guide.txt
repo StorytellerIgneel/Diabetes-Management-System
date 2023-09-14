@@ -1,199 +1,200 @@
-Glucose Lowering Agents	
-Biguanides
-1.	Metformin : 
+Glucose Lowering Agents             
+                                        OD	Once a day
+BiguanidesBD	                        BD Twice a day
+1.	Metformin :                         OM	Once every morning
 •	Formulation: 500/1000 mg 
-o	Minimum dose
+    o	Minimum dose
     Initial dose: 500 mg OD 
-o	Maximum dose
+    o	Maximum dose
     Usual dose: 1000 mg BD *Exception: 1000 mg TDS (follow doctor prescription)
 
 2.	Metformin Sustained Release : (takes longer time to dissolve)
 •	Formulation: 850 mg
-o	Minimum dose
+    o	Minimum dose
     Usual dose: 850 mg BD 
-o	Maximum dose
+    o	Maximum dose
     850 mg TDS
 
 3.	Metformin Extended Release : (take much longer time to dissolve)
 •	Formulation: 500/750/1000 mg
-o	Minimum dose
+    o	Minimum dose
     Initial dose: 500 mg OD
     Usual dose: 2000 mg OD
-o	Maximum dose
+    o	Maximum dose
     2000 mg OD
 
 Sulphonylureas
 1.	Glibenclamide :
 •	Formulation: 5 mg 
-o	Minimum dose
+    o	Minimum dose
     2.5	mg OD 
-o	Maximum dose
+    o	Maximum dose
     10 mg BD
 
 2.	Gliclazide :
 •	Formulation: 80 mg 
-o	Minimum dose
+    o	Minimum dose
     40 mg OM 
-o	Maximum dose
+    o	Maximum dose
     160 mg BD
 
-3.	Gliclazide Modified Release : (idk how long is this)
+3.	Gliclazide Modified Release :
 •	Formulation: 60/30 mg 
-o	Minimum dose
+    o	Minimum dose
     30 mg OM 
-o	Maximum dose
+    o	Maximum dose
     120 mg OM
 
 4.	Glipizide :
 •	Formulation: 5 mg 
-o	Minimum dose
+    o	Minimum dose
     2.5 mg OM
-o	Maximum dose 
+    o	Maximum dose 
     10 mg BD
 
 5.	Glimepiride :
 •	Formulation: 2/3 mg 
-o	Minimum dose
+    o	Minimum dose
     1 mg OM
-o	Maximum dose
+    o	Maximum dose
     6 mg OM
 
 Meglitinides
 1.	Repaglinide :
 •	Formulation: 0.5/1/2 mg 
-o	Minimum dose
+    o	Minimum dose
     0.5 mg with main meal
-o	Maximum dose
+    o	Maximum dose
     4 mg with main meals (not exceeding 16 mg daily)
 
 α-glucosidase inhibitor
 1.	Acarbose :
 •	Formulation: 50/100 mg 
-o	Minimum dose
+    o	Minimum dose
     Initial dose: 50 mg OD 
     Usual dose: 50-100 mg (take at 1st bite of main meals)
-o	Maximum dose
+    o	Maximum dose
     100 mg TDS
 
 Thiazolidinedione
 1.	Rosiglitazone :
 •	Formulation: 4/8 mg 
-o	Minimum dose
+    o	Minimum dose
     4 mg OD 
-o	Maximum dose
+    o	Maximum dose
     8 mg OD
 
 2.	Pioglitazone :
 •	Formulation: 15/30 mg 
-o	Minimum dose
+    o	Minimum dose
     15 mg OD 
-o	Maximum dose
+    o	Maximum dose
     45 mg OD
 
 DPP4-inhibitors
 1.	Sitagliptin :
 •	Formulation: 25/50/100 mg 
-o	Minimum dose
+    o	Minimum dose
     25 mg OD 
-o	Maximum dose
+    o	Maximum dose
     100 mg OD
 
 2.	Vildagliptin :
 •	Formulation: 50 mg 
-o	Minimum dose
+    o	Minimum dose
     50 mg OD 
-o	Maximum dose
+    o	Maximum dose
     50 mg BD
 
 3.	Saxagliptin :
 •	Formulation: 2.5/5 mg 
-o	Minimum dose
+    o	Minimum dose
     2.5 mg OD 
-o	Maximum dose
+    o	Maximum dose
     5 mg OD
 
 4.	Linagliptin :
 •	Formulation: 5 mg 
-o	Minimum dose
+    o	Minimum dose
     5 mg OD 
-o	Maximum dose
+    o	Maximum dose
     5 mg OD
 
 SGLT2-inhibitors
 1.	Dapagliflozin :
 •	Formulation: 5/10 mg 
-o	Minimum dose
+    o	Minimum dose
     5 mg OD 
-o	Maximum dose
+    o	Maximum dose
     10 mg OD
 
 2.	Canagliflozin :
 •	Formulation: 100/300 mg 
-o	Minimum dose
+    o	Minimum dose
     100 mg OD
-o	Maximum dose
+    o	Maximum dose
     300 mg OD
 
 3.	Empagliflozin :
 •	Formulation: 10/25 mg 
-o	Minimum dose
+    o	Minimum dose
     10 mg OD 
-o	Maximum dose
+    o	Maximum dose
     25 mg OD
 
 4.	Luseogliflozin :
 •	Formulation: 2.5/5 mg 
-o	Minimum dose
+    o	Minimum dose
     2.5 mg OD 
-o	Maximum dose
+    o	Maximum dose
     5 mg OD
 
 5.	Ertugliflozin :
 •	Formulation: 5/15 mg 
-o	Minimum dose
+    o	Minimum dose
     5 mg OD
-o	Maximum dose 
+    o	Maximum dose 
     15 mg OD
 
 GLP1-RA
 1.	Exenatide Immediate Release :
 •	Formulation: 5 μg/20 μL; 10 μg/40 μL 
-o	Minimum dose
+    o	Minimum dose
     5 μg BD 
-o	Maximum dose
+    o	Maximum dose
     10 μg BD
 
 2.	Exenatide Extended Release :
 •	Formulation: 2 mg 
-o	Minimum dose
+    o	Minimum dose
     2 mg weekly
-o	Maximum dose 
+    o	Maximum dose 
     2 mg weekly
 
 3.	Dulaglutide :
 •	Formulation: 0.75 mg/1.5 mg 
-o	Minimum dose
+    o	Minimum dose
     0.75 mg weekly
-o	Maximum dose
+    o	Maximum dose
     1.5 mg weekly
 
 4.	Liraglutide :
 •	Formulation: 6 mg/mL 
-o	Minimum dose
+    o	Minimum dose
     0.6 mg OD 
-o	Maximum dose
+    o	Maximum dose
     1.8 mg OD
 
 5.	Lixisenatide :
 •	Formulation: 50 μg/mL; 100 μg/mL 
-o	Minimum dose
+    o	Minimum dose
     10 μg OD
-o	Maximum dose
+    o	Maximum dose
     20 μg OD
 
 6.	Semaglutide :
 •	Formulation: 0.25/0.5 mg 
-o	Minimum dose
+    o	Minimum dose
     0.25 weekly
-o	Maximum dose 
+    o	Maximum dose 
     1.0 mg weekly

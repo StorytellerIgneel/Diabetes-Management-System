@@ -1,0 +1,66 @@
+Treatment algorithm for newly diagnosed T2DM
+
+HbA1c <6.5% AND FPG <6.0 mmol/L
+•	Consider metformin monotherapy (only one form of medication)
+•	if post prandial is > 11.0 mmol/L and/or metformin not tolerated, use:
+    o	Meglitinide
+    o	AGI (α-glucosidase inhibitor)
+    o	DPP4-i (DPP4-inhibitors)
+
+HbA1c 6.5-7.4% OR FPG 6.0-7.9 mmol/L
+•	Mono or dual therapy with
+    o	Metformin OR
+    o	SU (Sulphonylureas)
+    o	DPP4-i
+    o	SGLT2-i (SGLT2-inhibitors)
+
+HbA1c 7.5-8.4% OR FPG 8.0-9.9 mmol/L
+•	Dual combination therapy with any combination of:
+    o	Metformin 
+    o	SU 
+    o	Meglitinide 
+    o	AGI 
+    o	TZD (Thiazolidinedione)
+    o	DPP4-i 
+    o	GLP1-RA 
+    o	SGLT2-i 
+    o	Insulin
+
+HbA1c 8.5-10.0% OR FPG 10.0-13.0 mmol/L
+•	Triple combination therapy with any combination of:
+    o	Metformin 
+    o	SU 
+    o	Meglitinide 
+    o	AGI 
+    o	TZD 
+    o	DPP4-i 
+    o	GLP1-RA
+    o	SGLT2-i 
+    o	Insulin
+
+HbA1c >10.0% OR FPG >13.0 mmol/L
+•	Basal/premixed insulin therapy + Combination therapy
+            or
+•	Intensive insulin therapy + OGLD
+
+Treatment recommendations: Clinic follow-up
+When HbA1c above individualised target with lifestyle modification + existing therapy
+0.5%-1% above target :
+•	Add 1 additional GLD from different class 
+•	OR Intensification of insulin (if already on insulin)
+
+1%-2% above target :
+•	Consider 2 GLDs from different classes 
+•	OR Intensification of insulin (if already on insulin)
+
+>2% above target :
+•	Initiation of insulin/GLP1-RA 
+•	OR Intensification of insulin
+
+Hypoglycaemia
+•   impaired fasting glucose of 3.9 millimoles per liter (mmol/L), or below should serve as an alert for hypoglycemia
+•   happens when blood glucose level is abnormally low
+
+Hyperglcaemia
+•   impaired fasting glucose of 10 - 11.1 millimoles per liter (mmol/L) will show symptoms of hyperglycaemia
+•   happens when blood glucose level is high for a prolonged time

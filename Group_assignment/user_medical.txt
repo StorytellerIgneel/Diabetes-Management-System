@@ -4,9 +4,13 @@ false
 false
 false
 false
+false
 5
+No record
 0
+No record
 0
+No record
 No prescription
 No extra note
 false
@@ -15,9 +19,13 @@ false
 false
 false
 false
+false
 0
+No record
 0
+No record
 0
+No record
 No prescription
 No extra note
 false
@@ -26,8 +34,12 @@ false
 false
 false
 false
+false
 0
+No record
 0
+No record
 0
+No record
 No prescription
 No extra note
