@@ -21,6 +21,8 @@
 #define FALSE 0
 #define EXIT true
 #define CONTINUE false
+#define TERMINAL_WIDTH 100
+#define LINE string(TERMINAL_WIDTH, '-') + '\n'
 
 using namespace std; //not a good practice but judging that this assignment doesnt involve the use of other libraries that will cause clashes, namespace std is used.
 struct user_details

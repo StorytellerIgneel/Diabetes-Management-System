@@ -5,7 +5,7 @@ Your medication file is successfully generated in the system with your name as t
 Patient Venous Plasma Glucose value successfully updated!
 Patient HbA1c value successfully updated!
 Patient Oral Glucose Tolerance Test value successfully updated!
-Diet control has been issued successfully!
+Diet control has been issued successfully for the patient.
 Medication prescribed successfully!
 Patient selected successfully!
 Congradulations! You are not diagnosed as a T2DM patient.
@@ -19,3 +19,4 @@ You are in risk of Pre-Type 2 Diabetes Mellitus as your blood glucose level is m
 New admin successfully added!
 Insulin has been cancelled successfully for the patient.
 Insulin has been issued successfully for the patient.
+Diet control has been cancelled successfully for the patient.

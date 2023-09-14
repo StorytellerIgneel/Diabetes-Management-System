@@ -119,6 +119,67 @@ void    find_patient(user **patient, user   patient_list[], admin target_admin)
     return;
 }
 
+void    reminder(user patient)
+{
+    auto    now = chrono::system_clock::now();
+    int     current_hour;
+    time_t  current_time;
+    tm*     time_info;
+    string  reason;
+
+    current_time = chrono::system_clock::to_time_t(now);
+    time_info    = localtime(&current_time);
+    current_hour = time_info->tm_hour;
+    reason = "This is because u are under: ";
+
+    if (current_hour >= 5 && current_hour < 12) //morning (breakfast)
+    {
+        if (patient.medical.diet == true || patient.medical.medication != "No prescription" || patient.medical.insulin == true)
+        {
+            if (patient.medical.diet == true)
+                reason += "\nDiet treatment";
+            if (patient.medical.medication != "No prescription")
+                reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
+            if (patient.medical.insulin == true)
+                reason += "\nInsulin treatment";
+            notification("Good Morning. You are required to do a Self Monitoring Blood Glucose (SMBG) test both BEFORE and AFTER your breakfast and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.\n" + reason);
+        }  
+    }
+    else if (current_hour >= 12 && current_hour < 18) //afternoon (lunch)
+    {
+        if (patient.medical.diet == true || patient.medical.medication != "No prescription")
+        {
+            if (patient.medical.diet == true)
+                reason += "\nDiet treatment";
+            if (patient.medical.medication != "No prescription")
+                reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
+            notification("Good Afternoon. You are required to do the Self Monitoring Blood Glucose (SMBG) AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.\n" + reason);
+        }
+        else if (patient.medical.insulin == true)
+        {
+            reason += "\nInsulin treatment";
+            notification("Good Afternoon. You are required to do the Self Monitoring Blood Glucose (SMBG) both BEFORE and AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.\n" + reason);
+        }
+    }
+    else if (current_hour >= 18 && current_hour < 24) //evening (lunch)
+    {
+        if (patient.medical.diet == true || patient.medical.medication != "No prescription")
+        {
+            if (patient.medical.diet == true)
+                reason += "\nDiet treatment";
+            if (patient.medical.medication != "No prescription")
+                reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
+            notification("Good Evening. You are required to do the Self Monitoring Blood Glucose (SMBG) AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so." + reason);
+        }
+        else if (patient.medical.insulin == true)
+        {
+            reason += "\nInsulin treatment";
+            notification("Good Evening. You are required to do the Self Monitoring Blood Glucose (SMBG) both BEFORE and AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so." + reason);
+        }
+    }
+    else
+        return;
+}
 //update_patient_condition section
 void    update_patient_condition(user *patient, admin target_admin)
 {
@@ -449,39 +510,62 @@ bool    get_medication(int *step, string prompt, string *medication, admin targe
     return 0;
 }
 
-void    set_diet_control(user   *patient, admin target_admin)
-{
-    string  choice;
-    while(1)
-    {
-        menu(*patient, target_admin, "Issue Diet Control", "You are about to issue a diet for the patient, continue?", "Press \"y\" to continue or \"n\" to cancel : ");
-        getline(cin, choice);
-        if(!cin || choice == "n" || choice == "N")
-        {
-            cin.clear();
-            return;
-        }
-        else if (choice == "y" || choice == "Y")
-        {
-            patient->medical.diet = true;
-            success_message(8);
-            return;
-        }
-        else if (cin.fail())
-            error_message(1);
-        else
-            error_message(2);
-    }
-}
-
-void    insulin_issue(user *patient, admin target_admin)
+//incomplete
+void    set_diet_control(user *patient, admin target_admin) //issue diet
 {
     string choice;
     string cancel_choice;
 
     while(1)
     {
-        if (patient->medical.insulin == true)
+        if (patient->medical.insulin == true) //cancel insulin
+        {
+            menu(*patient, target_admin, "ISSUE DIET CONTROL", "Patient is already issued with a diet.\nDo you wish to cancel the diet issued?", "Press y to continue or n to return: ");
+            getline(cin, cancel_choice);
+            if (!cin || cancel_choice == "n" || cancel_choice == "N")
+            {
+                cin.clear();
+                return;
+            }
+            else if (cancel_choice == "y" || choice == "Y")
+            {
+                patient->medical.diet == false;
+                success_message(22);
+                return;
+            }
+            else
+                error_message(2);
+        } 
+        else
+        {   
+            menu(*patient, target_admin, "ISSUE DIET CONTROL", "You are about to issue a diet for the patient, continue?", "Press y to continue or n to return: ");
+            getline(cin, choice);
+            if(!cin || choice == "n" || choice == "N")
+            {
+                cin.clear();
+                return;
+            }
+            else if (choice == "y" || choice == "Y")
+            {
+                patient->medical.diet = true;
+                success_message(8);
+                return;
+            }
+            else
+                error_message(2);
+        }    
+    }
+    return;
+}
+
+void    insulin_issue(user *patient, admin target_admin) //issue insulin
+{
+    string choice;
+    string cancel_choice;
+
+    while(1)
+    {
+        if (patient->medical.insulin == true) //cancel insulin
         {
             menu(*patient, target_admin, "INSULIN ISSUING", "Patient is already issued with insulin.\nDo you wish to cancel the insulin issued?", "Press y to continue or n to return: ");
             cin >> cancel_choice;
@@ -496,8 +580,6 @@ void    insulin_issue(user *patient, admin target_admin)
                 success_message(20);
                 return;
             }
-            else if (cin.fail())
-                error_message(1);
             else
                 error_message(2);
         } 
@@ -516,8 +598,6 @@ void    insulin_issue(user *patient, admin target_admin)
                 success_message(21);
                 return;
             }
-            else if (cin.fail())
-                error_message(1);
             else
                 error_message(2);
         }    
