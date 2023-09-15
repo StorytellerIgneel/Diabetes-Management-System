@@ -17,6 +17,19 @@ string  banner(string to_print)
 
 void    notification(string notification)
 {   
+    string  modified_notification;
+    int     newline_count;
+    int     newline_pos;
+    size_t  index;
+
+    index = 0;
+    newline_count = count(notification.begin(), notification.end(), '\n');
+    for (int i = 0; i < newline_count; i++)
+    {
+        newline_pos = notification.find('\n', index);
+        modified_notification += notification.substr(index, newline_pos - 1) + "\n";
+        index = newline_pos;
+    }
     system("cls");
     cout << LINE << endl
          << banner("Notification")

@@ -7,6 +7,7 @@
 #include "user_menu_diet.hpp"
 
 void    user_menu                   (user *patient);
+string  get_time                    ();
 void    update_condition            (user *patient);
 void    update_diabetic_condition   (user *patient);
 void    vpg_test                    (user *patient, admin target_admin);
@@ -45,6 +46,17 @@ void    user_menu(user  *patient)
         else
             error_message(1);
     }
+}
+
+string    get_time()
+{
+    time_t  current_time;
+    string  current_time_str;
+
+    current_time = time(nullptr);
+    current_time_str = ctime(&current_time);
+    current_time_str.pop_back();
+    return current_time_str;
 }
 //update condition section
 void    update_condition(user   *patient)
@@ -103,7 +115,6 @@ void    update_diabetic_condition(user   *patient)
 
 void    vpg_test(user *patient, admin target_admin)
 {
-    time_t  current_time;
     string  choice_str;
     string  vpg_str;
     int     choice_int;
@@ -124,7 +135,7 @@ void    vpg_test(user *patient, admin target_admin)
             return;
         if(is_number(choice_str, &choice_int))
         {
-            if (choice_int == 1)
+            if (choice_int == 1) // fasting
             {
                 while(1)
                 {
@@ -139,26 +150,55 @@ void    vpg_test(user *patient, admin target_admin)
                     {
                         if (vpg_double < 7.00 && vpg_double > 0)
                         {
-                            if(is_user)
-                                success_message(11);
+                            if (vpg_double < 3.9) // hypoglycaemia
+                            {
+                                if(is_user)
+                                    success_message(16);
+                                else
+                                    success_message(13);
+                                patient->medical.vpg_time = get_time();
+                                patient->medical.vpg = vpg_double;
+                                patient->medical.hypoglycaemia = true;
+                                patient->medical.vpg_fasting = true;
+                            }
                             else
-                                success_message(5);
-                            current_time = time(nullptr);
-                            patient->medical.vpg_time = ctime(&current_time);
-                            patient->medical.vpg = vpg_double;
-                            return;
+                            {
+                                if(is_user)
+                                    success_message(11);
+                                else
+                                    success_message(5);
+                                patient->medical.vpg_time = get_time();
+                                patient->medical.vpg = vpg_double;
+                                patient->medical.vpg_fasting = true;
+                                return; 
+                            }
+                            
                         }
                         else if (vpg_double >= 7.00)
                         {
-                            if (is_user)
-                                success_message(15);
+                            if (vpg_double >= 10 && vpg_double <= 11.1) // hyperglycaemia
+                            {
+                                if(is_user)
+                                    success_message(17);
+                                else
+                                    success_message(14);
+                                patient->medical.vpg_time = get_time();
+                                patient->medical.vpg = vpg_double;
+                                patient->medical.hyperglycaemia = true;
+                                patient->medical.vpg_fasting = true;
+                            }
                             else
-                                success_message(5);
-                            current_time = time(nullptr);
-                            patient->medical.vpg_time = ctime(&current_time);
-                            patient->medical.vpg = vpg_double;
-                            patient->medical.diabetic_patient = true;
-                            return;
+                            {
+                                if (is_user)
+                                    success_message(15);
+                                else
+                                    success_message(5);
+                                patient->medical.vpg_time = get_time();
+                                patient->medical.vpg = vpg_double;
+                                patient->medical.diabetic_patient = true;
+                                patient->medical.vpg_fasting = true;
+                                return;
+                            }
                         }
                         else
                             error_message(1);
@@ -167,7 +207,7 @@ void    vpg_test(user *patient, admin target_admin)
                         error_message(1);
                 }  
             }
-            else if (choice_int == 2)
+            else if (choice_int == 2) //random
             {
                 while(1)
                 {
@@ -180,52 +220,27 @@ void    vpg_test(user *patient, admin target_admin)
                         break;
                     if(is_double(vpg_str, &vpg_double))
                     {
-                        if (vpg_double < 11.1)
+                        if (vpg_double < 11.1 && vpg_double > 0)
                         {
-                            if (vpg_double < 3.9) // hypoglycaemia
-                            {
-                                if(is_user)
-                                    success_message(16);
-                                else
-                                    success_message(13);
-                                current_time = time(nullptr);
-                                patient->medical.vpg_time = ctime(&current_time);
-                                patient->medical.vpg = vpg_double;
-                                patient->medical.hypoglycaemia = true;
-                            }
-                            else if (vpg_double >= 10 && vpg_double <= 11.1) // hyperglycaemia
-                            {
-                                if(is_user)
-                                    success_message(17);
-                                else
-                                    success_message(14);
-                                current_time = time(nullptr);
-                                patient->medical.vpg_time = ctime(&current_time);
-                                patient->medical.vpg = vpg_double;
-                                patient->medical.hyperglycaemia = true;
-                            }
-                            else // normal
-                            {
-                                if(is_user)
-                                    success_message(11);
-                                else
-                                    success_message(5);
-                                current_time = time(nullptr);
-                                patient->medical.vpg_time = ctime(&current_time);
-                                patient->medical.vpg = vpg_double;
-                                return;
-                            }
+                            if(is_user)
+                                success_message(11);
+                            else
+                                success_message(5);
+                            patient->medical.vpg_time = get_time();
+                            patient->medical.vpg = vpg_double;
+                            patient->medical.vpg_fasting = false;
+                            return;
                         }
-                        else if (vpg_double >= 11.1)
+                        else if (vpg_double >= 11.1) // add max here
                         {
                             if(is_user)
                                 success_message(15);
                             else
                                 success_message(5);
-                            current_time = time(nullptr);
-                            patient->medical.vpg_time = ctime(&current_time);
+                            patient->medical.vpg_time = get_time();
                             patient->medical.vpg = vpg_double;
                             patient->medical.diabetic_patient = true;
+                            patient->medical.vpg_fasting = false;
                             return;
                         }
                         else
@@ -244,7 +259,6 @@ void    vpg_test(user *patient, admin target_admin)
 
 void    hba1c_test(user *patient, admin target_admin)
 {
-    time_t  current_time;
     string  mode_str;
     string  hba1c_str;
     int     mode_int;
@@ -269,35 +283,52 @@ void    hba1c_test(user *patient, admin target_admin)
             {
                 if (hba1c_double < 4.1) //hypoglycaemia
                 {
-                    success_message(16);
-                    current_time = time(nullptr);
-                    patient->medical.hba1c_time = ctime(&current_time);
-                    patient->medical.hba1c = hba1c_double;
+                    if (is_user)
+                        success_message(16);
+                    else
+                        success_message(24);
                     patient->medical.hypoglycaemia = true;
                 }
                 else // normal
                 {
-                    success_message(11);
-                    current_time = time(nullptr);
-                    patient->medical.hba1c_time = ctime(&current_time);
-                    patient->medical.hba1c = hba1c_double;
-                    return;
+                    if (is_user)
+                        success_message(11);
+                    else
+                        success_message(6);
                 }
+                patient->medical.hba1c_time = get_time();               
+                patient->medical.hba1c = hba1c_double;
+                return;
             }
             else if (hba1c_double >= 5.7 && hba1c_double < 6.3)
             {
-                success_message(18);
-                current_time = time(nullptr);
-                patient->medical.hba1c_time = ctime(&current_time);
+                if (is_user)
+                    success_message(18);
+                else
+                    success_message(6);
+                patient->medical.hba1c_time = get_time();
                 patient->medical.hba1c = hba1c_double;
                 patient->medical.diabetic_patient = true;
                 return;
             }
-            else if (hba1c_double >= 6.3)
+            else if (hba1c_double >= 6.3) // add max
             {
-                success_message(18);
-                current_time = time(nullptr);
-                patient->medical.hba1c_time = ctime(&current_time);
+                if (hba1c_double >= 7.9)// hyper
+                {
+                    if (is_user)
+                        success_message(23);
+                    else
+                        success_message(25);
+                    patient->medical.hyperglycaemia = true;
+                }
+                else // no hyper
+                {
+                    if(is_user)
+                        success_message(15);
+                    else
+                        success_message(6);
+                }
+                patient->medical.hba1c_time = get_time();
                 patient->medical.hba1c = hba1c_double;
                 patient->medical.diabetic_patient = true;
                 return;

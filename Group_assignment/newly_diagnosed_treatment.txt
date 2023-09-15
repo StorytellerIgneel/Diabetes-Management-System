@@ -42,25 +42,3 @@ HbA1c >10.0% OR FPG >13.0 mmol/L
 •	Basal/premixed insulin therapy + Combination therapy
             or
 •	Intensive insulin therapy + OGLD
-
-Treatment recommendations: Clinic follow-up
-When HbA1c above individualised target with lifestyle modification + existing therapy
-0.5%-1% above target :
-•	Add 1 additional GLD from different class 
-•	OR Intensification of insulin (if already on insulin)
-
-1%-2% above target :
-•	Consider 2 GLDs from different classes 
-•	OR Intensification of insulin (if already on insulin)
-
->2% above target :
-•	Initiation of insulin/GLP1-RA 
-•	OR Intensification of insulin
-
-Hypoglycaemia
-•   impaired fasting glucose of 3.9 millimoles per liter (mmol/L), or below should serve as an alert for hypoglycemia
-•   happens when blood glucose level is abnormally low
-
-Hyperglcaemia
-•   impaired fasting glucose of 10 - 11.1 millimoles per liter (mmol/L) will show symptoms of hyperglycaemia
-•   happens when blood glucose level is high for a prolonged time

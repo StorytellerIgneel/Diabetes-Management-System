@@ -50,9 +50,12 @@ void    admin_menu(admin target_admin, user patient_list[],  admin admin_list[])
                 cout << "Have you checked the hyperglycaemia and hypoglycaemia patients out?\nPress y for yes and n for no.";
                 getline(cin, checked_hyper_hypo);
                 if(exit_check(&cin))
-                    return;
+                    break;
                 if (checked_hyper_hypo == "Y" || checked_hyper_hypo == "y")
+                {
                     return;
+                }
+                    
                 else if (checked_hyper_hypo == "N" || checked_hyper_hypo == "n")
                 {
                     error_message(16);
@@ -118,68 +121,6 @@ void    find_patient(user **patient, user   patient_list[], admin target_admin)
     }
     return;
 }
-
-void    reminder(user patient)
-{
-    auto    now = chrono::system_clock::now();
-    int     current_hour;
-    time_t  current_time;
-    tm*     time_info;
-    string  reason;
-
-    current_time = chrono::system_clock::to_time_t(now);
-    time_info    = localtime(&current_time);
-    current_hour = time_info->tm_hour;
-    reason = "This is because u are under: ";
-
-    if (current_hour >= 5 && current_hour < 12) //morning (breakfast)
-    {
-        if (patient.medical.diet == true || patient.medical.medication != "No prescription" || patient.medical.insulin == true)
-        {
-            if (patient.medical.diet == true)
-                reason += "\nDiet treatment";
-            if (patient.medical.medication != "No prescription")
-                reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
-            if (patient.medical.insulin == true)
-                reason += "\nInsulin treatment";
-            notification("Good Morning. You are required to do a Self Monitoring Blood Glucose (SMBG) test both BEFORE and AFTER your breakfast and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.\n" + reason);
-        }  
-    }
-    else if (current_hour >= 12 && current_hour < 18) //afternoon (lunch)
-    {
-        if (patient.medical.diet == true || patient.medical.medication != "No prescription")
-        {
-            if (patient.medical.diet == true)
-                reason += "\nDiet treatment";
-            if (patient.medical.medication != "No prescription")
-                reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
-            notification("Good Afternoon. You are required to do the Self Monitoring Blood Glucose (SMBG) AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.\n" + reason);
-        }
-        else if (patient.medical.insulin == true)
-        {
-            reason += "\nInsulin treatment";
-            notification("Good Afternoon. You are required to do the Self Monitoring Blood Glucose (SMBG) both BEFORE and AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.\n" + reason);
-        }
-    }
-    else if (current_hour >= 18 && current_hour < 24) //evening (lunch)
-    {
-        if (patient.medical.diet == true || patient.medical.medication != "No prescription")
-        {
-            if (patient.medical.diet == true)
-                reason += "\nDiet treatment";
-            if (patient.medical.medication != "No prescription")
-                reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
-            notification("Good Evening. You are required to do the Self Monitoring Blood Glucose (SMBG) AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so." + reason);
-        }
-        else if (patient.medical.insulin == true)
-        {
-            reason += "\nInsulin treatment";
-            notification("Good Evening. You are required to do the Self Monitoring Blood Glucose (SMBG) both BEFORE and AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so." + reason);
-        }
-    }
-    else
-        return;
-}
 //update_patient_condition section
 void    update_patient_condition(user *patient, admin target_admin)
 {
@@ -212,7 +153,6 @@ void    update_patient_condition(user *patient, admin target_admin)
 
 void    ogtt_update(user* patient, admin target_admin)
 {
-    time_t  current_time;
     string  mode_str;
     string  ogtt_str;
     int     mode_int;
@@ -237,18 +177,15 @@ void    ogtt_update(user* patient, admin target_admin)
                         if (ogtt_double < 6.1 && ogtt_double > 0)
                         {
                             success_message(7);
-                            current_time = time(nullptr);
-                            patient->medical.ogtt_time = ctime(&current_time);
+                            patient->medical.ogtt_time = get_time();
                             patient->medical.ogtt = ogtt_double;
-                            patient->medical.diabetic_patient = false;
                             return;
                         }
                         else if (ogtt_double >= 6.1 && ogtt_double <= 6.9 || ogtt_double >= 7.0)
                         {
                             success_message(7);
                             patient->medical.current_state = "IMPAIRED GLUCOSE (IFG)";
-                            current_time = time(nullptr);
-                            patient->medical.ogtt_time = ctime(&current_time);
+                            patient->medical.ogtt_time = get_time();
                             patient->medical.ogtt = ogtt_double;
                             patient->medical.diabetic_patient = true;
                             return;
@@ -257,8 +194,7 @@ void    ogtt_update(user* patient, admin target_admin)
                         {
                             success_message(7);
                             patient->medical.current_state = "DIABETES MELLITUS (DM)";
-                            current_time = time(nullptr);
-                            patient->medical.ogtt_time = ctime(&current_time);
+                            patient->medical.ogtt_time = get_time();
                             patient->medical.ogtt = ogtt_double;
                             patient->medical.diabetic_patient = true;
                             return;
@@ -283,8 +219,7 @@ void    ogtt_update(user* patient, admin target_admin)
                         if (ogtt_double < 7.8 && ogtt_double > 0)
                         {
                             success_message(7);
-                            current_time = time(nullptr);
-                            patient->medical.ogtt_time = ctime(&current_time);
+                            patient->medical.ogtt_time = get_time();
                             patient->medical.ogtt = ogtt_double;
                             patient->medical.diabetic_patient = false;
                             return;
@@ -293,8 +228,7 @@ void    ogtt_update(user* patient, admin target_admin)
                         {
                             success_message(7);
                             patient->medical.current_state = "IMPAIRED GLUCOSE TOLERANCE (IGT)";
-                            current_time = time(nullptr);
-                            patient->medical.ogtt_time = ctime(&current_time);
+                            patient->medical.ogtt_time = get_time();
                             patient->medical.ogtt = ogtt_double;
                             patient->medical.diabetic_patient = true;
                             return;
@@ -303,8 +237,7 @@ void    ogtt_update(user* patient, admin target_admin)
                         {
                             success_message(7);
                             patient->medical.current_state = "DIABETES MELLITUS (DM)";
-                            current_time = time(nullptr);
-                            patient->medical.ogtt_time = ctime(&current_time);
+                            patient->medical.ogtt_time = get_time();
                             patient->medical.ogtt = ogtt_double;
                             patient->medical.diabetic_patient = true;
                             return;

@@ -1,6 +1,6 @@
 Kirigaya Kazuto
 15
-0
+0143242668
 Tokyo
 Yuki Asuna
 16
@@ -8,5 +8,9 @@ Yuki Asuna
 Kyoto
 Suguha
 14
+0
+Shiguya
+Shi non
+15
 0
 Shiguya

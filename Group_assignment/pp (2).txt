@@ -1,0 +1,338 @@
+Diagnostic value for T2DM
+venous plasma glucose :
+•	> 7.0 mmol/L while fasting.
+•	> 11.1 mmol/L without any lifestyle modification
+HbA-1c :
+•	Normal = <5.7 %	 (<39 mmol/mol)
+•	Pre-DM = 5.7 % - <6.3 % (39-44 mmol/mol)
+•	DM 	= ≥6.3 % 	 (≥45 mmol/mol)
+
+Management of T2DM
+At diagnosis of T2DM the following should be performed: 
+› detailed history and physical examination, focusing on key issues which will affect treatment decision 
+› baseline investigations to assess ASCVD* risk factors and complications of T2DM
+Management is based on the results of the above. 
+Management involves lifestyle modification, medications and patient education encouraging self-care and empowerment.
+    * atherosclerotic cardiovascular disease
+
+Targets for Control
+Glycaemic control :			                                       mmol/L = VPG	
+Venous Plasma Glucose :                                     mmol/mol or % = HbA-1c
+•	4.4 mmol/L – 7.0 mmol/L (pre-prandial/fasting) 
+•	4.4 mmol/L – 8.5 mmol/L (post-prandial)
+HbA-1c :
+•	< 7.0 % (for most)
+•	≤ 6.5 % (for young, healthy, short duration of T2DM and no/minimal risk of hypoglycaemia)
+
+Lipids :
+•	Triglycerides = ≤ 1.7 mmol/L
+•	HDL-C 
+    o	Male = > 1.0 mmol/L
+    o	Female = > 1.2 mmol/L
+•	LDL-C = ≤ 2.6 mmol/L
+
+Blood pressure :
+•	130 – 139/70 – 79 mmHg (under normal circumstances)
+
+Lifestyle changes :
+•	150 mins/week of moderate-intensity exercise
+•	75 mins/week of high-intensity exercise
+•	Weight loss of ≥7%-10% of initial body weight within 6 months if BMI ≥ 25
+•	Proper diet with foods with low GI (glycaemic index) 
+
+Individualised HbA-1c targets based on different patient profiles
+≤ 6.5 %
+•	Newly and recently diagnosed
+•	Younger age 
+•	Healthier (no complications) 
+•	Low risk of hypoglycaemia
+6.6 % - 7.0 %
+•	Normal circumstances
+≥ 7.0 %
+•	Elderly patients 
+•	Presence of co-morbidities 
+•	High risk of severe hypoglycaemia; hypo unawareness (unable to tell when blood glucose level drops to dangerous levels)
+•	Short life expectancy
+
+Recommendation for SMBG (self monitoring of blood glucose)
+Mode of treatment	Breakfast	Lunch	    Dinner
+	                Pre	Post	Pre	Post	Pre	Post
+Diet only	        √	√	    -	√	    -	√
+OGLDs	            √	√	    -	√	    -	√
+Insulin	            √	√	    √	√	    √	√
+
+Glucose Lowering Agents	                OD	Once a day
+BiguanidesBD	                        BD Twice a day
+1.	Metformin :                         OM	Once every morning
+•	Formulation: 500/1000 mg 
+    o	Minimum dose
+    Initial dose: 500 mg OD 
+    o	Maximum dose
+    Usual dose: 1000 mg BD *Exception: 1000 mg TDS (follow doctor prescription)
+
+2.	Metformin Sustained Release : (takes longer time to dissolve)
+•	Formulation: 850 mg
+    o	Minimum dose
+    Usual dose: 850 mg BD 
+    o	Maximum dose
+    850 mg TDS
+
+3.	Metformin Extended Release : (take much longer time to dissolve)
+•	Formulation: 500/750/1000 mg
+    o	Minimum dose
+    Initial dose: 500 mg OD
+    Usual dose: 2000 mg OD
+    o	Maximum dose
+    2000 mg OD
+
+Sulphonylureas
+1.	Glibenclamide :
+•	Formulation: 5 mg 
+    o	Minimum dose
+    2.5	mg OD 
+    o	Maximum dose
+    10 mg BD
+
+2.	Gliclazide :
+•	Formulation: 80 mg 
+    o	Minimum dose
+    40 mg OM 
+    o	Maximum dose
+    160 mg BD
+
+3.	Gliclazide Modified Release :
+•	Formulation: 60/30 mg 
+    o	Minimum dose
+    30 mg OM 
+    o	Maximum dose
+    120 mg OM
+
+4.	Glipizide :
+•	Formulation: 5 mg 
+    o	Minimum dose
+    2.5 mg OM
+    o	Maximum dose 
+    10 mg BD
+
+5.	Glimepiride :
+•	Formulation: 2/3 mg 
+    o	Minimum dose
+    1 mg OM
+    o	Maximum dose
+    6 mg OM
+
+Meglitinides
+1.	Repaglinide :
+•	Formulation: 0.5/1/2 mg 
+    o	Minimum dose
+    0.5 mg with main meal
+    o	Maximum dose
+    4 mg with main meals (not exceeding 16 mg daily)
+
+α-glucosidase inhibitor
+1.	Acarbose :
+•	Formulation: 50/100 mg 
+    o	Minimum dose
+    Initial dose: 50 mg OD 
+    Usual dose: 50-100 mg (take at 1st bite of main meals)
+    o	Maximum dose
+    100 mg TDS
+
+Thiazolidinedione
+1.	Rosiglitazone :
+•	Formulation: 4/8 mg 
+    o	Minimum dose
+    4 mg OD 
+    o	Maximum dose
+    8 mg OD
+
+2.	Pioglitazone :
+•	Formulation: 15/30 mg 
+    o	Minimum dose
+    15 mg OD 
+    o	Maximum dose
+    45 mg OD
+
+DPP4-inhibitors
+1.	Sitagliptin :
+•	Formulation: 25/50/100 mg 
+    o	Minimum dose
+    25 mg OD 
+    o	Maximum dose
+    100 mg OD
+
+2.	Vildagliptin :
+•	Formulation: 50 mg 
+    o	Minimum dose
+    50 mg OD 
+    o	Maximum dose
+    50 mg BD
+
+3.	Saxagliptin :
+•	Formulation: 2.5/5 mg 
+    o	Minimum dose
+    2.5 mg OD 
+    o	Maximum dose
+    5 mg OD
+
+4.	Linagliptin :
+•	Formulation: 5 mg 
+    o	Minimum dose
+    5 mg OD 
+    o	Maximum dose
+    5 mg OD
+
+SGLT2-inhibitors
+1.	Dapagliflozin :
+•	Formulation: 5/10 mg 
+    o	Minimum dose
+    5 mg OD 
+    o	Maximum dose
+    10 mg OD
+
+2.	Canagliflozin :
+•	Formulation: 100/300 mg 
+    o	Minimum dose
+    100 mg OD
+    o	Maximum dose
+    300 mg OD
+
+3.	Empagliflozin :
+•	Formulation: 10/25 mg 
+    o	Minimum dose
+    10 mg OD 
+    o	Maximum dose
+    25 mg OD
+
+4.	Luseogliflozin :
+•	Formulation: 2.5/5 mg 
+    o	Minimum dose
+    2.5 mg OD 
+    o	Maximum dose
+    5 mg OD
+
+5.	Ertugliflozin :
+•	Formulation: 5/15 mg 
+    o	Minimum dose
+    5 mg OD
+    o	Maximum dose 
+    15 mg OD
+
+GLP1-RA
+1.	Exenatide Immediate Release :
+•	Formulation: 5 μg/20 μL; 10 μg/40 μL 
+    o	Minimum dose
+    5 μg BD 
+    o	Maximum dose
+    10 μg BD
+
+2.	Exenatide Extended Release :
+•	Formulation: 2 mg 
+    o	Minimum dose
+    2 mg weekly
+    o	Maximum dose 
+    2 mg weekly
+
+3.	Dulaglutide :
+•	Formulation: 0.75 mg/1.5 mg 
+    o	Minimum dose
+    0.75 mg weekly
+    o	Maximum dose
+    1.5 mg weekly
+
+4.	Liraglutide :
+•	Formulation: 6 mg/mL 
+    o	Minimum dose
+    0.6 mg OD 
+    o	Maximum dose
+    1.8 mg OD
+
+5.	Lixisenatide :
+•	Formulation: 50 μg/mL; 100 μg/mL 
+    o	Minimum dose
+    10 μg OD
+    o	Maximum dose
+    20 μg OD
+
+6.	Semaglutide :
+•	Formulation: 0.25/0.5 mg 
+    o	Minimum dose
+    0.25 weekly
+    o	Maximum dose 
+    1.0 mg weekly
+
+Treatment algorithm for newly diagnosed T2DM
+HbA1c <6.5% AND FPG <6.0 mmol/L
+•	Consider metformin monotherapy (only one form of medication)
+•	if post prandial is > 11.0 mmol/L and/or metformin not tolerated, use:
+    o	Meglitinide
+    o	AGI (α-glucosidase inhibitor)
+    o	DPP4-i (DPP4-inhibitors)
+
+HbA1c 6.5-7.4% OR FPG 6.0-7.9 mmol/L
+•	Mono or dual therapy with
+    o	Metformin OR
+    o	SU (Sulphonylureas)
+    o	DPP4-i
+    o	SGLT2-i (SGLT2-inhibitors)
+
+HbA1c 7.5-8.4% OR FPG 8.0-9.9 mmol/L
+•	Dual combination therapy with any combination of:
+    o	Metformin 
+    o	SU 
+    o	Meglitinide 
+    o	AGI 
+    o	TZD (Thiazolidinedione)
+    o	DPP4-i 
+    o	GLP1-RA 
+    o	SGLT2-i 
+    o	Insulin
+
+HbA1c 8.5-10.0% OR FPG 10.0-13.0 mmol/L
+•	Triple combination therapy with any combination of:
+    o	Metformin 
+    o	SU 
+    o	Meglitinide 
+    o	AGI 
+    o	TZD 
+    o	DPP4-i 
+    o	GLP1-RA
+    o	SGLT2-i 
+    o	Insulin
+
+HbA1c >10.0% OR FPG >13.0 mmol/L
+•	Basal/premixed insulin therapy + Combination therapy
+            or
+•	Intensive insulin therapy + OGLD
+
+Treatment recommendations: Clinic follow-up
+When HbA1c above individualised target with lifestyle modification + existing therapy
+0.5%-1% above target :
+•	Add 1 additional GLD from different class 
+•	OR Intensification of insulin (if already on insulin)
+
+1%-2% above target :
+•	Consider 2 GLDs from different classes 
+•	OR Intensification of insulin (if already on insulin)
+
+>2% above target :
+•	Initiation of insulin/GLP1-RA 
+•	OR Intensification of insulin
+
+Hypoglycaemia
+•   impaired fasting glucose of 
+    - < 3.9 mmol/L (VPG)
+    - < 4.1 % (HbA1c)
+    - < 21 mmol/mol (HbA1c)
+    should serve as an alert for hypoglycemia
+•   happens when blood glucose level is abnormally low
+-   You are in risk of hypoglycaemia\nPlease consume something high in sugar or any medications issued by a doctor\nIf any symptoms such as dizziness or a headache are showing, please consult a doctor
+
+Hyperglcaemia
+•   impaired fasting glucose of 
+    - 10 - 11.1 millimoles per liter (mmol/L) (VPG)
+    - 7.9 - 8.6 % (HbA1c)
+    - 63 - 70 mmol/mol (HbA1c)
+    will show symptoms of hyperglycaemia
+•   happens when blood glucose level is high for a prolonged time
+-   You are in risk of hyperglycaemia\nPlease ensure you are not skipping any insulin doses issued by the doctor\nIf any symptoms such as nausea and vomitting are occuring, please consult a doctor immediately
