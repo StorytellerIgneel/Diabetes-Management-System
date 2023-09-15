@@ -16,4 +16,4 @@ Password for admin name incorrect. Please confirm again.
 Please check on the conditions of the hypoglycaemia and hyperglycaemia patients before quitting!
 Please enter something. You have entered nothing.
 There are no patients in risk of hyperglycaemia and hypoglycaemia right now.
-No meal record found.\nPlease do add a meal record before choosing to display them.
+No meal record found.\Please do add a meal record before choosing to display them.

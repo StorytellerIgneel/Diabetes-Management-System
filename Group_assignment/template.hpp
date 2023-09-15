@@ -18,23 +18,30 @@ string  banner(string to_print)
 void    notification(string notification)
 {   
     string  modified_notification;
-    int     newline_count;
+    size_t  newline_count;
     int     newline_pos;
     size_t  index;
 
     index = 0;
-    newline_count = count(notification.begin(), notification.end(), '\n');
-    for (int i = 0; i < newline_count; i++)
+    newline_count = count(notification.begin(), notification.end(), '\\');
+    if (newline_count != 0) // newline present inside message
     {
-        newline_pos = notification.find('\n', index);
-        modified_notification += notification.substr(index, newline_pos - 1) + "\n";
-        index = newline_pos;
+        for (int i = 0; i <= newline_count; i++)
+        {
+            newline_pos = notification.find('\\', index);
+            cout << "pos: " << newline_pos;
+            cin.get();
+            modified_notification += notification.substr(index, newline_pos - 1) + "\n";
+            index = newline_pos + 1;
+        }
     }
+    else // no newline
+        modified_notification = notification;
     system("cls");
     cout << LINE << endl
          << banner("Notification")
          << LINE << endl << endl
-         << notification << endl << endl << LINE;
+         << modified_notification << endl << endl << LINE;
     return;
 }
 

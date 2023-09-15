@@ -2,10 +2,11 @@
 #include <string>
 #include "headers.hpp"
 #include "template.hpp"
+#include "validation.hpp"
 using namespace std;
 
 int main (void)
 {
-    notification("a\nb\nc\nd");
+    error_message(17);
     return 0;
 }

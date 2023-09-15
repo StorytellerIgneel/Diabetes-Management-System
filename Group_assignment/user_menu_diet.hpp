@@ -9,6 +9,7 @@
 void    update_meal_record(user *patient);
 void    add_record(user *patient);
 void    add_meal(user *patient, string meal);
+void    display_meal(user *patient);
 
 void    update_meal_record(user *patient)
 {
@@ -19,9 +20,9 @@ void    update_meal_record(user *patient)
     int     choice_int;
     map < int, function < void(user *) >> option_list;
     option_list[1] = add_record;
-    //option_list[2] = display_meal;
-    //option_list[2] = update_record;
-    //ogtt not here as it is limited to the admin (doctor)
+    option_list[2] = display_meal;
+
+
     while(1)
     {
         menu(*patient, admin(), "UPDATE MEAL RECORD", "Please choose one of the following functions to use:\n1. Add new record\n2. Review record", "Please enter your choice: ");
@@ -69,6 +70,7 @@ void    add_meal(user *patient, string meal) //breakfast
 {
     string  choice_str;
     string  prompt;
+    string  temporary;
 
     prompt = "\nDid you eat your " + meal + " ?\nPress \"y\" for yes and \"n\" for no. ";
     while(1)
@@ -86,9 +88,9 @@ void    add_meal(user *patient, string meal) //breakfast
                 getline(cin, patient->breakfast.time);
                 if(exit_check(&cin))
                     return;
-                cout << "Fill in the level of food ingested for each food type (None / Low / Medium / High):\n";
+                cout << "Fill in the level of food ingested for each food type ( ___ quantity of ___ food):\n";
                 cout << "Carbohydrate: ";
-                getline(cin, patient->breakfast.carbohydrate);
+                getline(cin, temporary);
                 if(exit_check(&cin))
                     return;
                 cout << "Protein     : ";
@@ -116,7 +118,7 @@ void    add_meal(user *patient, string meal) //breakfast
                 getline(cin, patient->lunch.time);
                 if(exit_check(&cin))
                     return;
-                cout << "Fill in the level of food ingested for each food type (None / Low / Medium / High):\n";
+                cout << "Fill in the level of food ingested for each food type ( ___ quantity of ___ food):\n";
                 cout << "Carbohydrate: ";
                 getline(cin, patient->lunch.carbohydrate);
                 if(exit_check(&cin))
@@ -146,7 +148,7 @@ void    add_meal(user *patient, string meal) //breakfast
                 getline(cin, patient->dinner.time);
                 if(exit_check(&cin))
                     return;
-                cout << "Fill in the level of food ingested for each food type (None / Low / Medium / High):\n";
+                cout << "Fill in the level of food ingested for each food type ( ___ quantity of ___ food):\n";
                 cout << "Carbohydrate: ";
                 getline(cin, patient->dinner.carbohydrate);
                 if(exit_check(&cin))
@@ -169,8 +171,6 @@ void    add_meal(user *patient, string meal) //breakfast
                     return;
                 success_message(12);
             }
-            else
-                cout << "Please specify your meal. (Breakfast, Lunch, Dinner)";
         }
         else if (choice_str == "n" || choice_str == "N")
             notification("You should have eaten your food no matter what.\nSkipping meals will only cause your insulin to surge.\nThis will cause your health to deterioate and not help with weight reducing.");

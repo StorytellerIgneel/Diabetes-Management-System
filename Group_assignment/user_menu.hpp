@@ -65,6 +65,7 @@ void    update_condition(user   *patient)
     int     choice_int;
     map < int, function < void(user *) >> option_list;
     option_list[1] = update_diabetic_condition;
+    option_list[2] = update_meal_record;
     //option_list[2] = update_meal_record;
     
     while(1)

@@ -33,6 +33,7 @@ void    admin_menu(admin target_admin, user patient_list[],  admin admin_list[])
     option_list[1] = update_patient_condition;
     option_list[3] = prescribe_medication_control;
     option_list[5] = check_medical_guides;
+    option_list[6] = 
     
     patient = nullptr;
     hyper_hypo = find_hyper_hypo(patient_list, &hyper_hypo_list);
@@ -55,7 +56,6 @@ void    admin_menu(admin target_admin, user patient_list[],  admin admin_list[])
                 {
                     return;
                 }
-                    
                 else if (checked_hyper_hypo == "N" || checked_hyper_hypo == "n")
                 {
                     error_message(16);
@@ -77,7 +77,7 @@ void    admin_menu(admin target_admin, user patient_list[],  admin admin_list[])
                 else
                     error_message(18);
             }
-            else if (choice_int == 6)
+            else if (choice_int == 7)
                 add_new_admin(target_admin, admin_list);
             else if (option_list.find(choice_int) != option_list.end())
                 option_list[choice_int](patient, target_admin);  // Call the selected function
@@ -576,6 +576,69 @@ void    check_medical_guides(user* patient, admin target_admin)
         else
             error_message(1);
     }   
+}
+
+void    export_data(user patient_list[], admin target_admin)
+{
+	ofstream out_file_user("user_medical_report.txt", ios::out);
+
+    //Get current time
+    time_t current_time = time(nullptr);
+    string string_time;
+    current_time = time(nullptr);
+    string_time  = ctime(&current_time);
+	
+	//File header
+	out_file_user << "User Medical Report";
+	out_file_user << "\nRequested by: " << target_admin.admin_name;
+	out_file_user << "\nDate        : " << string_time << "\n\n";
+	out_file_user << "Patient's Medical Condition";
+	
+	//Find array length
+	int count = 0;  //Number of patients
+	for (int i = 0; patient_list[i].details.name != "" ; i++)
+		count++;
+
+	//Loop through patient's list
+	for (int idx = 0 ; idx < count ; idx++){
+		//Basic details
+		out_file_user << idx + 1 << ". " << patient_list[idx].details.name; 
+		out_file_user << "\nAge          : " << patient_list[idx].details.age;
+		out_file_user << "\nPhone number : " << patient_list[idx].details.phone_number;
+		out_file_user << "\nAddress      : " << patient_list[idx].details.home_address;
+		//Medical conditions
+		out_file_user << "\nCurrent state |  Insulin  |  VPG(%)   State         Time                 |  HBA1c(%)   Time                 |  OGTT(%)   Time\n";
+		out_file_user << left;
+		//Current state
+		out_file_user << setw(14) << patient_list[idx].medical.current_state << "|  ";
+		//Insulin
+		if (patient_list[idx].medical.insulin == true)
+			out_file_user << setw(9) << "Yes" << "|  ";
+		else
+			out_file_user << setw(9) << "No" << "|  ";
+		//VPD details
+		if (patient_list[idx].medical.vpg != 0)
+			out_file_user << setw(9) << patient_list[idx].medical.vpg << setw(14) << patient_list[idx].medical.vpg_fasting 
+						  << setw(21) << patient_list[idx].medical.vpg_time << "|  ";
+		else
+			out_file_user << setw(44) << "No record" << "|  ";
+		//HBA1c details
+		if (patient_list[idx].medical.hba1c != 0)
+			out_file_user << setw(11) << patient_list[idx].medical.hba1c << setw(21) 
+				  		  << patient_list[idx].medical.hba1c_time << "|  ";
+		else 
+			out_file_user << setw(44) << "No record" << "|  ";
+		//OGTT details
+		if (patient_list[idx].medical.ogtt != 0)
+			out_file_user << setw(10) << patient_list[idx].medical.ogtt
+						  << setw(21) << patient_list[idx].medical.ogtt_time << "\n\n";
+		else 
+			out_file_user << setw(31) << "No record";
+    }   
+
+	out_file_user.close();
+
+	return; 
 }
 //add a new admin
 void    add_new_admin (admin target_admin, admin admin_list[])
