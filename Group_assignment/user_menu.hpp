@@ -564,7 +564,8 @@ void display_overview_details(user *patient, admin target_admin)
     
     if (is_user)
         menu(*patient, admin(), "VIEW OVERVIEW MEDICAL DETAILS", "You can view your medical details here.");
-    
+    else
+        menu(*patient, target_admin, "VIEW OVERVIEW MEDICAL DETAILS", "You can view your medical details here.");
     //Display overview details
     cout << endl << "Medical Conditions" << endl;
     cout << "Current state\t: " << (*patient).medical.current_state << endl;

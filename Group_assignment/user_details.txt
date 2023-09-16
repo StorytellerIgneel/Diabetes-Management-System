@@ -14,3 +14,7 @@ Shi non
 15
 0
 Shiguya
+a
+c
+d
+s

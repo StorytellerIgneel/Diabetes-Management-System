@@ -58,3 +58,18 @@ No record
 No record
 No prescription
 No extra note
+false
+Normal
+false
+false
+false
+false
+false
+0
+No record
+0
+No record
+0
+No record
+No prescription
+No extra note

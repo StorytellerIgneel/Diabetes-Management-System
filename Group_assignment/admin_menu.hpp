@@ -45,28 +45,34 @@ void    admin_menu(admin target_admin, user patient_list[],  admin admin_list[])
     {
         menu(*patient, target_admin, "MAIN MENU", "Please choose one of the following functions to use: \n1. Update patient health condition.\n2. Check hyperglycaemia and hypoglycaemia patients\n3. Provide Medication\n4. Check patient profile\n5. Check medical guides\n6. Add a new admin", "Enter your choice: ");
         getline(cin, choice_str);
-        if(exit_check(&cin) && hyper_hypo == true)
+        if(exit_check(&cin))
         {
-            while(1)
+            if (hyper_hypo == true)
             {
-                cout << "Have you checked the hyperglycaemia and hypoglycaemia patients out?\nPress y for yes and n for no.";
-                getline(cin, checked_hyper_hypo);
-                if(exit_check(&cin))
-                    break;
-                if (checked_hyper_hypo == "Y" || checked_hyper_hypo == "y")
+                while(1)
                 {
-                    return;
+                    cout << "Have you checked the hyperglycaemia and hypoglycaemia patients out?\nPress y for yes and n for no: ";
+                    getline(cin, checked_hyper_hypo);
+                    if(exit_check(&cin))
+                        break;
+                    if (checked_hyper_hypo == "Y" || checked_hyper_hypo == "y")
+                    {
+                        //set all hyper hypo flag to false
+                        return;
+                    }
+                    else if (checked_hyper_hypo == "N" || checked_hyper_hypo == "n")
+                    {
+                        error_message(16);
+                        break;
+                    }
+                    else
+                        error_message(2);
                 }
-                else if (checked_hyper_hypo == "N" || checked_hyper_hypo == "n")
-                {
-                    error_message(16);
-                    break;
-                }
-                else
-                    error_message(2);
             }
+            else
+                return;
         }
-        if (is_number(choice_str, &choice_int))
+        else if (is_number(choice_str, &choice_int))
         {
             if (choice_int == 2)
             {
