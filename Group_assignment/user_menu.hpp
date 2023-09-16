@@ -179,7 +179,9 @@ void    vpg_test(user *patient, admin target_admin)
                                 patient->medical.vpg_time = get_time();
                                 patient->medical.vpg = vpg_double;
                                 patient->medical.hypoglycaemia = true;
+                                patient->medical.hyperglycaemia = false;
                                 patient->medical.vpg_fasting = true;
+                                return;
                             }
                             else
                             {
@@ -189,6 +191,8 @@ void    vpg_test(user *patient, admin target_admin)
                                     success_message(5);
                                 patient->medical.vpg_time = get_time();
                                 patient->medical.vpg = vpg_double;
+                                patient->medical.hypoglycaemia = false;
+                                patient->medical.hyperglycaemia = false;
                                 patient->medical.vpg_fasting = true;
                                 return; 
                             }
@@ -204,10 +208,12 @@ void    vpg_test(user *patient, admin target_admin)
                                     success_message(14);
                                 patient->medical.vpg_time = get_time();
                                 patient->medical.vpg = vpg_double;
+                                patient->medical.hypoglycaemia = false;
                                 patient->medical.hyperglycaemia = true;
                                 patient->medical.vpg_fasting = true;
+                                return;
                             }
-                            else
+                            else //normal
                             {
                                 if (is_user)
                                     success_message(15);
@@ -215,6 +221,8 @@ void    vpg_test(user *patient, admin target_admin)
                                     success_message(5);
                                 patient->medical.vpg_time = get_time();
                                 patient->medical.vpg = vpg_double;
+                                patient->medical.hypoglycaemia = false;
+                                patient->medical.hyperglycaemia = false;
                                 patient->medical.diabetic_patient = true;
                                 patient->medical.vpg_fasting = true;
                                 return;
@@ -248,6 +256,8 @@ void    vpg_test(user *patient, admin target_admin)
                                 success_message(5);
                             patient->medical.vpg_time = get_time();
                             patient->medical.vpg = vpg_double;
+                            patient->medical.hypoglycaemia = false;
+                            patient->medical.hyperglycaemia = false;
                             patient->medical.vpg_fasting = false;
                             return;
                         }
@@ -259,6 +269,8 @@ void    vpg_test(user *patient, admin target_admin)
                                 success_message(5);
                             patient->medical.vpg_time = get_time();
                             patient->medical.vpg = vpg_double;
+                            patient->medical.hypoglycaemia = false;
+                            patient->medical.hyperglycaemia = false;
                             patient->medical.diabetic_patient = true;
                             patient->medical.vpg_fasting = false;
                             return;
@@ -308,6 +320,7 @@ void    hba1c_test(user *patient, admin target_admin)
                     else
                         success_message(24);
                     patient->medical.hypoglycaemia = true;
+                    patient->medical.hyperglycaemia = false;
                 }
                 else // normal
                 {
@@ -315,6 +328,8 @@ void    hba1c_test(user *patient, admin target_admin)
                         success_message(11);
                     else
                         success_message(6);
+                    patient->medical.hypoglycaemia = false;
+                    patient->medical.hyperglycaemia = false;
                 }
                 patient->medical.hba1c_time = get_time();               
                 patient->medical.hba1c = hba1c_double;
@@ -328,6 +343,8 @@ void    hba1c_test(user *patient, admin target_admin)
                     success_message(6);
                 patient->medical.hba1c_time = get_time();
                 patient->medical.hba1c = hba1c_double;
+                patient->medical.hypoglycaemia = false;
+                patient->medical.hyperglycaemia = false;
                 patient->medical.diabetic_patient = true;
                 return;
             }
@@ -339,6 +356,7 @@ void    hba1c_test(user *patient, admin target_admin)
                         success_message(23);
                     else
                         success_message(25);
+                    patient->medical.hypoglycaemia = false;
                     patient->medical.hyperglycaemia = true;
                 }
                 else // no hyper
@@ -350,6 +368,8 @@ void    hba1c_test(user *patient, admin target_admin)
                 }
                 patient->medical.hba1c_time = get_time();
                 patient->medical.hba1c = hba1c_double;
+                patient->medical.hypoglycaemia = false;
+                patient->medical.hyperglycaemia = false;
                 patient->medical.diabetic_patient = true;
                 return;
             }
@@ -440,7 +460,6 @@ void    update_account(user   *patient)
     }
     return;
 }
-
 //view information
 void    display_overview_details(user *patient, admin target_admin)
 {
@@ -523,7 +542,7 @@ void    display_overview_details(user *patient, admin target_admin)
     cin.get();
     return;
 }
-//target for control section
+//target for control section //16/9 not done
 void    target_for_control(user *patient)
 {
     string  content;
@@ -544,15 +563,18 @@ void    target_for_control(user *patient)
         if (is_number(choice_str, &choice_int))
         {
             if (choice_int == 1)
-            {
-                //
-            }
+                menu(*patient, admin(), "TARGET LEVELS FOR VARIOUS MEDICAL PARAMETERS", "control_targets.txt");
             else if (choice_int == 2)
             {
                 if(stoi(patient->details.age) < 40)
                     menu(*patient, admin(), "Individualised HbA1c targets", "Your HbA1c target is <= 6.5% (Tight)\nThis is because your fulfil the following conditions: ", "Press Enter to continue", false, "hba1c_tight.txt");
-                
+                else if (stoi(patient->details.age) > 60)
+                    menu(*patient, admin(), "Individualised HbA1c targets", "Your HbA1c target is >= 7.0% (Less Tight)\nThis is because your fulfil the following conditions: ", "Press Enter to continue", false, "hba1c_less_tight.txt");
+                else
+                    menu(*patient, admin(), "Individualised HbA1c targets", "Your HbA1c target is >= 6.6%% and <= 7.0% (Moderate)\nThis is because you are under normal circumstances.", "Press Enter to continue", false, "hba1c_less_tight.txt");
             }
+            else if (choice_int == 3);
+                //
             else
                 error_message(2);
         }

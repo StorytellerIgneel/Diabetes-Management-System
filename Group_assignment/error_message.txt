@@ -13,7 +13,7 @@ The patient you chose does not exist. Please confirm that you have entered the c
 You have no medications prescribed by your doctor currently.
 Admin name not found. Please confirm again.
 Password for admin name incorrect. Please confirm again.
-Please check on the conditions of the hypoglycaemia and hyperglycaemia patients before quitting!
+Please check on the conditions of the hypoglycaemia and hyperglycaemia patients before quitting!\You are also required to key in and ensure that all of the patients are no longer suffering from hypoglycemia and hyperglycaemia,\and that all of their blood glucose levels are in normal ranges.
 Please enter something. You have entered nothing.
 There are no patients in risk of hyperglycaemia and hypoglycaemia right now.
 No meal record found.\Please do add a meal record before choosing to display them.

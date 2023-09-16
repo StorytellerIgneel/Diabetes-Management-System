@@ -26,7 +26,7 @@ int main(void) //initial access control
 
     while(1)
     {
-        user_count = get_user_num("user") % 100; //
+        user_count = get_user_num("user") % 100; //to allow cycling configuration of new users (if theres the 101st patient, the 1st will be removed and the 101st will take the place)
         admin_count = get_user_num("admin") % 100;
         read_admin_data(admin_list, admin_count);
         read_user_data(user_list, user_count);

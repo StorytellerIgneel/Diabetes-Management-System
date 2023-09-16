@@ -49,27 +49,14 @@ void    admin_menu(admin target_admin, user patient_list[],  admin admin_list[])
         getline(cin, choice_str);
         if(exit_check(&cin))
         {
+            hyper_hypo = find_hyper_hypo(patient_list, &hyper_hypo_list);
             if (hyper_hypo == true)
             {
-                while(1)
-                {
-                    cout << "Have you checked the hyperglycaemia and hypoglycaemia patients out?\nPress y for yes and n for no: ";
-                    getline(cin, checked_hyper_hypo);
-                    if(exit_check(&cin))
-                        break;
-                    if (checked_hyper_hypo == "Y" || checked_hyper_hypo == "y")
-                    {
-                        //set all hyper hypo flag to false
-                        return;
-                    }
-                    else if (checked_hyper_hypo == "N" || checked_hyper_hypo == "n")
-                    {
-                        error_message(16);
-                        break;
-                    }
-                    else
-                        error_message(2);
-                }
+                error_message(16);
+                break;
+            }
+            else
+                return;
             }
             else
                 return;
@@ -185,26 +172,48 @@ void    ogtt_update(user* patient, admin target_admin)
                         break;
                     if (is_double(ogtt_str, &ogtt_double))
                     {
-                        if (ogtt_double < 6.1 && ogtt_double > 0)
+                        if (ogtt_double < OGTT_IFG_MIN && ogtt_double > 0) //Normal 
                         {
-                            success_message(7);
+                            if (ogtt_double < HYPOGLYCAEMIA_LEVEL_MMOL) //hypoglycaemia
+                            {
+                                success_message(27);
+                                patient->medical.hypoglycaemia = true;
+                            }      
+                            else
+                            {
+                                success_message(7);
+                                patient->medical.hypoglycaemia = false;
+                            }  
                             patient->medical.ogtt_time = get_time();
+                            patient->medical.hyperglycaemia = false;
                             patient->medical.ogtt = ogtt_double;
                             return;
                         }
-                        else if (ogtt_double >= 6.1 && ogtt_double <= 6.9 || ogtt_double >= 7.0)
+                        else if (ogtt_double >= OGTT_IFG_MIN && ogtt_double <= OGTT_IFG_MAX) // IFG
                         {
                             success_message(7);
                             patient->medical.current_state = "IMPAIRED GLUCOSE (IFG)";
                             patient->medical.ogtt_time = get_time();
                             patient->medical.ogtt = ogtt_double;
+                            patient->medical.hypoglycaemia = false;
+                            patient->medical.hyperglycaemia = false;
                             patient->medical.diabetic_patient = true;
                             return;
                         }
-                        else if (ogtt_double >= 7.0)
+                        else if (ogtt_double > OGTT_IFG_MAX  && ogtt_double <= HYPOGLYCAEMIA_LEVEL_MMOL)
                         {
-                            success_message(7);
+                            if (ogtt_double < HYPERGLYCAEMIA_LEVEL_MMOL_MIN) // no hyper
+                            {
+                                success_message(7);
+                                patient->medical.hyperglycaemia = false;
+                            }
+                            else
+                            {
+                                success_message(28);
+                                patient->medical.hyperglycaemia = true;
+                            }
                             patient->medical.current_state = "DIABETES MELLITUS (DM)";
+                            patient->medical.hypoglycaemia = false;
                             patient->medical.ogtt_time = get_time();
                             patient->medical.ogtt = ogtt_double;
                             patient->medical.diabetic_patient = true;
@@ -265,38 +274,46 @@ void    ogtt_update(user* patient, admin target_admin)
             error_message(1);
     }
 }
-
 //hyper/hypo section
 bool    find_hyper_hypo(user patient_list[], string *for_noti)
 {
+    int     count;
     bool    hyper;
     bool    hypo;
 
+    count = 1;
     hyper = false;
     hypo = false;
-    *for_noti = "Attention!!\nThe following patients are in risk of hypoglycaemia:\n";
+    *for_noti = "Attention!!";
     for(int i = 0; patient_list[i].details.name != ""; i++)
     {
         if(patient_list[i].medical.hypoglycaemia == true)
         {
-            *for_noti = *for_noti + "\n" + to_string(i) + ". " + patient_list[i].details.name;
+            if(hypo == false)
+                *for_noti += "\nThe following patients are in risk of hypoglycaemia:\n";
+            *for_noti = *for_noti + "\n" + to_string(count) + ". " + patient_list[i].details.name;
             hypo = true;
+            count++;
         }
     }
+    count = 1;
     for(int i = 0; patient_list[i].details.name != ""; i++)
     {
         if(patient_list[i].medical.hyperglycaemia == true)
         {
             if(hyper == false)
                 *for_noti += "\n\nThe following patients are in risk of hyperglycaemia:\n";
-            *for_noti = *for_noti + "\n" + to_string(i) + ". " + patient_list[i].details.name;
+            *for_noti = *for_noti + "\n" + to_string(count) + ". " + patient_list[i].details.name;
             hyper = true;
+            count++;
         }
     }
-    *for_noti += "Please check on their conditions as soon as possible.";
+    *for_noti += "Please check on their conditions as soon as possible.\nYou will also have to key in their blood glucose levels after you have checked on their conditions.";
     if (hyper == true || hypo == true)
     {
         notification(*for_noti);
+        cout << "Press Enter to continue.";
+        cin.get();
         return true;
     }
     else
@@ -356,38 +373,48 @@ void    prescribe_medication(user   *patient, admin target_admin)
     string  choice;
     string  medication;
     string  for_menu;
-    string  *name;
-    string  *formulation;
-    string  *unit;
-    string  *frequency;
-    string  *note;
-    int     *step;
+    string  name;
+    string  formulation;
+    string  unit;
+    string  frequency;
+    string  note;
+    int     step;
 
-    *step = 1;
+    step = 1;
     menu(*patient, target_admin, "MEDICATION PRESCRIPTION", "Enter the details of the medication prescription for the patient here.\nYou can press g or G to show the guide for the medication prescription.\nYou can also press B or b to go back to the previous step.");
     while(1)
     {
-        if (*step == 1)
-            if (get_medication(step, "Enter the name of the drug: ", name, target_admin))
+        if (step == 1)
+        {
+            if (get_medication(&step, "Enter the name of the drug: ", &name, target_admin))
                 return;
-        if (*step == 2)
-            if (get_medication(step, "Enter the formulation of the drug: ", formulation, target_admin))
+        }   
+        if (step == 2)
+        {
+            if (get_medication(&step, "Enter the formulation of the drug: ", &formulation, target_admin))
                 return;
-        if (*step == 3)
-            if (get_medication(step, "Enter the unit of the drug formulation: ", unit, target_admin))
+        } 
+        if (step == 3)
+        {
+            if (get_medication(&step, "Enter the unit of the drug formulation: ", &unit, target_admin))
                 return;
-        if (*step == 4)
-            if (get_medication(step, "Enter the number of times for the drug to be ingested per day: ", frequency, target_admin))
+        }
+        if (step == 4)
+        {
+            if (get_medication(&step, "Enter the number of times for the drug to be ingested per day: ", &frequency, target_admin))
                 return;
-        if (*step == 5)
-            if (get_medication(step, "Are there any extra notes you would like to add to the prescription of the medication?\nPress n if you don't have any: ", note, target_admin))
+        }
+        if (step == 5)
+        {
+            if (get_medication(&step, "Are there any extra notes you would like to add to the prescription of the medication?\nPress n if you don't have any: ", &note, target_admin))
                 return;
-        if (*step == 6)
+        }
+        if (step == 6)
             break;
     }
-    medication = "Your medication is:\n" + *formulation + " " + *unit + " of " + *name + ".\nPlease take the drug " + *frequency + " times a day.\nFor more information, please contact your doctor.";
-    if (*note != "No extra note")
-        for_menu = medication + "\nExtra note from doctor: " + *note;
+    medication = "Your medication is:\n" + formulation + " " + unit + " of " + name + ".\nPlease take the drug " + frequency + " times a day.\nFor more information, please contact your doctor.";
+    if (note != "No extra note")
+        for_menu = medication + "\nExtra note from doctor: " + note;
     else
         for_menu = medication;
     while(1)
@@ -400,7 +427,7 @@ void    prescribe_medication(user   *patient, admin target_admin)
         {
             success_message(9);
             patient->medical.medication = medication;
-            patient->medical.medication_note = *note;
+            patient->medical.medication_note = note;
             return;
         }
         else
@@ -427,38 +454,41 @@ void    medication_guide(admin target_admin)
 
 bool    get_medication(int *step, string prompt, string *medication, admin target_admin)
 {
+    string  temporary;
     while(1)
     {
         cout << prompt;
-        getline(cin, *medication);
+        getline(cin, temporary);
+        *medication = temporary;
+        cout << "Entered,";
+        cin.get();
         if(exit_check(&cin))
-            return 1;
+            return true;
         else if(*medication == "G" || *medication == "g")
             medication_guide(target_admin);
         else if (*step != 1 && (*medication == "B" || *medication == "b"))
         {
             *step -= 1;
-            return 0;
+            return false;
         }
         else if (*step == 5 && (*medication == "Y" || *medication == "y"))
         {
             *medication = "Extra note: " + *medication;
-            return 0;
+            return false;
         }
         else if (*step == 5 && (*medication == "N" || *medication == "n"))
         {
             *medication = "No extra note";
-            return 0;
+            return false;
         }
         else
         {
             *step += 1;
-            return 0;
+            return false;
         }
     }
-    return 0;
+    return false;
 }
-
 //incomplete
 void    set_diet_control(user *patient, admin target_admin) //issue diet
 {

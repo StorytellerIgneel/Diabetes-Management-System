@@ -23,3 +23,6 @@ Diet control has been cancelled successfully for the patient.
 You are in risk of Type 2 Diabetes Mellitus as your blood glucose level is abnormally high.\Other than that, you are also in great risk of hyperglycaemia.\Please seek medical advices from our medical personnels as soon as possible.
 Patient HbA1c value successfully updated.\However, the patient is in risk of hypoglycaemia.\Please do pay extra attention and carry out necessary safety precautions.
 Patient HbA1c value successfully updated.\However, the patient is in risk of hyperglycaemia.\Please do pay extra attention and carry out necessary safety precautions.
+Please do remember to record their 
+Patient Oral Glucose Tolerance Test value successfully updated.\However, the patient is in risk of hypoglycaemia.\Please do pay extra attention and carry out necessary safety precautions.
+Patient Oral Glucose Tolerance Test value successfully updated.\However, the patient is in risk of hyperglycaemia.\Please do pay extra attention and carry out necessary safety precautions.
