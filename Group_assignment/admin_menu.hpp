@@ -34,6 +34,7 @@ void    admin_menu(admin target_admin, user patient_list[],  admin admin_list[])
     map < int, function < void(user*, admin) >> option_list;
     option_list[1] = update_patient_condition;
     option_list[3] = prescribe_medication_control;
+    option_list[4] = display_overview_details;
     option_list[5] = check_medical_guides;
     
     patient = nullptr;

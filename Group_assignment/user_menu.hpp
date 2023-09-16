@@ -27,18 +27,20 @@ void    user_menu(user  *patient)
         map < int, function < void(user*) >> option_list;
         option_list[1] = update_condition;
         option_list[2] = update_account;
-        option_list[3] = target_for_control;
-        option_list[4] = receive_medication;
+        option_list[4] = target_for_control;
+        option_list[5] = receive_medication;
 
         if ((*patient).medical.medication_received == true)
             notification("You have received a medication prescription from your doctor. Please proceed to the section 'receive medication' to view the details.");
-        menu(*patient, admin(), "MAIN MENU", "Please choose one of the following functions to use: \n1. Update health condition\n2. Update account details\n3. Recommendations and suggestions on target for control (T2DM patient only)\n4. Receive medication (T2DM patient only)", "Enter your choice: ");
+        menu(*patient, admin(), "MAIN MENU", "Please choose one of the following functions to use: \n1. Update health condition\n2. Update account details\n3. Review all account details and medical informations\n4. Recommendations and suggestions on target for control (T2DM patient only)\n5. Receive medication (T2DM patient only)", "Enter your choice: ");
         getline(cin, choice_str);
         if(exit_check(&cin))
             return;
         if(is_number(choice_str, &choice_int))
         {
-            if (option_list.find(choice_int) != option_list.end())
+            if (choice_int == 3)
+                display_overview_details(patient, admin());
+            else if (option_list.find(choice_int) != option_list.end())
                 option_list[choice_int](patient);  // Call the selected function
             else
                 error_message(2);
@@ -565,7 +567,7 @@ void display_overview_details(user *patient, admin target_admin)
     if (is_user)
         menu(*patient, admin(), "VIEW OVERVIEW MEDICAL DETAILS", "You can view your medical details here.");
     else
-        menu(*patient, target_admin, "VIEW OVERVIEW MEDICAL DETAILS", "You can view your medical details here.");
+        menu(*patient, target_admin, "VIEW OVERVIEW MEDICAL DETAILS", "The patient's medical details are as follows: ");
     //Display overview details
     cout << endl << "Medical Conditions" << endl;
     cout << "Current state\t: " << (*patient).medical.current_state << endl;
@@ -631,7 +633,7 @@ void display_overview_details(user *patient, admin target_admin)
     else
         cout << "N/A" << endl;
     cout << LINE << "Press Enter to continue.";
-    
+    cin.get();
     return;
 }
 #endif
