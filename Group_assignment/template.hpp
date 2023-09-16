@@ -29,9 +29,7 @@ void    notification(string notification)
         for (int i = 0; i <= newline_count; i++)
         {
             newline_pos = notification.find('\\', index);
-            cout << "pos: " << newline_pos;
-            cin.get();
-            modified_notification += notification.substr(index, newline_pos - 1) + "\n";
+            modified_notification += notification.substr(index, newline_pos - index) + "\n";
             index = newline_pos + 1;
         }
     }

@@ -18,6 +18,7 @@ void    prescribe_medication            (user *patient, admin target_admin);
 void    medication_guide                (admin target_admin);
 bool    get_medication                  (int *step, string prompt, string *medication, admin target_admin);
 void    set_diet_control                (user *patient, admin target_admin);
+void    insulin_issue                   (user *patient, admin target_admin);
 void    check_medical_guides            (user *patient, admin target_admin);
 void    export_data_control             (user* patient, user patient_list[], admin target_admin);
 void    export_data                     (user* patient, user patient_list[], admin target_admin);
@@ -44,7 +45,7 @@ void    admin_menu(admin target_admin, user patient_list[],  admin admin_list[])
         return;
     while(1)
     {
-        menu(*patient, target_admin, "MAIN MENU", "Please choose one of the following functions to use: \n1. Update patient health condition.\n2. Check hyperglycaemia and hypoglycaemia patients\n3. Provide Medication\n4. Check patient profile\n5. Check medical guides\n6. Add a new admin", "Enter your choice: ");
+        menu(*patient, target_admin, "MAIN MENU", "Please choose one of the following functions to use: \n1. Update patient health condition.\n2. Check hyperglycaemia and hypoglycaemia patients\n3. Provide Medication\n4. Check patient profile\n5. Check medical guides\n6. Export all patient data\n7. Add a new admin", "Enter your choice: ");
         getline(cin, choice_str);
         if(exit_check(&cin))
         {
@@ -266,20 +267,19 @@ void    ogtt_update(user* patient, admin target_admin)
 }
 
 //hyper/hypo section
-bool    find_hyper_hypo(user patient_list[], string *)
+bool    find_hyper_hypo(user patient_list[], string *for_noti)
 {
     bool    hyper;
     bool    hypo;
-    string  for_noti;
 
     hyper = false;
     hypo = false;
-    for_noti = "Attention!!\nThe following patients are in risk of hypoglycaemia:\n";
+    *for_noti = "Attention!!\nThe following patients are in risk of hypoglycaemia:\n";
     for(int i = 0; patient_list[i].details.name != ""; i++)
     {
         if(patient_list[i].medical.hypoglycaemia == true)
         {
-            for_noti = for_noti + "\n" + to_string(i) + ". " + patient_list[i].details.name;
+            *for_noti = *for_noti + "\n" + to_string(i) + ". " + patient_list[i].details.name;
             hypo = true;
         }
     }
@@ -288,15 +288,15 @@ bool    find_hyper_hypo(user patient_list[], string *)
         if(patient_list[i].medical.hyperglycaemia == true)
         {
             if(hyper == false)
-                for_noti += "\n\nThe following patients are in risk of hyperglycaemia:\n";
-            for_noti = for_noti + "\n" + to_string(i) + ". " + patient_list[i].details.name;
+                *for_noti += "\n\nThe following patients are in risk of hyperglycaemia:\n";
+            *for_noti = *for_noti + "\n" + to_string(i) + ". " + patient_list[i].details.name;
             hyper = true;
         }
     }
-    for_noti += "Please check on their conditions as soon as possible.";
+    *for_noti += "Please check on their conditions as soon as possible.";
     if (hyper == true || hypo == true)
     {
-        notification(for_noti);
+        notification(*for_noti);
         return true;
     }
     else

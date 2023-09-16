@@ -70,7 +70,6 @@ void    add_meal(user *patient, string meal) //breakfast
 {
     string  choice_str;
     string  prompt;
-    string  temporary;
 
     prompt = "\nDid you eat your " + meal + " ?\nPress \"y\" for yes and \"n\" for no. ";
     while(1)
@@ -88,9 +87,8 @@ void    add_meal(user *patient, string meal) //breakfast
                 getline(cin, patient->breakfast.time);
                 if(exit_check(&cin))
                     return;
-                cout << "Fill in the level of food ingested for each food type ( ___ quantity of ___ food):\n";
+                cout << "Fill in the level of food ingested for each food type (None / Low / Medium / High):\n";
                 cout << "Carbohydrate: ";
-                getline(cin, temporary);
                 if(exit_check(&cin))
                     return;
                 cout << "Protein     : ";

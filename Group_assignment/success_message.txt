@@ -13,7 +13,7 @@ Your meal record has been added into the system successfully.
 Patient Venous Plasma Glucose value successfully updated.\However, the patient is in risk of hypoglycaemia.\Please do pay extra attention and carry out necessary safety precautions.
 Patient Venous Plasma Glucose value successfully updated.\However, the patient is in risk of hyperglycaemia.\Please do pay extra attention and carry out necessary safety precautions.
 You are in risk of Type 2 Diabetes Mellitus as your blood glucose level is abnormally high.\Please seek medical advices from our medical personnels as soon as possible.
-Your blood glucose level is abnormally low!\This indicates that you are in risk of hypoglycaemia.\Please consume something high in sugar or any medications issued by a doctor\If any symptoms such as dizziness or a headache are showing, please consult a doctor immediately.
+Your blood glucose level is abnormally low!\This indicates that you are in risk of hypoglycaemia.\Please consume something high in sugar or any medications issued by a doctor.\If any symptoms such as dizziness or a headache are showing, please consult a doctor immediately.
 Your blood glucose level is abnormally high!\This indicates that you are in risk of hyperglycaemia\Please ensure you are not skipping any insulin doses issued by the doctor\If any symptoms such as nausea and vomitting are occuring, please consult a doctor immediately.
 You are in risk of Pre-Type 2 Diabetes Mellitus as your blood glucose level is mildly high.\Please seek medical advices from our medical personnels.
 New admin successfully added!

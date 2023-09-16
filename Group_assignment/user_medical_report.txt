@@ -1,0 +1,31 @@
+User Medical Report
+Requested by: admin1
+Date        : Sat Sep 16 19:08:25 2023
+
+
+Patient's Medical Condition1. Kirigaya Kazuto
+Age          : 15
+Phone number : 0143242668
+Address      : Tokyo
+Current state |  Insulin  |  VPG(%)   State         Time                 |  HBA1c(%)   Time                 |  OGTT(%)   Time
+Normal        |  No       |  5        0             Thu Sep 14 21:54:05 2023|  5          Thu Sep 14 21:54:05 2023|  No record                      2. Yuki Asuna
+Age          : 16
+Phone number : 00
+Address      : Kyoto
+Current state |  Insulin  |  VPG(%)   State         Time                 |  HBA1c(%)   Time                 |  OGTT(%)   Time
+Normal        |  No       |  No record                                   |  No record                                   |  No record                      3. Suguha
+Age          : 14
+Phone number : 0
+Address      : Shiguya
+Current state |  Insulin  |  VPG(%)   State         Time                 |  HBA1c(%)   Time                 |  OGTT(%)   Time
+Normal        |  No       |  No record                                   |  No record                                   |  No record                      4. Shi non
+Age          : 15
+Phone number : 0
+Address      : Shiguya
+Current state |  Insulin  |  VPG(%)   State         Time                 |  HBA1c(%)   Time                 |  OGTT(%)   Time
+Normal        |  No       |  4        0             Thu Sep 14 23:01:35 2023|  No record                                   |  No record                      5. a
+Age          : c
+Phone number : d
+Address      : s
+Current state |  Insulin  |  VPG(%)   State         Time                 |  HBA1c(%)   Time                 |  OGTT(%)   Time
+Normal        |  No       |  No record                                   |  No record                                   |  No record                      
