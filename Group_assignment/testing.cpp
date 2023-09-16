@@ -1,12 +1,11 @@
-#include <iostream>
-#include <string>
-#include "headers.hpp"
-#include "template.hpp"
-#include "validation.hpp"
-using namespace std;
-
-int main (void)
+void doctor_feedback(USER c[], int* i_ptr)
 {
-    error_message(17);
-    return 0;
+	system("CLS");
+	char feedback[600];
+	cout << "Username:\t\t" << c[*i_ptr].username << endl;
+	cout << "User ic:\t\t" << c[*i_ptr].ic << endl;
+	cout << "User status:\t\t" << c[*i_ptr].status << endl;
+	cout << "Enter your feedback:\t";
+	cin.get(feedback, 50);
+	cout << &feedback[0];
 }

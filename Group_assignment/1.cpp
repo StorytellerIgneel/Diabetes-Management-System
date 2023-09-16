@@ -26,8 +26,8 @@ int main(void) //initial access control
 
     while(1)
     {
-        user_count = get_user_num("user");
-        admin_count = get_user_num("admin");
+        user_count = get_user_num("user") % 100; //
+        admin_count = get_user_num("admin") % 100;
         read_admin_data(admin_list, admin_count);
         read_user_data(user_list, user_count);
         menu(user(), admin(), "LOGIN", "Welcome to Diabetes Management System!\nPlease choose to login or to register:\n1. User login\n2. Register\n3. Admin login", "Enter choice: ");

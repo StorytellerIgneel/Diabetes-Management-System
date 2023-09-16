@@ -66,7 +66,6 @@ void    update_condition(user   *patient)
     map < int, function < void(user *) >> option_list;
     option_list[1] = update_diabetic_condition;
     option_list[2] = update_meal_record;
-    //option_list[2] = update_meal_record;
     
     while(1)
     {
@@ -551,5 +550,87 @@ void    reminder(user patient)
     }
     else
         return;
+}
+
+//view information
+void display_overview_details(user *patient, admin target_admin)
+{
+    string  for_content;
+    bool    is_user;
+
+    is_user = false;
+    if (patient->access.username != "")
+        is_user = true;
+    
+    if (is_user)
+        menu(*patient, admin(), "VIEW OVERVIEW MEDICAL DETAILS", "You can view your medical details here.");
+    
+    //Display overview details
+    cout << endl << "Medical Conditions" << endl;
+    cout << "Current state\t: " << (*patient).medical.current_state << endl;
+    if ((*patient).medical.insulin == true)
+        cout << "Insulin\t: " << "Yes" << endl << endl;
+    else
+        cout << "Insulin\t: " << "No" << endl << endl;
+    //VPG details
+    if ((*patient).medical.vpg != 0)
+        {
+        cout << "Venous Plasma Glucose Test: " << endl;
+        cout << "Time\t: " << (*patient).medical.vpg_time << endl;
+        cout << "Value\t: " << (*patient).medical.vpg << endl;
+        cout << "State\t: " << (*patient).medical.vpg_fasting << endl << endl;
+        }
+    else
+        cout << "Venous Plasma Glucose Test\t: " << "No record" << endl << endl;
+    //HBA1c details
+    if ((*patient).medical.hba1c != 0)
+        {
+        cout << "HbA1c Test: " << endl;
+        cout << "Time\t: " << (*patient).medical.hba1c_time << endl;
+        cout << "Value\t: " << (*patient).medical.hba1c << endl;
+        }
+    else
+        cout << "HbA1c Test: " << "No record" << endl << endl;
+    //OGTT details
+    if ((*patient).medical.ogtt != 0)
+        {
+        cout << "Oral Glucose Tolerance Test: " << endl;
+        cout << "Time\t: " << (*patient).medical.ogtt_time << endl;
+        cout << "Value\t: " << (*patient).medical.ogtt << endl;
+        }
+    else
+        cout << "Oral Glucose Tolerance Test: " << "No record" << endl << endl;
+
+    //Diet details
+    cout << "Diet details" << endl;
+    //Table header
+    cout << "          | Time                           | Carbohydrate | Protein | Vegetable | Fruit | Fats" << endl;
+    //Breakfast
+    cout << "Breakfast | "; 
+    if ((*patient).breakfast.option = true)
+        cout << setw(31) << (*patient).breakfast.time << "| " << setw(13) << (*patient).breakfast.carbohydrate <<"| "
+                        << setw(8) << (*patient).breakfast.protein << "| " << setw(10) << (*patient).breakfast.vegetable << "| "
+                        << setw(6) << (*patient).breakfast.fruit << "| " << setw(4) << (*patient).breakfast.fats << endl;
+    else
+        cout << "N/A";
+    //Lunch
+    cout << "Lunch     | ";
+    if ((*patient).lunch.option = true)
+        cout << setw(31) << (*patient).lunch.time << "| " << setw(13) << (*patient).lunch.carbohydrate << "| "
+                        << setw(8) << (*patient).lunch.protein << "| " << setw(10) << (*patient).lunch.vegetable << "| "
+                        << setw(6) << (*patient).lunch.fruit << "| " << setw(4) << (*patient).lunch.fats << endl;
+    else
+        cout << "N/A";
+    //Dinner//
+    cout << "Dinner    | ";
+    if ((*patient).dinner.option = true)
+        cout << setw(31) << (*patient).dinner.time<< "| " << setw(13) <<(*patient).dinner.carbohydrate << "| "
+                        << setw(8) << (*patient).dinner.protein << "| " << setw(10) << (*patient).dinner.vegetable << "| "
+                        << setw(6) << (*patient).dinner.fruit << "| " << setw(4) << (*patient).dinner.fats;
+    else
+        cout << "N/A" << endl;
+    cout << LINE << "Press Enter to continue.";
+    
+    return;
 }
 #endif

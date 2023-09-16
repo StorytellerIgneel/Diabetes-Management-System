@@ -19,6 +19,8 @@ void    medication_guide                (admin target_admin);
 bool    get_medication                  (int *step, string prompt, string *medication, admin target_admin);
 void    set_diet_control                (user *patient, admin target_admin);
 void    check_medical_guides            (user *patient, admin target_admin);
+void    export_data_control             (user* patient, user patient_list[], admin target_admin);
+void    export_data                     (user* patient, user patient_list[], admin target_admin);
 void    add_new_admin                   (admin target_admin, admin admin_list[]);
 //admin main menu
 void    admin_menu(admin target_admin, user patient_list[],  admin admin_list[])
@@ -33,7 +35,6 @@ void    admin_menu(admin target_admin, user patient_list[],  admin admin_list[])
     option_list[1] = update_patient_condition;
     option_list[3] = prescribe_medication_control;
     option_list[5] = check_medical_guides;
-    option_list[6] = 
     
     patient = nullptr;
     hyper_hypo = find_hyper_hypo(patient_list, &hyper_hypo_list);
@@ -77,6 +78,8 @@ void    admin_menu(admin target_admin, user patient_list[],  admin admin_list[])
                 else
                     error_message(18);
             }
+            else if (choice_int == 6)
+                export_data_control(patient, patient_list, target_admin);
             else if (choice_int == 7)
                 add_new_admin(target_admin, admin_list);
             else if (option_list.find(choice_int) != option_list.end())
@@ -577,17 +580,41 @@ void    check_medical_guides(user* patient, admin target_admin)
             error_message(1);
     }   
 }
+//export user data
+void    export_data_control(user* patient, user patient_list[], admin target_admin)
+{
+    string  choice;
 
-void    export_data(user patient_list[], admin target_admin)
+    while(1)
+    {
+        menu(*patient, target_admin, "PRODUCE USER INFORMATION REPORT", "Do you wish to produce a user information report of all patient?\nThe report shall contain the account details and medical information of all patients.", "Press y to continue or n to return: ");
+        getline(cin, choice);
+        if (!cin || choice == "n" || choice == "N")
+        {
+            cin.clear();
+            return;
+        }
+        else if (choice == "y" || choice == "Y")
+        {
+            export_data(patient, patient_list, target_admin);
+            return;
+        }
+        else
+            error_message(2);
+    } 
+}
+
+void    export_data(user* patient, user patient_list[], admin target_admin)
 {
 	ofstream out_file_user("user_medical_report.txt", ios::out);
-
     //Get current time
+    
     time_t current_time = time(nullptr);
     string string_time;
     current_time = time(nullptr);
     string_time  = ctime(&current_time);
 	
+    
 	//File header
 	out_file_user << "User Medical Report";
 	out_file_user << "\nRequested by: " << target_admin.admin_name;

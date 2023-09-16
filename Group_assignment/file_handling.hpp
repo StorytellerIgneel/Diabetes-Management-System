@@ -60,7 +60,7 @@ int     get_user_num(string access_type)
     }
     in_file_user.close();
     in_file_admin.close();
-    return (line_number / details_count);
+    return ((line_number / details_count) % 100);
 }
 
 void    read_user_data(user user_list[], int size)
