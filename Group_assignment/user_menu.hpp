@@ -17,6 +17,7 @@ void    display_overview_details    (user *patient, admin target_admin);
 void    target_for_control          (user *patient);
 void    receive_medication          (user *patient);
 bool    change_detail               (user *patient, string detail, bool new_user = false);
+void    reminder                    (user patient);
 
 //user main menu
 void    user_menu(user  *patient)
@@ -26,29 +27,39 @@ void    user_menu(user  *patient)
         reminder(*patient);
         string  choice_str;
         int     choice_int;
-        bool    received_medication;
+        bool    medication_received;
         map < int, function < void(user*) >> option_list;
         option_list[1] = update_condition;
         option_list[2] = update_account;
         option_list[4] = target_for_control;
         option_list[5] = receive_medication;
 
-        received_medication = false;
+        medication_received = true;
         if ((*patient).medical.medication_received == true)
         {
-            
-        }
             notification("You have received a medication prescription from your doctor. Please proceed to the section 'receive medication' to view the details.");
+            medication_received = false;
+        }
         menu(*patient, admin(), "MAIN MENU", "Please choose one of the following functions to use: \n1. Update health condition\n2. Update account details\n3. Review all account details and medical informations\n4. Recommendations and suggestions on target for control (T2DM patient only)\n5. Receive medication (T2DM patient only)", "Enter your choice: ");
         getline(cin, choice_str);
         if(exit_check(&cin))
-            return;
+        {
+            if ((*patient).medical.medication_received == true && medication_received == false)
+                error_message(20);
+            else
+                return;
+        }
+            
         if(is_number(choice_str, &choice_int))
         {
             if (choice_int == 3)
                 display_overview_details(patient, admin());
             else if (option_list.find(choice_int) != option_list.end())
+            {
                 option_list[choice_int](patient);  // Call the selected function
+                if (choice_int == 5)
+                    medication_received = true;
+            }
             else
                 error_message(2);
         }
@@ -519,7 +530,7 @@ void    target_for_control(user *patient)
     string  choice_str;
     int     choice_int;
 
-    if(patient->medical.diabetic_patient == false)
+    if (patient->medical.diabetic_patient == false && patient->medical.hyperglycaemia == false && patient->medical.hypoglycaemia == false)
     {
         error_message(11);
         return;

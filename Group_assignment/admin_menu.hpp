@@ -347,6 +347,11 @@ void    prescribe_medication_control(user   *patient, admin target_admin) //cont
 
 void    prescribe_medication(user   *patient, admin target_admin)
 {
+    if (patient->medical.diabetic_patient == false && patient->medical.hyperglycaemia == false && patient->medical.hypoglycaemia == false)
+    {
+        error_message(21);
+        return ;
+    }
     string  choice;
     string  medication;
     string  for_menu;

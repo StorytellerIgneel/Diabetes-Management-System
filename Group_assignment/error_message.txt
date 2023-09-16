@@ -8,7 +8,7 @@ New detail is same with the old detail. Please confirm again.
 An error has occured.
 Venous Plasma Glucose value should not be lower than 7, please confirm again.
 Something went wrong, please confirm again.
-You are not diagnosed with T2DM, hence you do not have targets for control.
+You are not diagnosed with Type-2 Diabetes Mellitus, hyperglycaemia, nor hypoglycaemia.\Hence, you do not have targets for control.
 The patient you chose does not exist. Please confirm that you have entered the correct patient name.
 You have no medications prescribed by your doctor currently.
 Admin name not found. Please confirm again.
@@ -17,3 +17,5 @@ Please check on the conditions of the hypoglycaemia and hyperglycaemia patients 
 Please enter something. You have entered nothing.
 There are no patients in risk of hyperglycaemia and hypoglycaemia right now.
 No meal record found.\Please do add a meal record before choosing to display them.
+You have not received your medication record from your doctor yet.\Please do receive and view them from menu option 5: receive medication.\You shall not be permitted to leave before you do so to ensure that you follow the medications given by your doctors. 
+The patient is not in risk of Type-2 Diabetes Mellitus, hyperglycaemia, nor hypoglycaemia.\Only patients in risk of those diseases can be prescribed with medication.
