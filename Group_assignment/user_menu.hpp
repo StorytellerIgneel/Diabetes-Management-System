@@ -23,15 +23,21 @@ void    user_menu(user  *patient)
 {
     while(1)
     {
+        reminder(*patient);
         string  choice_str;
         int     choice_int;
+        bool    received_medication;
         map < int, function < void(user*) >> option_list;
         option_list[1] = update_condition;
         option_list[2] = update_account;
         option_list[4] = target_for_control;
         option_list[5] = receive_medication;
 
+        received_medication = false;
         if ((*patient).medical.medication_received == true)
+        {
+            
+        }
             notification("You have received a medication prescription from your doctor. Please proceed to the section 'receive medication' to view the details.");
         menu(*patient, admin(), "MAIN MENU", "Please choose one of the following functions to use: \n1. Update health condition\n2. Update account details\n3. Review all account details and medical informations\n4. Recommendations and suggestions on target for control (T2DM patient only)\n5. Receive medication (T2DM patient only)", "Enter your choice: ");
         getline(cin, choice_str);
@@ -599,39 +605,47 @@ void    reminder(user patient)
 
     if (current_hour >= 5 && current_hour < 12) //morning (breakfast)
     {
-        if (patient.medical.diet == true || patient.medical.medication != "No precription" || patient.medical.insulin == true)
-            notification("Good Morning. You are required to do a Self Monitoring Blood Glucose (SMBG) test both BEFORE and AFTER your breakfast and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.\n");
-    }
-    else if (current_hour >= 12 && current_hour < 18) //afternoon (lunch)
-    {
-        if (patient.medical.diet == true || patient.medical.medication != "No precription")
+        if (patient.medical.diet == true || patient.medical.medication != "No prescription" || patient.medical.insulin == true)
         {
             if (patient.medical.diet == true)
                 reason += "\nDiet treatment";
-            if (patient.medical.medication != "No precription")
+            if (patient.medical.medication != "No prescription")
                 reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
-            notification("Good Afternoon. You are required to do the Self Monitoring Blood Glucose (SMBG) AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.");
+            if (patient.medical.insulin == true)
+                reason += "\nInsulin treatment";
+            notification("Good Morning. You are required to do a Self Monitoring Blood Glucose (SMBG) test both BEFORE and AFTER your breakfast and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.\n" + reason);
+        }  
+    }
+    else if (current_hour >= 12 && current_hour < 18) //afternoon (lunch)
+    {
+        if (patient.medical.diet == true || patient.medical.medication != "No prescription")
+        {
+            if (patient.medical.diet == true)
+                reason += "\nDiet treatment";
+            if (patient.medical.medication != "No prescription")
+                reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
+            notification("Good Afternoon. You are required to do the Self Monitoring Blood Glucose (SMBG) AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.\n" + reason);
         }
         else if (patient.medical.insulin == true)
         {
             reason += "\nInsulin treatment";
-            notification("Good Afternoon. You are required to do the Self Monitoring Blood Glucose (SMBG) both BEFORE and AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.");
+            notification("Good Afternoon. You are required to do the Self Monitoring Blood Glucose (SMBG) both BEFORE and AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.\n" + reason);
         }
     }
     else if (current_hour >= 18 && current_hour < 24) //evening (lunch)
     {
-        if (patient.medical.diet == true || patient.medical.medication != "No precription")
+        if (patient.medical.diet == true || patient.medical.medication != "No prescription")
         {
             if (patient.medical.diet == true)
                 reason += "\nDiet treatment";
-            if (patient.medical.medication != "No precription")
+            if (patient.medical.medication != "No prescription")
                 reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
-            notification("Good Evening. You are required to do the Self Monitoring Blood Glucose (SMBG) AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.");
+            notification("Good Evening. You are required to do the Self Monitoring Blood Glucose (SMBG) AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so." + reason);
         }
         else if (patient.medical.insulin == true)
         {
             reason += "\nInsulin treatment";
-            notification("Good Evening. You are required to do the Self Monitoring Blood Glucose (SMBG) both BEFORE and AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.");
+            notification("Good Evening. You are required to do the Self Monitoring Blood Glucose (SMBG) both BEFORE and AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so." + reason);
         }
     }
     else

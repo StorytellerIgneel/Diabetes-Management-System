@@ -68,6 +68,7 @@ void    read_user_data(user user_list[], int size)
     ifstream    in_file_details("user_details.txt", ios::in);
     ifstream    in_file_access("user_access.txt", ios::in);
     ifstream    in_file_medical("user_medical.txt", ios::in);
+    ifstream    in_file_meal("user_meal_record.txt", ios::in);
     string      bool_getter;
     string      double_getter;
     string      int_getter;
@@ -127,6 +128,34 @@ void    read_user_data(user user_list[], int size)
         getline(in_file_medical, user_list[counter].medical.medication_note);
         if (user_list[counter].medical.medication != "No prescription")
             user_list[counter].medical.medication_received = true;
+        //meals
+        //breakfast
+        getline(in_file_meal, bool_getter);
+        user_list[counter].breakfast.option = stob(bool_getter);
+        getline(in_file_meal, user_list[counter].breakfast.time);
+        getline(in_file_meal, user_list[counter].breakfast.carbohydrate);
+        getline(in_file_meal, user_list[counter].breakfast.protein);
+        getline(in_file_meal, user_list[counter].breakfast.vegetable);
+        getline(in_file_meal, user_list[counter].breakfast.fruit);
+        getline(in_file_meal, user_list[counter].breakfast.fats);
+        //lunch
+        getline(in_file_meal, bool_getter);
+        user_list[counter].lunch.option = stob(bool_getter);
+        getline(in_file_meal, user_list[counter].lunch.time);
+        getline(in_file_meal, user_list[counter].lunch.carbohydrate);
+        getline(in_file_meal, user_list[counter].lunch.protein);
+        getline(in_file_meal, user_list[counter].lunch.vegetable);
+        getline(in_file_meal, user_list[counter].lunch.fruit);
+        getline(in_file_meal, user_list[counter].lunch.fats);
+        //dinner
+        getline(in_file_meal, bool_getter);
+        user_list[counter].dinner.option = stob(bool_getter);
+        getline(in_file_meal, user_list[counter].dinner.time);
+        getline(in_file_meal, user_list[counter].dinner.carbohydrate);
+        getline(in_file_meal, user_list[counter].dinner.protein);
+        getline(in_file_meal, user_list[counter].dinner.vegetable);
+        getline(in_file_meal, user_list[counter].dinner.fruit);
+        getline(in_file_meal, user_list[counter].dinner.fats);
         counter++;
     }   
     in_file_details.close();
@@ -140,7 +169,9 @@ void    export_user_data(user user_list[], admin admin_list[])
     ofstream    out_file_details("user_details.txt", ios::out);
     ofstream    out_file_access("user_access.txt", ios::out);
     ofstream    out_file_medical("user_medical.txt", ios::out);
+    ofstream    out_file_meal("user_meal_record.txt", ios::out);
     ofstream    out_file_admin("admin.txt", ios::out);
+
     int         counter;
 
     counter = 0;
@@ -151,6 +182,7 @@ void    export_user_data(user user_list[], admin admin_list[])
             out_file_details << endl;
             out_file_access << endl;
             out_file_medical << endl;
+            out_file_meal << endl;
         }
         // details section
         out_file_details << user_list[counter].details.name << endl;
@@ -176,6 +208,31 @@ void    export_user_data(user user_list[], admin admin_list[])
         out_file_medical << user_list[counter].medical.ogtt_time << endl;
         out_file_medical << user_list[counter].medical.medication << endl;
         out_file_medical << user_list[counter].medical.medication_note;
+        //meal section
+        //breakfast
+        out_file_meal << ((user_list[counter].breakfast.option == true)? "true\n" : "false\n");
+        out_file_meal << user_list[counter].breakfast.time << endl;
+        out_file_meal << user_list[counter].breakfast.carbohydrate << endl;
+        out_file_meal << user_list[counter].breakfast.protein << endl;
+        out_file_meal << user_list[counter].breakfast.vegetable << endl;
+        out_file_meal << user_list[counter].breakfast.fruit << endl;
+        out_file_meal << user_list[counter].breakfast.fats << endl;
+        //lunch
+        out_file_meal << ((user_list[counter].lunch.option == true)? "true\n" : "false\n");
+        out_file_meal << user_list[counter].lunch.time << endl;
+        out_file_meal << user_list[counter].lunch.carbohydrate << endl;
+        out_file_meal << user_list[counter].lunch.protein << endl;
+        out_file_meal << user_list[counter].lunch.vegetable << endl;
+        out_file_meal << user_list[counter].lunch.fruit << endl;
+        out_file_meal << user_list[counter].lunch.fats << endl;
+        //dinner
+        out_file_meal << ((user_list[counter].dinner.option == true)? "true\n" : "false\n");
+        out_file_meal << user_list[counter].dinner.time << endl;
+        out_file_meal << user_list[counter].dinner.carbohydrate << endl;
+        out_file_meal << user_list[counter].dinner.protein << endl;
+        out_file_meal << user_list[counter].dinner.vegetable << endl;
+        out_file_meal << user_list[counter].dinner.fruit << endl;
+        out_file_meal << user_list[counter].dinner.fats;
         counter++;
     }
     counter = 0;

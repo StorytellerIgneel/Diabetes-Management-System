@@ -194,7 +194,7 @@ void    display_meal(user *patient)
             return;
         if (meal_choice == "1")
         {   
-            if (patient->breakfast.option = true)
+            if (patient->breakfast.option == true)
             {            
                 to_menu = "Carbohydrates : " + patient->breakfast.carbohydrate +
                         "\nProtein       : " + patient->breakfast.protein +
@@ -202,13 +202,14 @@ void    display_meal(user *patient)
                         "\nFruits        : " + patient->breakfast.fruit +
                         "\nFats          : " + patient->breakfast.fats;
                 menu(*patient, admin(), "BREAKFAST RECORD", "Time of meal taken : " + patient->breakfast.time +"\n"+ to_menu, "Press enter to continue");
+                cin.get();
             }
             else
                 error_message(19); //No meal record
         }
         else if (meal_choice == "2")
         {
-            if (patient->lunch.option = true)
+            if (patient->lunch.option == true)
             {
                 to_menu = "Carbohydrates : " + patient->lunch.carbohydrate +
                         "\nProtein       : " + patient->lunch.protein +
@@ -216,13 +217,14 @@ void    display_meal(user *patient)
                         "\nFruits        : " + patient->lunch.fruit +
                         "\nFats          : " + patient->lunch.fats;
                 menu(*patient, admin(), "LUNCH RECORD", "Time of meal taken : " + patient->lunch.time +"\n"+ to_menu, "Press enter to continue");
+                cin.get();
             }
             else
                 error_message(19); //No meal record
         }
         else if (meal_choice == "3")
         {
-            if (patient->dinner.option = true)
+            if (patient->dinner.option == true)
             {
                 to_menu = "Carbohydrates : " + patient->dinner.carbohydrate +
                     "\nProtein       : " + patient->dinner.protein +
@@ -230,6 +232,7 @@ void    display_meal(user *patient)
                     "\nFruits        : " + patient->dinner.fruit +
                     "\nFats          : " + patient->dinner.fats;
                 menu(*patient, admin(), "DINNER RECORD", "Time of meal taken : " + patient->dinner.time +"\n"+ to_menu, "Press enter to continue");
+                cin.get();
             }
             else
                 error_message(19); //No meal record

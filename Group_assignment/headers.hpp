@@ -61,12 +61,12 @@ struct medical_condition
 struct diet_record
 {
     bool     option = false;
-    string   time;
-    string   carbohydrate;   // Carbohydrate ingested level
-    string   protein;        // Protein ingested level 
-    string   vegetable;      // Vegetable ingested level
-    string   fruit;          // Fruit ingested level
-    string   fats;           // Fats ingested level  
+    string   time = "No record";
+    string   carbohydrate = "No record";   // Carbohydrate ingested level
+    string   protein = "No record";        // Protein ingested level 
+    string   vegetable = "No record";      // Vegetable ingested level
+    string   fruit = "No record";          // Fruit ingested level
+    string   fats = "No record";           // Fats ingested level  
 };
 struct user
 {
