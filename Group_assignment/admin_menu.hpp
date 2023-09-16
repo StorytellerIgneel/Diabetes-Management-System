@@ -325,10 +325,11 @@ void    prescribe_medication_control(user   *patient, admin target_admin) //cont
     map <int, function<void(user* , admin)>> option_list;
     option_list[1] = set_diet_control;
     option_list[2] = prescribe_medication;
+    option_list[3] = insulin_issue;
 
     while(1)
     {
-        menu(*patient, target_admin, "ISSUE MEDICATION ", "Choose one of the following to issue/prescriibe:\n1. Diet control\n2. Medications (OGLDs) \n3. Insulin", "Press y to continue and n to quit.");
+        menu(*patient, target_admin, "ISSUE MEDICATION ", "Choose one of the following to issue/prescriibe:\n1. Diet control\n2. Medications (OGLDs) \n3. Insulin", "Choose one of the following: ");
         getline(cin, choice_str);
         if(exit_check(&cin))
             return;
