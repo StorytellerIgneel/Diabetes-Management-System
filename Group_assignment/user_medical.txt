@@ -117,4 +117,4 @@ No record
 0
 No record
 No prescription
-No extra note
+y

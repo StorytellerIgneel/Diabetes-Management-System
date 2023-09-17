@@ -67,7 +67,7 @@ void    user_menu(user  *patient)
     }
 }
 
-string    get_time()
+string  get_time()
 {
     time_t  current_time;
     string  current_time_str;
@@ -522,7 +522,7 @@ void    display_overview_details(user *patient, admin target_admin)
     if ((*patient).breakfast.time != "No record")
         cout << setw(11) << (*patient).breakfast.time << "| " << setw(13) << (*patient).breakfast.carbohydrate <<"| "
                         << setw(10) << (*patient).breakfast.protein << "| " << setw(10) << (*patient).breakfast.vegetable << "| "
-                        << setw(6) << (*patient).breakfast.fruit << "| " << setw(4) << (*patient).breakfast.fats << endl;
+                        << setw(10) << (*patient).breakfast.fruit << "| " << (*patient).breakfast.fats << endl;
     else 
         cout << "No record"  << endl;
     //Lunch
@@ -530,7 +530,7 @@ void    display_overview_details(user *patient, admin target_admin)
     if ((*patient).lunch.time != "No record")
         cout << setw(11) << (*patient).lunch.time << "| " << setw(13) << (*patient).lunch.carbohydrate << "| "
                         << setw(10) << (*patient).lunch.protein << "| " << setw(10) << (*patient).lunch.vegetable << "| "
-                        << setw(10) << (*patient).lunch.fruit << "| " << setw(4) << (*patient).lunch.fats << endl;
+                        << setw(10) << (*patient).lunch.fruit << "| " << (*patient).lunch.fats << endl;
     else
         cout << "No record" << endl;
     //Dinner//
@@ -538,7 +538,7 @@ void    display_overview_details(user *patient, admin target_admin)
     if ((*patient).dinner.time != "No record")
         cout << setw(11) << (*patient).dinner.time<< "| " << setw(13) <<(*patient).dinner.carbohydrate << "| "
                         << setw(10) << (*patient).dinner.protein << "| " << setw(10) << (*patient).dinner.vegetable << "| "
-                        << setw(10) << (*patient).dinner.fruit << "| " << setw(4) << (*patient).dinner.fats << endl;
+                        << setw(10) << (*patient).dinner.fruit << "| " << (*patient).dinner.fats << endl;
     else
         cout << "No record" << endl;
     cout << LINE << "Press Enter to continue.";
@@ -598,26 +598,25 @@ void    receive_medication (user *patient)
     string      filename = patient->details.name + "_medication.txt";
     string      for_menu;
     string      medication;
-    ofstream    out_file_medication(filename, ios::in);
+    ofstream    out_file_medication(filename, ios::out);
     size_t      newline_count;
     size_t      index;
     int         newline_pos;
 
-    medication = patient->medical.medication_received;
     index = 0;
-    newline_count = count(medication.begin(), medication.end(), '\\');
+    newline_count = count(patient->medical.medication.begin(), patient->medical.medication.end(), '\\');
     if (newline_count != 0) // newline present inside message
     {
         for (int i = 0; i <= newline_count; i++)
         {
-            newline_pos = medication.find('\\', index);
-            medication += medication.substr(index, newline_pos - index) + "\n";
+            newline_pos = patient->medical.medication.find('\\', index);
+            medication += patient->medical.medication.substr(index, newline_pos - index) + "\n";
             index = newline_pos + 1;
         }
     }
     for_menu = "You can view your medications here.\nThe following is the medication prescribed to you by your doctor:\n" + medication;
     if(patient->medical.medication_note != "No extra note")
-        for_menu = for_menu + "\n\nExtra note from doctor:\n" + patient->medical.medication_note;
+        for_menu = for_menu + "\nExtra note from doctor:\n" + patient->medical.medication_note;
     while(1)
     {
         menu(*patient, admin(), "RECEIVE MEDICATION", for_menu, "Would you like to print this out?\nPress y for yes and n for no: ");
@@ -626,15 +625,17 @@ void    receive_medication (user *patient)
             return;
         else if (choice == "Y" || choice == "y")
         {
-            out_file_medication << patient->medical.medication;
-            patient->medical.medication = "\n";
+            newline_pos = for_menu.find('\n');
+            for_menu = for_menu.substr(newline_pos, for_menu.length() - newline_pos);
+            out_file_medication << for_menu;
+            patient->medical.medication = "No prescription";
             patient->medical.medication_received = false;
             success_message(4);
             return;
         }
         else if (choice == "N" || choice == "n")
         {
-            patient->medical.medication = "\n";
+            patient->medical.medication = "No prescription";
             patient->medical.medication_received = false;
             return;
         }
@@ -667,7 +668,7 @@ void    reminder(user patient)
                 reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
             if (patient.medical.insulin == true)
                 reason += "\nInsulin treatment";
-            notification("Good Morning. You are required to do a Self Monitoring Blood Glucose (SMBG) test both BEFORE and AFTER your breakfast and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.\n" + reason);
+            notification("Good Morning. You are required to do a Self Monitoring Blood Glucose (SMBG) test both BEFORE and AFTER your breakfast and record your results in the section 1 'Update health condition'.\n" + reason);
         }  
     }
     else if (current_hour >= 12 && current_hour < 18) //afternoon (lunch)
@@ -678,12 +679,12 @@ void    reminder(user patient)
                 reason += "\nDiet treatment";
             if (patient.medical.medication != "No prescription")
                 reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
-            notification("Good Afternoon. You are required to do the Self Monitoring Blood Glucose (SMBG) AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.\n" + reason);
+            notification("Good Afternoon. You are required to do the Self Monitoring Blood Glucose (SMBG) AFTER your lunch and record your results in the section 1 'Update health condition'.\n" + reason);
         }
         else if (patient.medical.insulin == true)
         {
             reason += "\nInsulin treatment";
-            notification("Good Afternoon. You are required to do the Self Monitoring Blood Glucose (SMBG) both BEFORE and AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so.\n" + reason);
+            notification("Good Afternoon. You are required to do the Self Monitoring Blood Glucose (SMBG) both BEFORE and AFTER your lunch and record your results in the section 1 'Update health condition'.\n" + reason);
         }
     }
     else if (current_hour >= 18 && current_hour < 24) //evening (lunch)
@@ -694,16 +695,15 @@ void    reminder(user patient)
                 reason += "\nDiet treatment";
             if (patient.medical.medication != "No prescription")
                 reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
-            notification("Good Evening. You are required to do the Self Monitoring Blood Glucose (SMBG) AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so." + reason);
+            notification("Good Evening. You are required to do the Self Monitoring Blood Glucose (SMBG) AFTER your lunch and record your results in the section 1 'Update health condition'." + reason);
         }
         else if (patient.medical.insulin == true)
         {
             reason += "\nInsulin treatment";
-            notification("Good Evening. You are required to do the Self Monitoring Blood Glucose (SMBG) both BEFORE and AFTER your lunch and record your results in the section 1 'Update health condition'.\nPlease be informed that you are not permitted to leave the system before you do so." + reason);
+            notification("Good Evening. You are required to do the Self Monitoring Blood Glucose (SMBG) both BEFORE and AFTER your lunch and record your results in the section 1 'Update health condition'." + reason);
         }
     }
     else
         return;
 }
-
 #endif

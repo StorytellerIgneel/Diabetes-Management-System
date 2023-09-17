@@ -15,13 +15,13 @@ bool    find_hyper_hypo                 (user patient_list[], string *for_noti, 
 void    check_hyper_hypo                (string hyper_hypo_list, admin target_admin);
 void    prescribe_medication_control    (user *patient, admin target_admin);
 void    prescribe_medication            (user *patient, admin target_admin);
-void    medication_guide                (admin target_admin);
 bool    get_medication                  (int *step, string prompt, string *medication, admin target_admin);
 void    set_diet_control                (user *patient, admin target_admin);
 void    insulin_issue                   (user *patient, admin target_admin);
 void    check_medical_guides            (user *patient, admin target_admin);
 void    export_data_control             (user* patient, user patient_list[], admin target_admin);
-void    export_data                     (user* patient, user patient_list[], admin target_admin);
+void    export_all_data                 (user* patient, user patient_list[], admin target_admin);
+void    export_selected_user            (user* patient, user patient_list[], admin target_admin);
 void    add_new_admin                   (admin target_admin, admin admin_list[]);
 //admin main menu
 void    admin_menu(admin target_admin, user patient_list[],  admin admin_list[])
@@ -48,7 +48,7 @@ void    admin_menu(admin target_admin, user patient_list[],  admin admin_list[])
             return;
         while(1)
         {
-            menu(*patient, target_admin, "MAIN MENU", "Please choose one of the following functions to use: \n1. Update patient health condition.\n2. Check hyperglycaemia and hypoglycaemia patients\n3. Provide Medication\n4. Check patient profile\n5. Check medical guides\n6. Export all patient data\n7. Add a new admin", "Enter your choice: ");
+            menu(*patient, target_admin, "MAIN MENU", "Please choose one of the following functions to use: \n1. Update patient health condition.\n2. Check hyperglycaemia and hypoglycaemia patients\n3. Provide Medication\n4. Check patient profile\n5. Check medical guides\n6. Export patient data\n7. Add a new admin", "Enter your choice: ");
             getline(cin, choice_str);
             if(exit_check(&cin))
             {
@@ -389,6 +389,10 @@ void    prescribe_medication(user   *patient, admin target_admin)
     string  unit;
     string  frequency;
     string  note;
+    string  modified_menu;
+    size_t  newline_count;
+    size_t  index;
+    int     newline_pos;
     int     step;
 
     step = 1;
@@ -425,12 +429,23 @@ void    prescribe_medication(user   *patient, admin target_admin)
     }
     medication = formulation + " " + unit + " of " + name + ".\\Please take the drug " + frequency + " times a day.\\For more information, please contact your doctor.";
     if (note != "No extra note")
-        for_menu = "Your medication is:\n" + medication + "\nExtra note from doctor: " + note;
+        for_menu = medication + "\nExtra note from doctor: " + note;
     else
         for_menu = medication;
+    index = 0;
+    newline_count = count(for_menu.begin(), for_menu.end(), '\\');
+    if (newline_count != 0) // newline present inside message
+    {
+        for (int i = 0; i <= newline_count; i++)
+        {
+            newline_pos = for_menu.find('\\', index);
+            modified_menu += for_menu.substr(index, newline_pos - index) + "\n";
+            index = newline_pos + 1;
+        }
+    }
     while(1)
     {
-        menu(*patient, target_admin, "Medication Prescription", "The medication you have prescribed is:\n" + for_menu, "Are you sure that you want to prescribe this medication for the patient? Do double check before confirming,\nPress y for yes and n to quit: ");
+        menu(*patient, target_admin, "Medication Prescription", "The medication you have prescribed is:\n" + modified_menu, "Are you sure that you want to prescribe this medication for the patient? Do double check before confirming,\nPress y for yes and n to quit: ");
         getline(cin, choice);
         if(!cin || choice == "n" || choice == "N")
             return;
@@ -447,22 +462,6 @@ void    prescribe_medication(user   *patient, admin target_admin)
     return;
 }
 
-void    medication_guide(admin target_admin)
-{
-    ifstream    print_guide("medication_guide.txt", ios::in);
-    string      line;
-    string      for_menu;
-    string      dummy;
-
-    for_menu = "This is the guide for the medication prescription: \n";
-    while(getline(print_guide, line))
-        for_menu += line;
-    menu(user(), target_admin, "Medication Prescription Guide", for_menu, "Press enter to continue.");
-    cin >> dummy;
-    print_guide.close();
-    return;
-}
-
 bool    get_medication(int *step, string prompt, string *medication, admin target_admin)
 {
     string  temporary;
@@ -471,29 +470,25 @@ bool    get_medication(int *step, string prompt, string *medication, admin targe
         cout << prompt;
         getline(cin, temporary);
         *medication = temporary;
-        cout << "Entered,";
-        cin.get();
         if(exit_check(&cin))
             return true;
         else if(*medication == "G" || *medication == "g")
-            medication_guide(target_admin);
+        {
+            menu(user(), target_admin, "GUIDE FOR MEDICATION PRESCRIPTION", "The guide for medication prescription is as follows: ", "Press enter to continue.", false, "medication_guide.txt");
+            cin.get();
+        }
         else if (*step != 1 && (*medication == "B" || *medication == "b"))
         {
             *step -= 1;
             return false;
         }
-        else if (*step == 5 && (*medication == "Y" || *medication == "y"))
-        {
-            *medication = "Extra note: " + *medication;
-            return false;
-        }
-        else if (*step == 5 && (*medication == "N" || *medication == "n"))
-        {
-            *medication = "No extra note";
-            return false;
-        }
         else
         {
+            if (*step == 5)
+            {
+                if (*medication == "N" || *medication == "n")
+                    *medication = "No extra note";
+            }
             *step += 1;
             return false;
         }
@@ -637,28 +632,34 @@ void    check_medical_guides(user* patient, admin target_admin)
 //export user data
 void    export_data_control(user* patient, user patient_list[], admin target_admin)
 {
-    string  choice;
+    string  choice_str;
+    int     choice_int;
+    map < int, function < void(user*, user[], admin) >> option_list;
+    option_list[1] = export_all_data;
+    option_list[2] = export_selected_user;
 
     while(1)
     {
-        menu(*patient, target_admin, "PRODUCE USER INFORMATION REPORT", "Do you wish to produce a user information report of all patient?\nThe report shall contain the account details and medical information of all patients.", "Press y to continue or n to return: ");
-        getline(cin, choice);
-        if (!cin || choice == "n" || choice == "N")
-        {
-            cin.clear();
+        menu(*patient, target_admin, "PRODUCE USER INFORMATION REPORT", "You can choose to produce:\n1. Current patient information report\n2. All patient information report\n\nThe report shall contain the account details and medical information of all patients.", "Please enter your choice: ");
+        getline(cin, choice_str);
+        if(exit_check(&cin))
             return;
-        }
-        else if (choice == "y" || choice == "Y")
+        else if (is_number(choice_str, &choice_int))
         {
-            export_data(patient, patient_list, target_admin);
-            return;
+            if (option_list.find(choice_int) != option_list.end())
+            {
+                option_list[choice_int](patient, patient_list, target_admin);  // Call the selected function
+                return;
+            }
+            else
+                error_message(2);
         }
         else
-            error_message(2);
+            error_message(1);
     } 
 }
 
-void    export_data(user* patient, user patient_list[], admin target_admin)
+void    export_all_data(user* patient, user patient_list[], admin target_admin)
 {
 	ofstream out_file_user("user_medical_report.txt", ios::out);
     //Get current time
@@ -725,6 +726,95 @@ void    export_data(user* patient, user patient_list[], admin target_admin)
 
 	out_file_user.close();
     success_message(29);
+	return; 
+}
+
+void    export_selected_user(user* patient, user patient_list[], admin target_admin)
+{
+	ofstream out_file_patient((*patient).details.name + "_medical_report.txt", ios::out);
+
+    //Get current time
+    time_t current_time = time(nullptr);
+    string string_time;
+    current_time = time(nullptr);
+    string_time  = ctime(&current_time);
+	
+	//File header
+	out_file_patient << (*patient).details.name + "'s Medical Report";
+	out_file_patient << "\nDate        : " << string_time << "\n\n";
+	out_file_patient << (*patient).details.name + "'s Medical Condition\n";
+
+    //Basic details
+    out_file_patient << "Age          : " << (*patient).details.age;
+    out_file_patient << "\nPhone number : " << (*patient).details.phone_number;
+    out_file_patient << "\nAddress      : " << (*patient).details.home_address;
+    //Medical conditions
+    out_file_patient << "\nCurrent state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time\n";
+    out_file_patient << left;
+    //Current state
+    out_file_patient << setw(14) << (*patient).medical.current_state << "|  ";
+    //Insulin
+    if ((*patient).medical.insulin == true)
+        out_file_patient << setw(9) << "Yes" << "|  ";
+    else
+        out_file_patient << setw(9) << "No" << "|  ";
+    //VPD details
+    if ((*patient).medical.vpg != 0)
+        {
+        out_file_patient << setw(9) << (*patient).medical.vpg; 
+        if ((*patient).medical.vpg_fasting == true)
+            out_file_patient << setw(14) << "Fasting";
+        else
+            out_file_patient << setw(14) << "Random";
+        out_file_patient << setw(24) << (*patient).medical.vpg_time << "|  ";
+        }
+    else
+        out_file_patient << setw(47) << "No record" << "|  ";
+    //HBA1c details
+    if ((*patient).medical.hba1c != 0)
+        out_file_patient << setw(11) << (*patient).medical.hba1c << setw(24) 
+                        << (*patient).medical.hba1c_time << "|  ";
+    else 
+        out_file_patient << setw(35) << "No record" << "|  ";
+    //OGTT details
+    if ((*patient).medical.ogtt != 0)
+        out_file_patient << setw(10) << (*patient).medical.ogtt
+                        << setw(21) << (*patient).medical.ogtt_time << "\n\n";
+    else 
+        out_file_patient << setw(31) << "No record" << "\n\n" ;
+
+    //Diet details
+        out_file_patient << "Diet details:" << "\n";
+    //Table header
+    out_file_patient << "          | Time       | Carbohydrate | Protein   | Vegetable | Fruit     | Fats" << "\n";
+    //Breakfast
+    out_file_patient << "Breakfast | "; 
+    out_file_patient << left;
+    if ((*patient).breakfast.time != "No record")
+        out_file_patient << setw(11) << (*patient).breakfast.time << "| " << setw(13) << (*patient).breakfast.carbohydrate <<"| "
+                        << setw(10) << (*patient).breakfast.protein << "| " << setw(10) << (*patient).breakfast.vegetable << "| "
+                        << setw(10) << (*patient).breakfast.fruit << "| " << (*patient).breakfast.fats << "\n";
+    else 
+        out_file_patient << "No record"  << "\n";
+    //Lunch
+    out_file_patient << "Lunch     | ";
+    if ((*patient).lunch.time != "No record")
+        out_file_patient << setw(11) << (*patient).lunch.time << "| " << setw(13) << (*patient).lunch.carbohydrate << "| "
+                        << setw(10) << (*patient).lunch.protein << "| " << setw(10) << (*patient).lunch.vegetable << "| "
+                        << setw(10) << (*patient).lunch.fruit << "| " << (*patient).lunch.fats << "\n";
+    else
+        out_file_patient << "No record" << "\n";
+    //Dinner//
+    out_file_patient << "Dinner    | ";
+    if ((*patient).dinner.time != "No record")
+        out_file_patient << setw(11) << (*patient).dinner.time<< "| " << setw(13) <<(*patient).dinner.carbohydrate << "| "
+                        << setw(10) << (*patient).dinner.protein << "| " << setw(10) << (*patient).dinner.vegetable << "| "
+                        << setw(10) << (*patient).dinner.fruit << "| " << (*patient).dinner.fats << "\n";
+    else
+        out_file_patient << "No record" << "\n";
+
+	out_file_patient.close();
+
 	return; 
 }
 //add a new admin

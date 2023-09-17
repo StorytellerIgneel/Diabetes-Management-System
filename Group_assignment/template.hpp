@@ -105,7 +105,11 @@ void    menu(user   patient, admin target_admin, string stage, string content, s
 
         cout << content << endl << endl;
         while(getline(print_file, line))
+        {
             cout << line;
+            if (line[line.length() - 1] == '\\')
+                cout << endl;
+        }
         cout << endl << LINE << prompt;
         print_file.close();
     }
