@@ -67,6 +67,12 @@ void    menu(user   patient, admin target_admin, string stage, string content, s
     string      username;
     string      patient_name;
     string      line;
+    string      current_time_str;
+    time_t      current_time;
+
+    current_time = time(nullptr);
+    current_time_str = ctime(&current_time);
+    current_time_str.pop_back();
 
     system("cls");
     cout << LINE    
@@ -86,7 +92,7 @@ void    menu(user   patient, admin target_admin, string stage, string content, s
     else //guest mode
         username = "Guest";
 
-    cout << left << username << right << setw(TERMINAL_WIDTH - username.length()) << get_time();
+    cout << left << username << right << setw(TERMINAL_WIDTH - username.length()) << current_time_str << endl;
 
     if (patient_name != "")
         cout << patient_name << endl;

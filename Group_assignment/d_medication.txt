@@ -1,9 +1,0 @@
-
-The following is the medication prescribed to you by your doctor:
-d d of d.
-Please take the drug d times a day.
-For more information, please contact your doctor.
-
-
-Extra note from doctor:
-y

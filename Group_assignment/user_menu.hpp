@@ -19,7 +19,6 @@ void    target_for_control          (user *patient);
 void    receive_medication          (user *patient);
 bool    change_detail               (user *patient, string detail, user patient_list[], bool new_user);
 
-
 //user main menu
 //Allow user choose to update their own condition, update account details, view their overview medical details, target for control and view medications give by doctors
 void    user_menu(user  *patient)

@@ -5,14 +5,6 @@
 #include "headers.hpp"
 #include "template.hpp"
 
-bool    is_number           (string  target, int        *converted);
-bool    is_double           (string  target, double     *converted);
-string  remove_trail        (string input);
-void    success_message     (unsigned int success_code, string username = "");
-void    error_message       (unsigned int error_code,   string missing_file = "");
-int     check_file_present  ();
-int     exit_check          (istream *cin);
-
 //Return true if target is integer, and the integer value
 bool    is_number(string  target, int    *converted)
 {
@@ -108,7 +100,6 @@ int     check_file_present()
     "clinic_followup_treatment.txt", 
     "control_targets.txt", 
     "error_message.txt", 
-    "glucose_lowering_agents.txt", 
     "hba1c_less_tight.txt", 
     "hba1c_tight.txt", 
     "individualised_hba1c_target.txt", 
@@ -123,7 +114,7 @@ int     check_file_present()
     "user_medical.txt", 
     "user_medical_report.txt"};
 
-    for(int    file_list_counter   = 0; file_list_counter < 19; file_list_counter++)
+    for(int    file_list_counter   = 0; file_list_counter < 18; file_list_counter++)
     {
         ifstream    in_file(file_list[file_list_counter], ios::in);
         if(!in_file) //file not present
