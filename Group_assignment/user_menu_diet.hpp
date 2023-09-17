@@ -29,7 +29,7 @@ void    update_meal_record(user *patient)
         getline(cin, choice_str);            
         if(exit_check(&cin))
             return;
-        if(is_number(choice_str, &choice_int))
+        else if(is_number(choice_str, &choice_int))
         {
             if (option_list.find(choice_int) != option_list.end())
                 option_list[choice_int](patient);  // Call the selected function
@@ -53,7 +53,7 @@ void    add_record(user *patient)
         getline(cin, choice_str);            
         if(exit_check(&cin))
             return;
-        if(is_number(choice_str, &choice_int))
+        else if(is_number(choice_str, &choice_int))
         {
             if (choice_int >= 1 && choice_int <= 3)
                 add_meal(patient, meal_list[choice_int]);  // Call the selected function
@@ -78,7 +78,7 @@ void    add_meal(user *patient, string meal) //breakfast
         getline(cin, choice_str);
         if(exit_check(&cin))
             return;
-        if((choice_str == "y" || choice_str == "Y") )
+        else if((choice_str == "y" || choice_str == "Y") )
         {   
             if (meal == "Breakfast")
             {
@@ -190,7 +190,7 @@ void    display_meal(user *patient)
         getline(cin, meal_choice);
         if(exit_check(&cin))
             return;
-        if (meal_choice == "1")
+        else if (meal_choice == "1")
         {   
             if (patient->breakfast.option == true)
             {            

@@ -19,8 +19,8 @@ void    notification(string notification)
 {   
     string  modified_notification;
     size_t  newline_count;
-    int     newline_pos;
     size_t  index;
+    int     newline_pos;
 
     index = 0;
     newline_count = count(notification.begin(), notification.end(), '\\');

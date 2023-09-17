@@ -92,7 +92,7 @@ void    update_condition(user   *patient)
         getline(cin, choice_str);            
         if(exit_check(&cin))
             return;
-        if(is_number(choice_str, &choice_int))
+        else if(is_number(choice_str, &choice_int))
         {
             if (option_list.find(choice_int) != option_list.end())
                 option_list[choice_int](patient);  // Call the selected function
@@ -120,7 +120,7 @@ void    update_diabetic_condition(user   *patient)
         getline(cin, choice_str);            
         if(exit_check(&cin))
             return;
-        if(is_number(choice_str, &choice_int))
+        else if(is_number(choice_str, &choice_int))
         {
             if (option_list.find(choice_int) != option_list.end())
                 option_list[choice_int](patient, admin());  // Call the selected function
@@ -152,7 +152,7 @@ void    vpg_test(user *patient, admin target_admin)
         getline(cin, choice_str);
         if(exit_check(&cin))
             return;
-        if(is_number(choice_str, &choice_int))
+        else if(is_number(choice_str, &choice_int))
         {
             if (choice_int == 1) // fasting
             {
@@ -165,7 +165,7 @@ void    vpg_test(user *patient, admin target_admin)
                     getline(cin, vpg_str);
                     if(exit_check(&cin))
                         break;
-                    if(is_double(vpg_str, &vpg_double))
+                    else if(is_double(vpg_str, &vpg_double))
                     {
                         if (vpg_double < 7.00 && vpg_double > 0)
                         {
@@ -245,7 +245,7 @@ void    vpg_test(user *patient, admin target_admin)
                     getline(cin, vpg_str);
                     if(exit_check(&cin))
                         break;
-                    if(is_double(vpg_str, &vpg_double))
+                    else if(is_double(vpg_str, &vpg_double))
                     {
                         if (vpg_double < 11.1 && vpg_double > 0)
                         {
@@ -308,7 +308,7 @@ void    hba1c_test(user *patient, admin target_admin)
         getline(cin, hba1c_str);
         if(exit_check(&cin))
             return; 
-        if(is_double(hba1c_str, &hba1c_double))
+        else if(is_double(hba1c_str, &hba1c_double))
         {
             if (hba1c_double < 5.7 && hba1c_double > 0)
             {
@@ -447,7 +447,7 @@ void    update_account(user   *patient)
         getline(cin, choice_str);
         if(exit_check(&cin))
             return;
-        if (is_number(choice_str, &choice_int))
+        else if (is_number(choice_str, &choice_int))
         {
             if (choice_int >= 1 &&  choice_int <= 6)
                 change_detail(patient, details_list[choice_int]);
@@ -466,7 +466,7 @@ void    display_overview_details(user *patient, admin target_admin)
     bool    is_user;
 
     is_user = false;
-    if (target_admin.admin_name == "")
+    if (patient->access.username != "")
         is_user = true;
     
     if (is_user)
@@ -486,7 +486,10 @@ void    display_overview_details(user *patient, admin target_admin)
         cout << "Venous Plasma Glucose Test: " << endl;
         cout << "Time\t: " << (*patient).medical.vpg_time << endl;
         cout << "Value\t: " << (*patient).medical.vpg << endl;
-        cout << "State\t: " << (*patient).medical.vpg_fasting << endl << endl;
+        if ((*patient).medical.vpg_fasting == true)
+            cout << "State\t: " << "Fasting" << endl << endl;
+        else
+            cout << "State\t: " << "Random" << endl << endl;
         }
     else
         cout << "Venous Plasma Glucose Test\t: " << "No record" << endl << endl;
@@ -495,7 +498,7 @@ void    display_overview_details(user *patient, admin target_admin)
         {
         cout << "HbA1c Test: " << endl;
         cout << "Time\t: " << (*patient).medical.hba1c_time << endl;
-        cout << "Value\t: " << (*patient).medical.hba1c << endl;
+        cout << "Value\t: " << (*patient).medical.hba1c << endl << endl;
         }
     else
         cout << "HbA1c Test: " << "No record" << endl << endl;
@@ -510,34 +513,35 @@ void    display_overview_details(user *patient, admin target_admin)
         cout << "Oral Glucose Tolerance Test: " << "No record" << endl << endl;
 
     //Diet details
-    cout << "Diet details" << endl;
+    cout << "Diet details:" << endl;
     //Table header
-    cout << "          | Time                           | Carbohydrate | Protein | Vegetable | Fruit | Fats" << endl;
+    cout << "          | Time       | Carbohydrate | Protein   | Vegetable | Fruit     | Fats" << endl;
     //Breakfast
     cout << "Breakfast | "; 
-    if ((*patient).breakfast.option = true)
-        cout << setw(31) << (*patient).breakfast.time << "| " << setw(13) << (*patient).breakfast.carbohydrate <<"| "
-                        << setw(8) << (*patient).breakfast.protein << "| " << setw(10) << (*patient).breakfast.vegetable << "| "
+    cout << left;
+    if ((*patient).breakfast.time != "No record")
+        cout << setw(11) << (*patient).breakfast.time << "| " << setw(13) << (*patient).breakfast.carbohydrate <<"| "
+                        << setw(10) << (*patient).breakfast.protein << "| " << setw(10) << (*patient).breakfast.vegetable << "| "
                         << setw(6) << (*patient).breakfast.fruit << "| " << setw(4) << (*patient).breakfast.fats << endl;
-    else
-        cout << "N/A";
+    else 
+        cout << "No record"  << endl;
     //Lunch
     cout << "Lunch     | ";
-    if ((*patient).lunch.option = true)
-        cout << setw(31) << (*patient).lunch.time << "| " << setw(13) << (*patient).lunch.carbohydrate << "| "
-                        << setw(8) << (*patient).lunch.protein << "| " << setw(10) << (*patient).lunch.vegetable << "| "
-                        << setw(6) << (*patient).lunch.fruit << "| " << setw(4) << (*patient).lunch.fats << endl;
+    if ((*patient).lunch.time != "No record")
+        cout << setw(11) << (*patient).lunch.time << "| " << setw(13) << (*patient).lunch.carbohydrate << "| "
+                        << setw(10) << (*patient).lunch.protein << "| " << setw(10) << (*patient).lunch.vegetable << "| "
+                        << setw(10) << (*patient).lunch.fruit << "| " << setw(4) << (*patient).lunch.fats << endl;
     else
-        cout << "N/A";
+        cout << "No record" << endl;
     //Dinner//
     cout << "Dinner    | ";
-    if ((*patient).dinner.option = true)
-        cout << setw(31) << (*patient).dinner.time<< "| " << setw(13) <<(*patient).dinner.carbohydrate << "| "
-                        << setw(8) << (*patient).dinner.protein << "| " << setw(10) << (*patient).dinner.vegetable << "| "
-                        << setw(6) << (*patient).dinner.fruit << "| " << setw(4) << (*patient).dinner.fats;
+    if ((*patient).dinner.time != "No record")
+        cout << setw(11) << (*patient).dinner.time<< "| " << setw(13) <<(*patient).dinner.carbohydrate << "| "
+                        << setw(10) << (*patient).dinner.protein << "| " << setw(10) << (*patient).dinner.vegetable << "| "
+                        << setw(10) << (*patient).dinner.fruit << "| " << setw(4) << (*patient).dinner.fats << endl;
     else
-        cout << "N/A" << endl;
-    cout << endl << LINE << "Press Enter to continue.";
+        cout << "No record" << endl;
+    cout << LINE << "Press Enter to continue.";
     cin.get();
     return;
 }
@@ -555,11 +559,11 @@ void    target_for_control(user *patient)
     }
     while(1)
     {
-        menu(*patient, admin(), "TARGET FOR CONTROL", "You can see a variety of suggestions and recommendations for your diabetes control here.\nPlease choose one of the following to see:\n\n1. Target levels for various medical parameters\n2. Individualised HbA1c targets based on patient profile\n3. Principal recommendation", "Press enter your choice: ");
+        menu(*patient, admin(), "TARGET FOR CONTROL", "You can see a variety of suggestions and recommendations for your diabetes control here.\nPlease choose one of the following to see:\n\n1. Target levels for various medical parameters\n2. Individualised HbA1c targets based on patient profile\n3. Principal recommendation", "Please enter your choice: ");
         getline(cin, choice_str);
         if(exit_check(&cin))
             return;
-        if (is_number(choice_str, &choice_int))
+        else if (is_number(choice_str, &choice_int))
         {
             if (choice_int == 1)
                 menu(*patient, admin(), "TARGET LEVELS FOR VARIOUS MEDICAL PARAMETERS", "control_targets.txt");
@@ -593,12 +597,27 @@ void    receive_medication (user *patient)
     string      choice;
     string      filename = patient->details.name + "_medication.txt";
     string      for_menu;
+    string      medication;
     ofstream    out_file_medication(filename, ios::in);
+    size_t      newline_count;
+    size_t      index;
+    int         newline_pos;
 
-    ///need to translate \\ into newline here
-    for_menu = "You can view your medications here.\nThe following is the medication prescribed to you by your doctor:\n" + patient->medical.medication;
+    medication = patient->medical.medication_received;
+    index = 0;
+    newline_count = count(medication.begin(), medication.end(), '\\');
+    if (newline_count != 0) // newline present inside message
+    {
+        for (int i = 0; i <= newline_count; i++)
+        {
+            newline_pos = medication.find('\\', index);
+            medication += medication.substr(index, newline_pos - index) + "\n";
+            index = newline_pos + 1;
+        }
+    }
+    for_menu = "You can view your medications here.\nThe following is the medication prescribed to you by your doctor:\n" + medication;
     if(patient->medical.medication_note != "No extra note")
-        for_menu = for_menu + "Extra note from doctor:\n" + patient->medical.medication_note;
+        for_menu = for_menu + "\n\nExtra note from doctor:\n" + patient->medical.medication_note;
     while(1)
     {
         menu(*patient, admin(), "RECEIVE MEDICATION", for_menu, "Would you like to print this out?\nPress y for yes and n for no: ");

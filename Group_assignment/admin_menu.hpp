@@ -143,7 +143,7 @@ void    update_patient_condition(user *patient, admin target_admin)
         getline(cin, choice_str);
         if(exit_check(&cin))
             return;
-        if (is_number(choice_str, &choice_int))
+        else if (is_number(choice_str, &choice_int))
         {
             if (update_list.find(choice_int) != update_list.end())
                 update_list[choice_int](patient, target_admin);
@@ -177,7 +177,7 @@ void    ogtt_update(user* patient, admin target_admin)
                     getline(cin, ogtt_str);
                     if(exit_check(&cin))
                         break;
-                    if (is_double(ogtt_str, &ogtt_double))
+                    else if (is_double(ogtt_str, &ogtt_double))
                     {
                         if (ogtt_double < OGTT_IFG_MIN && ogtt_double > 0) //Normal 
                         {
@@ -241,7 +241,7 @@ void    ogtt_update(user* patient, admin target_admin)
                     getline(cin, ogtt_str);
                     if(exit_check(&cin))
                         break;
-                    if (is_double(ogtt_str, &ogtt_double))
+                    else if (is_double(ogtt_str, &ogtt_double))
                     {
                         if (ogtt_double < 7.8 && ogtt_double > 0)
                         {
@@ -361,7 +361,7 @@ void    prescribe_medication_control(user   *patient, admin target_admin) //cont
         getline(cin, choice_str);
         if(exit_check(&cin))
             return;
-        if (is_number(choice_str, &choice_int))
+        else if (is_number(choice_str, &choice_int))
         {
             if (option_list.find(choice_int) != option_list.end())
                 option_list[choice_int](patient, target_admin);
@@ -606,7 +606,7 @@ void    check_medical_guides(user* patient, admin target_admin)
         getline(cin, choice_str);
         if(exit_check(&cin))
             return;
-        if (is_number(choice_str, &choice_int))
+        else if (is_number(choice_str, &choice_int))
         {
             if (choice_int >= 1 && choice_int <= 8)
             {
@@ -743,7 +743,7 @@ void    add_new_admin (admin target_admin, admin admin_list[])
         getline(cin, choice_str);
         if(exit_check(&cin))
             return;
-        if (choice_str == "Y" || choice_str == "y") 
+        else if (choice_str == "Y" || choice_str == "y") 
         {
             cout << "Enter the new admin username: ";
             getline(cin, new_admin.admin_name);
