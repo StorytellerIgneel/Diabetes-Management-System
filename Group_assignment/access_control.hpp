@@ -12,6 +12,7 @@ void    registration_control(user user_list[], int user_count, admin admin_list[
 void    user_login(user  user_list[], int user_count, admin admin_list[]);
 void    admin_login(user  user_list[], int user_count, admin admin_list[]);
 
+//Function: act as a control function to ensure that user know that what kind of information will be required to register a new account.
 void    registration_control(user user_list[], int user_count, admin admin_list[])
 {
     string    choice;
@@ -44,7 +45,7 @@ void    registration(user user_list[], int user_count)
     continue_step = false;
     for(int details_list_count = 0; details_list_count < 4; details_list_count++)
     {
-        if (change_detail(&new_user, details_list[details_list_count], true) == EXIT)
+        if (change_detail(&new_user, details_list[details_list_count], user_list, true) == EXIT)
         {
             details_list_count -= 2;
             if (details_list_count == -2)
@@ -62,9 +63,9 @@ void    registration(user user_list[], int user_count)
         {
             while(1)
             {
-                if (change_detail(&new_user, "username", true) != EXIT)
+                if (change_detail(&new_user, "username", user_list, true) != EXIT)
                 {
-                    if (change_detail(&new_user, "password", true) != EXIT)
+                    if (change_detail(&new_user, "password", user_list,true) != EXIT)
                     {
                         continue_step = true;
                         break;

@@ -57,7 +57,7 @@ void    admin_menu(admin target_admin, user patient_list[],  admin admin_list[])
                 {
                     error_message(16);
                     system("cls");
-                    cout << "Although we strongly recommend you to check on the conditions of the hypoglycaemia and hyperglycaemia patients before quitting and also key in their latest blood glucose levels,\nyou can still choose to quit if you are on an urgent situation.\nIn that case, type 'quit' to quit the system.\nJust press enter if you are not on an urgent situation: ";
+                    cout << "Although we strongly recommend you to check on the conditions of the hypoglycaemia and hyperglycaemia patients before quitting and also key in their latest blood glucose levels,\nyou can still choose to quit if you are on an urgent situation.\nIn that case, type 'quit' to quit the system.\nJust press enter and press CTrl + Z on the patient choosing page if you are not on an urgent situation: ";
                     getline(cin, confirm_quit);
                     if (confirm_quit == "quit")
                         return;
@@ -165,7 +165,7 @@ void    ogtt_update(user* patient, admin target_admin)
 
     while(1)
     {
-        menu(*patient, target_admin, "Oral Glucose Tolerance Test (OGTT)", "Welcome to update for patient ogtt value. \nYou are required to choose the time period of the OGTT test done\n1.0 hours (immediate)\n2. 2 hours", "Please enter the patient's ogtt value: ");
+        menu(*patient, target_admin, "Oral Glucose Tolerance Test (OGTT)", "Welcome to update for patient ogtt value. \nYou are required to choose the time period of the OGTT test done\n1. 0 hours (immediate)\n2. 2 hours", "Please enter the patient's ogtt value: ");
         getline(cin, mode_str);
         if (is_number(mode_str, &mode_int))
         {
@@ -611,13 +611,16 @@ void    check_medical_guides(user* patient, admin target_admin)
                     getline(cin, choice_str);
                     if (choice_str == "Y" || choice_str == "y")
                     {
-                        cout << "Please open the current directory and enter the new content of the medical guide in the text file with the name: " << filename_list[choice_int];
-                        cout << "If you are done, please type 'ok': ";
-                        getline(cin, choice_str);
+                        cout << "Please open the current directory and enter the new content of the medical guide in the text file with the name: " << filename_list[choice_int] << ",\nand change the contents inside the text file.";
+                        cout << "\n\nIf you are done, please press enter to continue: ";
+                        cin.get();
                         return;
                     }
-                    else if (choice_str == "N" || choice_str == "n")
+                    else if (!cin || choice_str == "N" || choice_str == "n")
+                    {
+                        cin.clear();
                         return;
+                    }
                     else
                         error_message(2);
                 }   
@@ -635,8 +638,8 @@ void    export_data_control(user* patient, user patient_list[], admin target_adm
     string  choice_str;
     int     choice_int;
     map < int, function < void(user*, user[], admin) >> option_list;
-    option_list[1] = export_all_data;
-    option_list[2] = export_selected_user;
+    option_list[1] = export_selected_user;
+    option_list[2] = export_all_data;
 
     while(1)
     {
@@ -661,7 +664,7 @@ void    export_data_control(user* patient, user patient_list[], admin target_adm
 
 void    export_all_data(user* patient, user patient_list[], admin target_admin)
 {
-	ofstream out_file_user("user_medical_report.txt", ios::out);
+	ofstream out_file_user("patient_medical_report.txt", ios::out);
     //Get current time
     
     time_t current_time = time(nullptr);
@@ -814,7 +817,7 @@ void    export_selected_user(user* patient, user patient_list[], admin target_ad
         out_file_patient << "No record" << "\n";
 
 	out_file_patient.close();
-
+    success_message(30);
 	return; 
 }
 //add a new admin

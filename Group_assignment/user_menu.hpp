@@ -16,7 +16,7 @@ void    update_account              (user *patient);
 void    display_overview_details    (user *patient, admin target_admin);
 void    target_for_control          (user *patient);
 void    receive_medication          (user *patient);
-bool    change_detail               (user *patient, string detail, bool new_user = false);
+bool    change_detail               (user *patient, string detail, user patient_list[], bool new_user);
 void    reminder                    (user patient);
 
 //user main menu
@@ -380,9 +380,12 @@ void    hba1c_test(user *patient, admin target_admin)
     }
 }
 //update account section
-bool    change_detail(user *patient, string detail, bool new_user)
+bool    change_detail(user *patient, string detail, user patient_list[], bool new_user)
 {
     string  new_detail;
+    int     int_validator;
+    int     index;
+    bool    repeated_username;
 
     map < string, string user_details::* > user_details_list =
     {
@@ -403,32 +406,82 @@ bool    change_detail(user *patient, string detail, bool new_user)
 
     if (details_iterator != user_details_list.end())//the detail to be changed is in the user_detail struct
     {
-        if (new_user == FALSE)
-            cout << "Old detail\t: " << ((*patient).details.*details_iterator->second) << endl << endl;
-        cout << "Please enter your ";
-        if (new_user != TRUE)
-            cout << "new ";
-        cout << detail << " (Press Ctrl + Z to quit): ";
-        getline(cin, new_detail);
-        if(exit_check(&cin))
-            return EXIT;
-        else if (new_detail == ((*patient).details.*details_iterator->second) && new_user == FALSE)
-            error_message(7);
-        else
-            ((*patient).details.*details_iterator->second) = new_detail;
+        while(1)
+        {
+            if (new_user == FALSE)
+                cout << "Old detail\t: " << ((*patient).details.*details_iterator->second) << endl << endl;
+            cout << "Please enter your ";
+            if (new_user != TRUE)
+                cout << "new ";
+            cout << detail << " (Press Ctrl + Z to quit): ";
+            getline(cin, new_detail);
+            if(exit_check(&cin))
+                return EXIT;
+            else if (new_detail == ((*patient).details.*details_iterator->second) && new_user == FALSE)
+                error_message(7);
+            else
+            {
+                if (detail == "age")
+                {
+                    if (is_number(new_detail, &int_validator) == false)
+                        error_message(2);
+                    else
+                    {
+                        ((*patient).details.*details_iterator->second) = new_detail;
+                        break;
+                    }
+                }
+                else
+                {
+                    ((*patient).details.*details_iterator->second) = new_detail;
+                    break;
+                }
+            }
+        }    
     }
     else
     {
-        if (new_user == FALSE)
-            cout << "Old detail\t\t: " << ((*patient).access.*access_iterator->second) << endl;
-        cout << "Please enter your new " << detail << " (Press Ctrl + Z to quit): ";
-        getline(cin, new_detail);
-        if(exit_check(&cin))
-            return EXIT;
-        else if (new_detail == ((*patient).access.*access_iterator->second) && new_user == FALSE)
-            error_message(7);
-        else
-            ((*patient).access.*access_iterator->second) = new_detail;
+        while(1)
+        {
+            index = 0;
+            repeated_username = false;
+            if (new_user == FALSE)
+                cout << "Old detail\t\t: " << ((*patient).access.*access_iterator->second) << endl;
+            cout << "Please enter your new " << detail << " (Press Ctrl + Z to quit): ";
+            getline(cin, new_detail);
+            if(exit_check(&cin))
+                return EXIT;
+            else if (new_detail == ((*patient).access.*access_iterator->second) && new_user == FALSE)
+                error_message(7);
+            else
+            {
+                if (detail == "username")
+                {
+                    index = 0;
+                    while(patient_list[index].details.name != "")
+                    {
+                        if (new_detail == patient_list[index].access.username)
+                        {
+                            repeated_username = true;
+                            break;
+                        }
+                        index++;
+                    }
+                    if (repeated_username == true)
+                        error_message(22);
+                    else
+                    {
+                        ((*patient).access.*access_iterator->second) = new_detail;
+                        break;
+                    }       
+                }
+                else
+                {
+                    ((*patient).access.*access_iterator->second) = new_detail;
+                    break;
+                }
+            }
+        }     
     }
     if(new_user == false)
         success_message(3);
@@ -437,6 +490,7 @@ bool    change_detail(user *patient, string detail, bool new_user)
 
 void    update_account(user   *patient)
 {
+    user    dummy_list[1];
     string  details_list[] = {"filler(ignore this)", "name", "age", "phone number", "home address", "username", "password"};
     string  choice_str;
     int     choice_int;
@@ -450,7 +504,7 @@ void    update_account(user   *patient)
         else if (is_number(choice_str, &choice_int))
         {
             if (choice_int >= 1 &&  choice_int <= 6)
-                change_detail(patient, details_list[choice_int]);
+                change_detail(patient, details_list[choice_int], dummy_list, false);
             else
                 error_message(2);
         }   
@@ -656,7 +710,7 @@ void    reminder(user patient)
     current_time = chrono::system_clock::to_time_t(now);
     time_info    = localtime(&current_time);
     current_hour = time_info->tm_hour;
-    reason = "This is because u are under: ";
+    reason = "\nThis is because u are under: ";
 
     if (current_hour >= 5 && current_hour < 12) //morning (breakfast)
     {
@@ -669,6 +723,7 @@ void    reminder(user patient)
             if (patient.medical.insulin == true)
                 reason += "\nInsulin treatment";
             notification("Good Morning. You are required to do a Self Monitoring Blood Glucose (SMBG) test both BEFORE and AFTER your breakfast and record your results in the section 1 'Update health condition'.\n" + reason);
+            cin.get();
         }  
     }
     else if (current_hour >= 12 && current_hour < 18) //afternoon (lunch)
@@ -680,11 +735,13 @@ void    reminder(user patient)
             if (patient.medical.medication != "No prescription")
                 reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
             notification("Good Afternoon. You are required to do the Self Monitoring Blood Glucose (SMBG) AFTER your lunch and record your results in the section 1 'Update health condition'.\n" + reason);
+            cin.get();
         }
         else if (patient.medical.insulin == true)
         {
             reason += "\nInsulin treatment";
             notification("Good Afternoon. You are required to do the Self Monitoring Blood Glucose (SMBG) both BEFORE and AFTER your lunch and record your results in the section 1 'Update health condition'.\n" + reason);
+            cin.get();
         }
     }
     else if (current_hour >= 18 && current_hour < 24) //evening (lunch)
@@ -696,14 +753,17 @@ void    reminder(user patient)
             if (patient.medical.medication != "No prescription")
                 reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
             notification("Good Evening. You are required to do the Self Monitoring Blood Glucose (SMBG) AFTER your lunch and record your results in the section 1 'Update health condition'." + reason);
+            cin.get();
         }
         else if (patient.medical.insulin == true)
         {
             reason += "\nInsulin treatment";
             notification("Good Evening. You are required to do the Self Monitoring Blood Glucose (SMBG) both BEFORE and AFTER your lunch and record your results in the section 1 'Update health condition'." + reason);
+            cin.get();
         }
     }
     else
         return;
 }
+
 #endif

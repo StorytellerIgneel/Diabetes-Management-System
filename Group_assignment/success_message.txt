@@ -26,4 +26,5 @@ Patient HbA1c value successfully updated.\However, the patient is in risk of hyp
 Please do remember to record their 
 Patient Oral Glucose Tolerance Test value successfully updated.\However, the patient is in risk of hypoglycaemia.\Please do pay extra attention and carry out necessary safety precautions.
 Patient Oral Glucose Tolerance Test value successfully updated.\However, the patient is in risk of hyperglycaemia.\Please do pay extra attention and carry out necessary safety precautions.
-Report successfully produced with the file name "user_medical_report.txt".
+All patient information report successfully produced with the file name "patient_medical_report.txt".
+Patient individual information report produced with the name of "(patient_name)_medical_report.txt".

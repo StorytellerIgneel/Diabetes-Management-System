@@ -19,3 +19,4 @@ There are no patients in risk of hyperglycaemia and hypoglycaemia right now.
 No meal record found.\Please do add a meal record before choosing to display them.
 You have not received your medication record from your doctor yet.\Please do receive and view them from menu option 5: receive medication.\You shall not be permitted to leave before you do so to ensure that you follow the medications given by your doctors. 
 The patient is not in risk of Type-2 Diabetes Mellitus, hyperglycaemia, nor hypoglycaemia.\Only patients in risk of those diseases can be prescribed with medication.
+Your username is already taken by another patient.\Please choose another username.
