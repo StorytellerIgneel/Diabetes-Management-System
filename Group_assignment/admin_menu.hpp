@@ -11,7 +11,7 @@ void    admin_menu                      (admin target_admin, user patient_list[]
 void    find_patient                    (user **patient, user patient_list[], admin target_admin);
 void    update_patient_condition        (user *patient, admin target_admin);
 void    ogtt_update                     (user *patient, admin target_admin);
-bool    find_hyper_hypo                 (user patient_list[], string *);
+bool    find_hyper_hypo                 (user patient_list[], string *for_noti, bool skip_notification);
 void    check_hyper_hypo                (string hyper_hypo_list, admin target_admin);
 void    prescribe_medication_control    (user *patient, admin target_admin);
 void    prescribe_medication            (user *patient, admin target_admin);
@@ -31,6 +31,7 @@ void    admin_menu(admin target_admin, user patient_list[],  admin admin_list[])
     string  choice_str;
     string  checked_hyper_hypo;
     string  hyper_hypo_list;
+    string  confirm_quit;
     user    *patient;
     map < int, function < void(user*, admin) >> option_list;
     option_list[1] = update_patient_condition;
@@ -38,52 +39,58 @@ void    admin_menu(admin target_admin, user patient_list[],  admin admin_list[])
     option_list[4] = display_overview_details;
     option_list[5] = check_medical_guides;
     
-    patient = nullptr;
-    hyper_hypo = find_hyper_hypo(patient_list, &hyper_hypo_list);
-    find_patient(&patient, patient_list, target_admin);
-    if (patient == nullptr) // chosen to quit in find_patient
-        return;
+    hyper_hypo = find_hyper_hypo(patient_list, &hyper_hypo_list, false);
     while(1)
     {
-        menu(*patient, target_admin, "MAIN MENU", "Please choose one of the following functions to use: \n1. Update patient health condition.\n2. Check hyperglycaemia and hypoglycaemia patients\n3. Provide Medication\n4. Check patient profile\n5. Check medical guides\n6. Export all patient data\n7. Add a new admin", "Enter your choice: ");
-        getline(cin, choice_str);
-        if(exit_check(&cin))
+        patient = nullptr;
+        find_patient(&patient, patient_list, target_admin);
+        if (patient == nullptr) // chosen to quit in find_patient
+            return;
+        while(1)
         {
-            hyper_hypo = find_hyper_hypo(patient_list, &hyper_hypo_list);
-            if (hyper_hypo == true)
+            menu(*patient, target_admin, "MAIN MENU", "Please choose one of the following functions to use: \n1. Update patient health condition.\n2. Check hyperglycaemia and hypoglycaemia patients\n3. Provide Medication\n4. Check patient profile\n5. Check medical guides\n6. Export all patient data\n7. Add a new admin", "Enter your choice: ");
+            getline(cin, choice_str);
+            if(exit_check(&cin))
             {
-                error_message(16);
-                break;
-            }
-            else
-                return;
-            }
-            else
-                return;
-        }
-        else if (is_number(choice_str, &choice_int))
-        {
-            if (choice_int == 2)
-            {
+                hyper_hypo = find_hyper_hypo(patient_list, &hyper_hypo_list, true);
                 if (hyper_hypo == true)
                 {
-                    check_hyper_hypo(hyper_hypo_list, target_admin);
-                    hyper_hypo = false;
+                    error_message(16);
+                    system("cls");
+                    cout << "Although we strongly recommend you to check on the conditions of the hypoglycaemia and hyperglycaemia patients before quitting and also key in their latest blood glucose levels,\nyou can still choose to quit if you are on an urgent situation.\nIn that case, type 'quit' to quit the system.\nJust press enter if you are not on an urgent situation: ";
+                    getline(cin, confirm_quit);
+                    if (confirm_quit == "quit")
+                        return;
+                    else
+                        break;
                 }
                 else
-                    error_message(18);
+                    return;
             }
-            else if (choice_int == 6)
-                export_data_control(patient, patient_list, target_admin);
-            else if (choice_int == 7)
-                add_new_admin(target_admin, admin_list);
-            else if (option_list.find(choice_int) != option_list.end())
-                option_list[choice_int](patient, target_admin);  // Call the selected function
+            else if (is_number(choice_str, &choice_int))
+            {
+                if (choice_int == 2)
+                {
+                    if (hyper_hypo == true)
+                    {
+                        check_hyper_hypo(hyper_hypo_list, target_admin);
+                        hyper_hypo = false;
+                    }
+                    else
+                        error_message(18);
+                }
+                else if (choice_int == 6)
+                    export_data_control(patient, patient_list, target_admin);
+                else if (choice_int == 7)
+                    add_new_admin(target_admin, admin_list);
+                else if (option_list.find(choice_int) != option_list.end())
+                    option_list[choice_int](patient, target_admin);  // Call the selected function
+                else
+                    error_message(2);
+            }
             else
-                error_message(2);
+                error_message(1);
         }
-        else
-            error_message(1);
     }
 }
 
@@ -200,7 +207,7 @@ void    ogtt_update(user* patient, admin target_admin)
                             patient->medical.diabetic_patient = true;
                             return;
                         }
-                        else if (ogtt_double > OGTT_IFG_MAX  && ogtt_double <= HYPOGLYCAEMIA_LEVEL_MMOL)
+                        else if (ogtt_double > OGTT_IFG_MAX  && ogtt_double <= HYPERGLYCAEMIA_LEVEL_MMOL_MAX)
                         {
                             if (ogtt_double < HYPERGLYCAEMIA_LEVEL_MMOL_MIN) // no hyper
                             {
@@ -275,7 +282,7 @@ void    ogtt_update(user* patient, admin target_admin)
     }
 }
 //hyper/hypo section
-bool    find_hyper_hypo(user patient_list[], string *for_noti)
+bool    find_hyper_hypo(user patient_list[], string *for_noti, bool skip_notification = false)
 {
     int     count;
     bool    hyper;
@@ -308,12 +315,15 @@ bool    find_hyper_hypo(user patient_list[], string *for_noti)
             count++;
         }
     }
-    *for_noti += "Please check on their conditions as soon as possible.\nYou will also have to key in their blood glucose levels after you have checked on their conditions.";
+    *for_noti += "\nPlease check on their conditions as soon as possible.\nYou will also have to key in their blood glucose levels after you have checked on their conditions.";
     if (hyper == true || hypo == true)
     {
-        notification(*for_noti);
-        cout << "Press Enter to continue.";
-        cin.get();
+        if (skip_notification == false)
+        {
+            notification(*for_noti);
+            cout << "Press Enter to continue.";
+            cin.get();
+        }
         return true;
     }
     else
@@ -329,6 +339,7 @@ void    check_hyper_hypo(string hyper_hypo_list, admin target_admin)
     lastNewlinePos = hyper_hypo_list.rfind('\n');
     if (firstNewlinePos != std::string::npos && lastNewlinePos != std::string::npos)// Extract the content between the first and last newlines
         hyper_hypo_list = hyper_hypo_list.substr(firstNewlinePos + 1, lastNewlinePos - firstNewlinePos - 1);
+    hyper_hypo_list += "\nYou will also have to key in their blood glucose levels after you have checked on their conditions.";
     menu(user(), target_admin, "HYPOGLYCAEMIA/HYPERGLYCAEMIA PATIENTS LIST ", hyper_hypo_list, "Press Enter to continue.");
     cin.get();
     return;
@@ -412,9 +423,9 @@ void    prescribe_medication(user   *patient, admin target_admin)
         if (step == 6)
             break;
     }
-    medication = "Your medication is:\n" + formulation + " " + unit + " of " + name + ".\nPlease take the drug " + frequency + " times a day.\nFor more information, please contact your doctor.";
+    medication = formulation + " " + unit + " of " + name + ".\\Please take the drug " + frequency + " times a day.\\For more information, please contact your doctor.";
     if (note != "No extra note")
-        for_menu = medication + "\nExtra note from doctor: " + note;
+        for_menu = "Your medication is:\n" + medication + "\nExtra note from doctor: " + note;
     else
         for_menu = medication;
     while(1)
@@ -662,7 +673,7 @@ void    export_data(user* patient, user patient_list[], admin target_admin)
 	out_file_user << "User Medical Report";
 	out_file_user << "\nRequested by: " << target_admin.admin_name;
 	out_file_user << "\nDate        : " << string_time << "\n\n";
-	out_file_user << "Patient's Medical Condition";
+	out_file_user << "Patient's Medical Condition\n";
 	
 	//Find array length
 	int count = 0;  //Number of patients
@@ -677,7 +688,7 @@ void    export_data(user* patient, user patient_list[], admin target_admin)
 		out_file_user << "\nPhone number : " << patient_list[idx].details.phone_number;
 		out_file_user << "\nAddress      : " << patient_list[idx].details.home_address;
 		//Medical conditions
-		out_file_user << "\nCurrent state |  Insulin  |  VPG(%)   State         Time                 |  HBA1c(%)   Time                 |  OGTT(%)   Time\n";
+		out_file_user << "\nCurrent state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time\n";
 		out_file_user << left;
 		//Current state
 		out_file_user << setw(14) << patient_list[idx].medical.current_state << "|  ";
@@ -688,26 +699,32 @@ void    export_data(user* patient, user patient_list[], admin target_admin)
 			out_file_user << setw(9) << "No" << "|  ";
 		//VPD details
 		if (patient_list[idx].medical.vpg != 0)
-			out_file_user << setw(9) << patient_list[idx].medical.vpg << setw(14) << patient_list[idx].medical.vpg_fasting 
-						  << setw(21) << patient_list[idx].medical.vpg_time << "|  ";
+            {
+			out_file_user << setw(9) << patient_list[idx].medical.vpg; 
+            if (patient_list[idx].medical.vpg_fasting == true)
+                out_file_user << setw(14) << "Fasting";
+            else
+                out_file_user << setw(14) << "Random";
+			out_file_user << setw(24) << patient_list[idx].medical.vpg_time << "|  ";
+            }
 		else
-			out_file_user << setw(44) << "No record" << "|  ";
+			out_file_user << setw(47) << "No record" << "|  ";
 		//HBA1c details
 		if (patient_list[idx].medical.hba1c != 0)
-			out_file_user << setw(11) << patient_list[idx].medical.hba1c << setw(21) 
+			out_file_user << setw(11) << patient_list[idx].medical.hba1c << setw(24) 
 				  		  << patient_list[idx].medical.hba1c_time << "|  ";
 		else 
-			out_file_user << setw(44) << "No record" << "|  ";
+			out_file_user << setw(35) << "No record" << "|  ";
 		//OGTT details
 		if (patient_list[idx].medical.ogtt != 0)
 			out_file_user << setw(10) << patient_list[idx].medical.ogtt
 						  << setw(21) << patient_list[idx].medical.ogtt_time << "\n\n";
 		else 
-			out_file_user << setw(31) << "No record";
+			out_file_user << setw(31) << "No record" << "\n\n" ;
     }   
 
 	out_file_user.close();
-
+    success_message(29);
 	return; 
 }
 //add a new admin

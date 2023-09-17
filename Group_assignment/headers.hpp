@@ -29,7 +29,7 @@
 #define OGTT_DIABETES_LEVEL 7.0
 #define HYPOGLYCAEMIA_LEVEL_MMOL 3.9
 #define HYPERGLYCAEMIA_LEVEL_MMOL_MIN 10
-#define HYPERGLYCAEMIA_LEVEL_MMOL_MIN 11.1
+#define HYPERGLYCAEMIA_LEVEL_MMOL_MAX 11.1
 using namespace std; //not a good practice but judging that this assignment doesnt involve the use of other libraries that will cause clashes, namespace std is used.
 struct user_details
 {

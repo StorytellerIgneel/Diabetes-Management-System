@@ -92,12 +92,33 @@ void error_message(unsigned int error_code, string missing_file = "")
 
 int     check_file_present()
 {
-    string          file_list[]         = {"error_message.txt", "file_handling.txt", "user_access.txt", "user_details.txt"};
+   string          file_list[]         = 
+   {"SMBG_recommendation.txt", 
+    "admin.txt", 
+    "clinic_followup_treatment.txt", 
+    "control_targets.txt", 
+    "error_message.txt", 
+    "glucose_lowering_agents.txt", 
+    "hba1c_less_tight.txt", 
+    "hba1c_tight.txt", 
+    "individualised_hba1c_target.txt", 
+    "medication_guide.txt", 
+    "success_message.txt", 
+    "newly_diagnosed_treatment.txt", 
+    "pp (2).txt", 
+    "principle_recommend.txt", 
+    "t2dm_management.txt", 
+    "user_access.txt", 
+    "user_details.txt", 
+    "user_meal_record.txt", 
+    "user_medical.txt", 
+    "user_medical_report.txt"};
+
     unsigned int    file_list_counter   = 0;
 
     while(!file_list[file_list_counter].empty())
     {
-        ifstream    in_file(file_list[file_list_counter]);
+        ifstream    in_file(file_list[file_list_counter], ios::in);
         if(!in_file)
         {
             error_message(3, file_list[file_list_counter]);

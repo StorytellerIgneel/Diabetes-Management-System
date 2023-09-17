@@ -1,31 +1,62 @@
 User Medical Report
 Requested by: admin1
-Date        : Sat Sep 16 19:08:25 2023
+Date        : Sun Sep 17 02:09:51 2023
 
 
-Patient's Medical Condition1. Kirigaya Kazuto
+Patient's Medical Condition
+1. Kirigaya Kazuto
 Age          : 15
 Phone number : 0143242668
 Address      : Tokyo
-Current state |  Insulin  |  VPG(%)   State         Time                 |  HBA1c(%)   Time                 |  OGTT(%)   Time
-Normal        |  No       |  5        0             Thu Sep 14 21:54:05 2023|  5          Thu Sep 14 21:54:05 2023|  No record                      2. Yuki Asuna
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  11       Fasting       Sat Sep 16 22:23:31 2023|  5          Thu Sep 14 21:54:05 2023|  No record                      
+
+2. Yuki Asuna
 Age          : 16
 Phone number : 00
 Address      : Kyoto
-Current state |  Insulin  |  VPG(%)   State         Time                 |  HBA1c(%)   Time                 |  OGTT(%)   Time
-Normal        |  No       |  No record                                   |  No record                                   |  No record                      3. Suguha
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  No record                                      |  No record                          |  No record                      
+
+3. Suguha
 Age          : 14
 Phone number : 0
 Address      : Shiguya
-Current state |  Insulin  |  VPG(%)   State         Time                 |  HBA1c(%)   Time                 |  OGTT(%)   Time
-Normal        |  No       |  No record                                   |  No record                                   |  No record                      4. Shi non
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  No record                                      |  No record                          |  No record                      
+
+4. Shi non
 Age          : 15
 Phone number : 0
 Address      : Shiguya
-Current state |  Insulin  |  VPG(%)   State         Time                 |  HBA1c(%)   Time                 |  OGTT(%)   Time
-Normal        |  No       |  4        0             Thu Sep 14 23:01:35 2023|  No record                                   |  No record                      5. a
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  4        Random        Thu Sep 14 23:01:35 2023|  No record                          |  No record                      
+
+5. a
 Age          : c
 Phone number : d
 Address      : s
-Current state |  Insulin  |  VPG(%)   State         Time                 |  HBA1c(%)   Time                 |  OGTT(%)   Time
-Normal        |  No       |  No record                                   |  No record                                   |  No record                      
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  Yes      |  No record                                      |  No record                          |  No record                      
+
+6. s
+Age          : s
+Phone number : s
+Address      : s
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  No record                                      |  No record                          |  No record                      
+
+7. 1
+Age          : 2
+Phone number : 3
+Address      : 4
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  11       Fasting       Sat Sep 16 21:30:52 2023|  8          Sat Sep 16 21:33:13 2023|  No record                      
+
+8. d
+Age          : d
+Phone number : d
+Address      : d
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  11       Fasting       Sun Sep 17 01:53:10 2023|  No record                          |  No record                      
+

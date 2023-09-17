@@ -48,9 +48,8 @@ void    user_menu(user  *patient)
                 error_message(20);
             else
                 return;
-        }
-            
-        if(is_number(choice_str, &choice_int))
+        }   
+        else if(is_number(choice_str, &choice_int))
         {
             if (choice_int == 3)
                 display_overview_details(patient, admin());
@@ -142,7 +141,7 @@ void    vpg_test(user *patient, admin target_admin)
     bool    is_user;
 
     is_user = false;
-    if (patient->access.username != "")
+    if (target_admin.admin_name == "")
         is_user = true;
     while(1)
     {
@@ -298,7 +297,7 @@ void    hba1c_test(user *patient, admin target_admin)
     bool    is_user;
 
     is_user = false;
-    if (patient->access.username != "")
+    if (target_admin.admin_name == "")
         is_user = true;
     while(1)
     {
@@ -467,7 +466,7 @@ void    display_overview_details(user *patient, admin target_admin)
     bool    is_user;
 
     is_user = false;
-    if (patient->access.username != "")
+    if (target_admin.admin_name == "")
         is_user = true;
     
     if (is_user)
@@ -538,7 +537,7 @@ void    display_overview_details(user *patient, admin target_admin)
                         << setw(6) << (*patient).dinner.fruit << "| " << setw(4) << (*patient).dinner.fats;
     else
         cout << "N/A" << endl;
-    cout << LINE << "Press Enter to continue.";
+    cout << endl << LINE << "Press Enter to continue.";
     cin.get();
     return;
 }
@@ -596,7 +595,10 @@ void    receive_medication (user *patient)
     string      for_menu;
     ofstream    out_file_medication(filename, ios::in);
 
-    for_menu = "You can view your medications here.\nThe following is the medication prescribed to you by your doctor:\n\n" + patient->medical.medication;
+    ///need to translate \\ into newline here
+    for_menu = "You can view your medications here.\nThe following is the medication prescribed to you by your doctor:\n" + patient->medical.medication;
+    if(patient->medical.medication_note != "No extra note")
+        for_menu = for_menu + "Extra note from doctor:\n" + patient->medical.medication_note;
     while(1)
     {
         menu(*patient, admin(), "RECEIVE MEDICATION", for_menu, "Would you like to print this out?\nPress y for yes and n for no: ");
