@@ -11,7 +11,7 @@ int     get_user_num(string access_type);
 void    read_user_data(user user_list[], int size);
 void    export_user_data(user user_list[], admin admin_list[]);
 
-
+//Convert string to boolean
 bool  stob(string target)
 {
     string  converted;
@@ -22,6 +22,7 @@ bool  stob(string target)
     return false; 
 }
 
+//Read admin data from list, given the number of admins
 void    read_admin_data(admin admin_list[], int admin_count)
 {
     ifstream    in_file_admin("admin.txt", ios::in);
@@ -38,6 +39,7 @@ void    read_admin_data(admin admin_list[], int admin_count)
     return;
 }
 
+//Find the number of accounts for admins or users
 int     get_user_num(string access_type)
 {
     int         line_number;
@@ -63,6 +65,7 @@ int     get_user_num(string access_type)
     return ((line_number / details_count) % 100);
 }
 
+//Convert text file information into data structure for processing
 void    read_user_data(user user_list[], int size)
 {
     ifstream    in_file_details("user_details.txt", ios::in);
@@ -164,6 +167,7 @@ void    read_user_data(user user_list[], int size)
     return;
 }
 
+//Store data structure into file
 void    export_user_data(user user_list[], admin admin_list[])
 {
     ofstream    out_file_details("user_details.txt", ios::out);

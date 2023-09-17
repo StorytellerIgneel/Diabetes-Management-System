@@ -4,11 +4,16 @@
 
 #include "headers.hpp"
 #include "template.hpp"
-#define ALL_PRESENT 0
-#define MISSING     1
-#define ERROR       2 //technically can be any number other than 0 and 1
-//defined global variables to 
 
+bool    is_number           (string  target, int        *converted);
+bool    is_double           (string  target, double     *converted);
+string  remove_trail        (string input);
+void    success_message     (unsigned int success_code, string username = "");
+void    error_message       (unsigned int error_code,   string missing_file = "");
+int     check_file_present  ();
+int     exit_check          (istream *cin);
+
+//Return true if target is integer, and the integer value
 bool    is_number(string  target, int    *converted)
 {
     for (char c : target)
@@ -20,6 +25,7 @@ bool    is_number(string  target, int    *converted)
     return true;
 }
 
+//Return true if target is double, and the double value
 bool    is_double(string  target, double    *converted)
 {
     int dot;
@@ -38,6 +44,7 @@ bool    is_double(string  target, double    *converted)
     return true;
 }
 
+//Remove whitespaces at the end of input string
 string  remove_trail(string input)
 {
     if(isspace(input[input.length() - 1]))
@@ -46,6 +53,7 @@ string  remove_trail(string input)
         return input;
 }
 
+//Display success message based on line in “success_message.txt”
 void    success_message(unsigned int success_code, string username = "")
 {
     string          success_message;
@@ -67,7 +75,8 @@ void    success_message(unsigned int success_code, string username = "")
     return;
 }
 
-void error_message(unsigned int error_code, string missing_file = "")
+// Display error message based on line in “error_message.txt”
+void    error_message(unsigned int error_code, string missing_file = "")
 {
     string          error_message;
     string          input_dummy;
@@ -90,6 +99,7 @@ void error_message(unsigned int error_code, string missing_file = "")
     return;
 }
 
+//Check if all files required for the system to run are present
 int     check_file_present()
 {
    string          file_list[]         = 
@@ -116,7 +126,7 @@ int     check_file_present()
     for(int    file_list_counter   = 0; file_list_counter < 19; file_list_counter++)
     {
         ifstream    in_file(file_list[file_list_counter], ios::in);
-        if(!in_file)
+        if(!in_file) //file not present
         {
             if (file_list[file_list_counter] == "error_message.txt")
             {
@@ -133,15 +143,16 @@ int     check_file_present()
     return ALL_PRESENT;
 }
 
-int exit_check(istream *cin)
+//Checks if an CTRL-Z or EOF is entered and returns true if so
+int     exit_check(istream *cin)
 {
     if (!(*cin))
     {
-        (*cin).clear();
-        return 1;
+        (*cin).clear(); //clear the cin flags set due to EOF
+        return 1; //interchangeable with bool: true
     }
     else
-        return 0;
+        return 0; //interchangeable with bool: false
 }
 
 #endif

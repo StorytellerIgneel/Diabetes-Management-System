@@ -23,7 +23,8 @@ void    export_data_control             (user* patient, user patient_list[], adm
 void    export_all_data                 (user* patient, user patient_list[], admin target_admin);
 void    export_selected_user            (user* patient, user patient_list[], admin target_admin);
 void    add_new_admin                   (admin target_admin, admin admin_list[]);
-//admin main menu
+
+//Allow admin to choose one of the 7 functions for a selected patient: update patient condition, check patient with hyperglycemia or hypoglycemia, prescribe medication, display overview details of current patient, check medical guide, export data, and add new admin
 void    admin_menu(admin target_admin, user patient_list[],  admin admin_list[])
 {
     bool    hyper_hypo;
@@ -94,6 +95,7 @@ void    admin_menu(admin target_admin, user patient_list[],  admin admin_list[])
     }
 }
 
+//Allow admin to choose the patients registered in the system and access to the patient's data structure
 void    find_patient(user **patient, user   patient_list[], admin target_admin)
 {
     int             i;
@@ -126,7 +128,9 @@ void    find_patient(user **patient, user   patient_list[], admin target_admin)
     }
     return;
 }
+
 //update_patient_condition section
+//A control function to call selected diabetes test functions which are vpg, hba1c or ogtt for the admin side
 void    update_patient_condition(user *patient, admin target_admin)
 {
     string  choice_str;
@@ -156,6 +160,7 @@ void    update_patient_condition(user *patient, admin target_admin)
     return;
 }
 
+//Update OGTT value in patient data structure, only available in admin menu (the only diabetes test that is not double sided)
 void    ogtt_update(user* patient, admin target_admin)
 {
     string  mode_str;
@@ -281,7 +286,10 @@ void    ogtt_update(user* patient, admin target_admin)
             error_message(1);
     }
 }
+
 //hyper/hypo section
+//Create and display a notification of list of patients with hyperglycaemia or hypoglycaemia
+//Returns true if there is any patients with hyper or hypoglycaemia and return false is no
 bool    find_hyper_hypo(user patient_list[], string *for_noti, bool skip_notification = false)
 {
     int     count;
@@ -330,22 +338,26 @@ bool    find_hyper_hypo(user patient_list[], string *for_noti, bool skip_notific
         return false;
 }
 
+//Display list of patients with hyperglycemia or hypoglycemia
 void    check_hyper_hypo(string hyper_hypo_list, admin target_admin)
 {
-    size_t firstNewlinePos;
-    size_t lastNewlinePos;
+    size_t first_newline_pos;
+    size_t last_newline_pos;
 
-    firstNewlinePos = hyper_hypo_list.find('\n');
-    lastNewlinePos = hyper_hypo_list.rfind('\n');
-    if (firstNewlinePos != std::string::npos && lastNewlinePos != std::string::npos)// Extract the content between the first and last newlines
-        hyper_hypo_list = hyper_hypo_list.substr(firstNewlinePos + 1, lastNewlinePos - firstNewlinePos - 1);
+    first_newline_pos = hyper_hypo_list.find('\n');
+    last_newline_pos = hyper_hypo_list.rfind('\n');
+
+    if (first_newline_pos != std::string::npos && last_newline_pos != std::string::npos)// Extract the content between the first and last newlines
+        hyper_hypo_list = hyper_hypo_list.substr(first_newline_pos + 1, last_newline_pos - first_newline_pos - 1);
+    
     hyper_hypo_list += "\nYou will also have to key in their blood glucose levels after you have checked on their conditions.";
     menu(user(), target_admin, "HYPOGLYCAEMIA/HYPERGLYCAEMIA PATIENTS LIST ", hyper_hypo_list, "Press Enter to continue.");
     cin.get();
     return;
 }
-//////HAVENT COMPLETE
+
 //prescribe_medication section
+//Allow admin to select the method and medication of prescription (diet control, medication or insulin)
 void    prescribe_medication_control(user   *patient, admin target_admin) //control access to the actual function
 {
     string  choice_str;
@@ -374,6 +386,7 @@ void    prescribe_medication_control(user   *patient, admin target_admin) //cont
     return;
 }
 
+//Prescribe dose of OGLD medication to patient and extra notes
 void    prescribe_medication(user   *patient, admin target_admin)
 {
     if (patient->medical.diabetic_patient == false && patient->medical.hyperglycaemia == false && patient->medical.hypoglycaemia == false)
@@ -462,6 +475,8 @@ void    prescribe_medication(user   *patient, admin target_admin)
     return;
 }
 
+//Get values of parts of medication step by step, 5 steps in total
+//G for opening guide, B to go back previous step
 bool    get_medication(int *step, string prompt, string *medication, admin target_admin)
 {
     string  temporary;
@@ -495,7 +510,8 @@ bool    get_medication(int *step, string prompt, string *medication, admin targe
     }
     return false;
 }
-//incomplete
+
+//set diet control or cancel it for patient
 void    set_diet_control(user *patient, admin target_admin) //issue diet
 {
     string choice;
@@ -543,6 +559,7 @@ void    set_diet_control(user *patient, admin target_admin) //issue diet
     return;
 }
 
+//issue insulin medication or cancel it for patient
 void    insulin_issue(user *patient, admin target_admin) //issue insulin
 {
     string choice;
@@ -588,7 +605,9 @@ void    insulin_issue(user *patient, admin target_admin) //issue insulin
         }    
     }
 }
-//check medical guide
+
+//check medical guide section
+//allow the admin to look through a variety of medical guide text files within the system and allow admin to change the text file contents if necessary
 void    check_medical_guides(user* patient, admin target_admin)
 {
     string  filename_list[] = {"filler", "t2dm_management.txt", "control_targets.txt", "individualised_hba1c_target.txt", "principle_recommend.txt", "SMBG_recommendation.txt", "medication_guide.txt", "newly_diagnosed_treatment.txt", "clinic_followup_treatment.txt"};
@@ -632,7 +651,9 @@ void    check_medical_guides(user* patient, admin target_admin)
             error_message(1);
     }   
 }
-//export user data
+
+//export user data section
+//control function for admin to select to export medical report for the current patient viewed or all patients within system
 void    export_data_control(user* patient, user patient_list[], admin target_admin)
 {
     string  choice_str;
@@ -662,6 +683,7 @@ void    export_data_control(user* patient, user patient_list[], admin target_adm
     } 
 }
 
+//Export all patient medical report to file
 void    export_all_data(user* patient, user patient_list[], admin target_admin)
 {
 	ofstream out_file_user("patient_medical_report.txt", ios::out);
@@ -732,6 +754,7 @@ void    export_all_data(user* patient, user patient_list[], admin target_admin)
 	return; 
 }
 
+//Export selected patient medical report
 void    export_selected_user(user* patient, user patient_list[], admin target_admin)
 {
 	ofstream out_file_patient((*patient).details.name + "_medical_report.txt", ios::out);
@@ -820,7 +843,9 @@ void    export_selected_user(user* patient, user patient_list[], admin target_ad
     success_message(30);
 	return; 
 }
-//add a new admin
+
+//add a new admin section
+//Create a new admin account
 void    add_new_admin (admin target_admin, admin admin_list[])
 {
     string  choice_str;

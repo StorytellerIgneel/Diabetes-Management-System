@@ -9,12 +9,14 @@ void    notification            (string notification);
 void    display_user_details    (user   patient, bool    registration);
 void    menu                    (user   patient, admin target_admin, string stage, string content, string prompt, bool display_details, string file);
 
+//Return a string where to_print is at the center of output (terminal width)
 string  banner(string to_print)
 {
     string  whitespace((TERMINAL_WIDTH-to_print.length())/2, ' ');
     return  (whitespace + to_print + whitespace + "\n");
 }
 
+//Clear the console screen and display a notification message, with a banner
 void    notification(string notification)
 {   
     string  modified_notification;
@@ -43,6 +45,7 @@ void    notification(string notification)
     return;
 }
 
+//display user details within the content area of the menu template
 void    display_user_details(user   patient, bool    registration = false)
 {
     cout << "Name\t\t: " << patient.details.name << endl
@@ -57,17 +60,14 @@ void    display_user_details(user   patient, bool    registration = false)
     return;
 }
 
+//display a template with the banner, time, user status, content and prompts 
+//dual-sided enabled for both user and admin, differs mainly in user status and show the current viewing patient for admin
 void    menu(user   patient, admin target_admin, string stage, string content, string prompt = "", bool display_details = false, string file = "") //for selections
 {
-    
-    time_t      current_time = time(nullptr);
-    string      string_time;
     string      username;
     string      patient_name;
     string      line;
 
-    current_time = time(nullptr);
-    string_time  = ctime(&current_time);
     system("cls");
     cout << LINE    
          << banner(stage)
@@ -86,7 +86,7 @@ void    menu(user   patient, admin target_admin, string stage, string content, s
     else //guest mode
         username = "Guest";
 
-    cout << left << username << right << setw(TERMINAL_WIDTH - username.length()) << string_time;
+    cout << left << username << right << setw(TERMINAL_WIDTH - username.length()) << get_time();
 
     if (patient_name != "")
         cout << patient_name << endl;

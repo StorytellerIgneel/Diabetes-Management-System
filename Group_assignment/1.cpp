@@ -3,15 +3,7 @@
 #include "access_control.hpp"
 #include "file_handling.hpp"
 
-/*
-Act as the initial starter of the entire programme (main) and as the initial access control.
-Pre:
-i.  libary "headers.hpp" is included
-ii. libary "validation.hpp" is included
-iii. libary "access_control.hpp" is included
-iv. libary "file_handling.hpp" is included
-*/
-
+//Act as the initial starter of the entire programme (main) and as the initial access control.
 int main(void) //initial access control
 {
     

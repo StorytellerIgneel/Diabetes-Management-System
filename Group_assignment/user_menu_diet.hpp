@@ -11,6 +11,7 @@ void    add_record(user *patient);
 void    add_meal(user *patient, string meal);
 void    display_meal(user *patient);
 
+//Choose to either add new meal record or display meal record
 void    update_meal_record(user *patient)
 {
     int choice;
@@ -41,6 +42,7 @@ void    update_meal_record(user *patient)
     }
 }
 
+//Choose meal to add record to
 void    add_record(user *patient)
 {
     string  choice_str;
@@ -66,7 +68,8 @@ void    add_record(user *patient)
     return;
 }
 
-void    add_meal(user *patient, string meal) //breakfast
+// Record meal details for all kind of meals
+void    add_meal(user *patient, string meal)
 {
     string  choice_str;
     string  prompt;
@@ -177,7 +180,8 @@ void    add_meal(user *patient, string meal) //breakfast
     }
     return;
 }
-//cacat
+
+//Display meal records
 void    display_meal(user *patient)
 {   
     string meal_choice;

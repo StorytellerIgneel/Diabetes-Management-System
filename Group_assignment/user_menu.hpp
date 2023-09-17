@@ -8,6 +8,7 @@
 
 void    user_menu                   (user *patient);
 string  get_time                    ();
+void    reminder                    (user patient);
 void    update_condition            (user *patient);
 void    update_diabetic_condition   (user *patient);
 void    vpg_test                    (user *patient, admin target_admin);
@@ -17,9 +18,10 @@ void    display_overview_details    (user *patient, admin target_admin);
 void    target_for_control          (user *patient);
 void    receive_medication          (user *patient);
 bool    change_detail               (user *patient, string detail, user patient_list[], bool new_user);
-void    reminder                    (user patient);
+
 
 //user main menu
+//Allow user choose to update their own condition, update account details, view their overview medical details, target for control and view medications give by doctors
 void    user_menu(user  *patient)
 {
     while(1)
@@ -67,6 +69,7 @@ void    user_menu(user  *patient)
     }
 }
 
+//Allow user choose to update their own condition, update account details, view their overview medical details, target for control and view medications give by doctors
 string  get_time()
 {
     time_t  current_time;
@@ -77,7 +80,77 @@ string  get_time()
     current_time_str.pop_back();
     return current_time_str;
 }
+
+//push a reminder based on medications issued (diet, ogld or insulin) to remind patient take action
+void    reminder(user patient)
+{
+    auto    now = chrono::system_clock::now();
+    int     current_hour;
+    time_t  current_time;
+    tm*     time_info;
+    string  reason;
+
+    current_time = chrono::system_clock::to_time_t(now);
+    time_info    = localtime(&current_time);
+    current_hour = time_info->tm_hour;
+    reason = "\nThis is because u are under: ";
+
+    if (current_hour >= 5 && current_hour < 12) //morning (breakfast)
+    {
+        if (patient.medical.diet == true || patient.medical.medication != "No prescription" || patient.medical.insulin == true)
+        {
+            if (patient.medical.diet == true)
+                reason += "\nDiet treatment";
+            if (patient.medical.medication != "No prescription")
+                reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
+            if (patient.medical.insulin == true)
+                reason += "\nInsulin treatment";
+            notification("Good Morning. You are required to do a Self Monitoring Blood Glucose (SMBG) test both BEFORE and AFTER your breakfast and record your results in the section 1 'Update health condition'.\n" + reason);
+            cin.get();
+        }  
+    }
+    else if (current_hour >= 12 && current_hour < 18) //afternoon (lunch)
+    {
+        if (patient.medical.diet == true || patient.medical.medication != "No prescription")
+        {
+            if (patient.medical.diet == true)
+                reason += "\nDiet treatment";
+            if (patient.medical.medication != "No prescription")
+                reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
+            notification("Good Afternoon. You are required to do the Self Monitoring Blood Glucose (SMBG) AFTER your lunch and record your results in the section 1 'Update health condition'.\n" + reason);
+            cin.get();
+        }
+        else if (patient.medical.insulin == true)
+        {
+            reason += "\nInsulin treatment";
+            notification("Good Afternoon. You are required to do the Self Monitoring Blood Glucose (SMBG) both BEFORE and AFTER your lunch and record your results in the section 1 'Update health condition'.\n" + reason);
+            cin.get();
+        }
+    }
+    else if (current_hour >= 18 && current_hour < 24) //evening (lunch)
+    {
+        if (patient.medical.diet == true || patient.medical.medication != "No prescription")
+        {
+            if (patient.medical.diet == true)
+                reason += "\nDiet treatment";
+            if (patient.medical.medication != "No prescription")
+                reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
+            notification("Good Evening. You are required to do the Self Monitoring Blood Glucose (SMBG) AFTER your lunch and record your results in the section 1 'Update health condition'." + reason);
+            cin.get();
+        }
+        else if (patient.medical.insulin == true)
+        {
+            reason += "\nInsulin treatment";
+            notification("Good Evening. You are required to do the Self Monitoring Blood Glucose (SMBG) both BEFORE and AFTER your lunch and record your results in the section 1 'Update health condition'." + reason);
+            cin.get();
+        }
+    }
+    else
+        return;
+}
+
 //update condition section
+//Choose to update diabetic condition or meal record
 void    update_condition(user   *patient)
 {
     string  choice_str;
@@ -106,6 +179,8 @@ void    update_condition(user   *patient)
     return;
 }
 
+//Choose to use vpg test or hbA1c test, ogtt for admin only
+//vpg and hba1c is enabled for both sides
 void    update_diabetic_condition(user   *patient)
 {
     string  choice_str;
@@ -132,6 +207,7 @@ void    update_diabetic_condition(user   *patient)
     }
 }
 
+//Update VPG value in patient data structure, available in admin and user menu
 void    vpg_test(user *patient, admin target_admin)
 {
     string  choice_str;
@@ -287,6 +363,7 @@ void    vpg_test(user *patient, admin target_admin)
     return;
 }
 
+//Update HbA1c value in patient data structure, available in admin and user menu
 void    hba1c_test(user *patient, admin target_admin)
 {
     string  mode_str;
@@ -378,7 +455,10 @@ void    hba1c_test(user *patient, admin target_admin)
             error_message(1);
     }
 }
+
 //update account section
+//change the details in the patient data structure according to value of detail string passed, compatible with all user details and access informations
+//returns true or EXIT if user chooses to quit, vice versa
 bool    change_detail(user *patient, string detail, user patient_list[], bool new_user)
 {
     string  new_detail;
@@ -487,6 +567,7 @@ bool    change_detail(user *patient, string detail, user patient_list[], bool ne
     return CONTINUE;
 }
 
+//Allow user to select one of the their account details or access information to update
 void    update_account(user   *patient)
 {
     user    dummy_list[1];
@@ -512,7 +593,9 @@ void    update_account(user   *patient)
     }
     return;
 }
+
 //view information
+//Display overview details consisting of medical informations and meal records of the current patient
 void    display_overview_details(user *patient, admin target_admin)
 {
     string  for_content;
@@ -598,7 +681,9 @@ void    display_overview_details(user *patient, admin target_admin)
     cin.get();
     return;
 }
-//target for control section //16/9 not done
+
+//target for control section
+//Allow diabetic patient to view their recommended HbA1c target for control
 void    target_for_control(user *patient)
 {
     string  content;
@@ -639,7 +724,9 @@ void    target_for_control(user *patient)
     }
     return;
 }
+
 //receive medication section
+//Display and write medication of patient to file
 void    receive_medication (user *patient)
 {
     if (patient->medical.medication_received == false)
@@ -696,73 +783,6 @@ void    receive_medication (user *patient)
             error_message(1);
     }
     return;
-}
-//incomplete
-void    reminder(user patient)
-{
-    auto    now = chrono::system_clock::now();
-    int     current_hour;
-    time_t  current_time;
-    tm*     time_info;
-    string  reason;
-
-    current_time = chrono::system_clock::to_time_t(now);
-    time_info    = localtime(&current_time);
-    current_hour = time_info->tm_hour;
-    reason = "\nThis is because u are under: ";
-
-    if (current_hour >= 5 && current_hour < 12) //morning (breakfast)
-    {
-        if (patient.medical.diet == true || patient.medical.medication != "No prescription" || patient.medical.insulin == true)
-        {
-            if (patient.medical.diet == true)
-                reason += "\nDiet treatment";
-            if (patient.medical.medication != "No prescription")
-                reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
-            if (patient.medical.insulin == true)
-                reason += "\nInsulin treatment";
-            notification("Good Morning. You are required to do a Self Monitoring Blood Glucose (SMBG) test both BEFORE and AFTER your breakfast and record your results in the section 1 'Update health condition'.\n" + reason);
-            cin.get();
-        }  
-    }
-    else if (current_hour >= 12 && current_hour < 18) //afternoon (lunch)
-    {
-        if (patient.medical.diet == true || patient.medical.medication != "No prescription")
-        {
-            if (patient.medical.diet == true)
-                reason += "\nDiet treatment";
-            if (patient.medical.medication != "No prescription")
-                reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
-            notification("Good Afternoon. You are required to do the Self Monitoring Blood Glucose (SMBG) AFTER your lunch and record your results in the section 1 'Update health condition'.\n" + reason);
-            cin.get();
-        }
-        else if (patient.medical.insulin == true)
-        {
-            reason += "\nInsulin treatment";
-            notification("Good Afternoon. You are required to do the Self Monitoring Blood Glucose (SMBG) both BEFORE and AFTER your lunch and record your results in the section 1 'Update health condition'.\n" + reason);
-            cin.get();
-        }
-    }
-    else if (current_hour >= 18 && current_hour < 24) //evening (lunch)
-    {
-        if (patient.medical.diet == true || patient.medical.medication != "No prescription")
-        {
-            if (patient.medical.diet == true)
-                reason += "\nDiet treatment";
-            if (patient.medical.medication != "No prescription")
-                reason += "\nOral Glucose Lowering Drugs (OGLDs) treatment";
-            notification("Good Evening. You are required to do the Self Monitoring Blood Glucose (SMBG) AFTER your lunch and record your results in the section 1 'Update health condition'." + reason);
-            cin.get();
-        }
-        else if (patient.medical.insulin == true)
-        {
-            reason += "\nInsulin treatment";
-            notification("Good Evening. You are required to do the Self Monitoring Blood Glucose (SMBG) both BEFORE and AFTER your lunch and record your results in the section 1 'Update health condition'." + reason);
-            cin.get();
-        }
-    }
-    else
-        return;
 }
 
 #endif

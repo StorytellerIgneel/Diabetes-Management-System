@@ -12,7 +12,7 @@ void    registration_control(user user_list[], int user_count, admin admin_list[
 void    user_login(user  user_list[], int user_count, admin admin_list[]);
 void    admin_login(user  user_list[], int user_count, admin admin_list[]);
 
-//Function: act as a control function to ensure that user know that what kind of information will be required to register a new account.
+//Act as a control function to ensure that user know that what kind of information will be required to register a new account  and to get confirmation to proceed to new account registration
 void    registration_control(user user_list[], int user_count, admin admin_list[])
 {
     string    choice;
@@ -33,6 +33,7 @@ void    registration_control(user user_list[], int user_count, admin admin_list[
     return;
 }
 
+//Allow new user of the system to register a new account to use within the system
 void    registration(user user_list[], int user_count)
 {
     bool        continue_step;
@@ -101,6 +102,7 @@ void    registration(user user_list[], int user_count)
     //hidden input for pw (asterisk)
 }
 
+//user login page, validation of account information, proceed to user menu if success
 void    user_login(user  user_list[], int user_count, admin admin_list[])
 {
     string  username;
@@ -156,6 +158,7 @@ void    user_login(user  user_list[], int user_count, admin admin_list[])
     return;
 }
 
+//admin login page, validation of account information, proceed to admin menu if success
 void    admin_login(user user_list[], int admin_count ,admin  admin_list[])
 {
     string  admin_name;

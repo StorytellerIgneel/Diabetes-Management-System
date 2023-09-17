@@ -16,13 +16,19 @@
 #include <limits>
 #include <map>
 #include <string>
+#include <time.h>
+
 #define MAX_CAPACITY 100
 #define TRUE 1
 #define FALSE 0
+#define ALL_PRESENT 0
+#define MISSING     1
+#define ERROR       2 //technically can be any number other than 0 and 1
 #define EXIT true
 #define CONTINUE false
 #define TERMINAL_WIDTH 100
 #define LINE string(TERMINAL_WIDTH, '-') + '\n'
+
 //VPG
 #define VPG_FASTING_DIAGNOSIS 7.0
 #define VPG_RANDOM_DIAGNOSIS 11.1
