@@ -105,7 +105,6 @@ int     check_file_present()
     "medication_guide.txt", 
     "success_message.txt", 
     "newly_diagnosed_treatment.txt", 
-    "pp (2).txt", 
     "principle_recommend.txt", 
     "t2dm_management.txt", 
     "user_access.txt", 
@@ -114,45 +113,24 @@ int     check_file_present()
     "user_medical.txt", 
     "user_medical_report.txt"};
 
-    unsigned int    file_list_counter   = 0;
-
-    while(!file_list[file_list_counter].empty())
+    for(int    file_list_counter   = 0; file_list_counter < 19; file_list_counter++)
     {
         ifstream    in_file(file_list[file_list_counter], ios::in);
         if(!in_file)
         {
+            if (file_list[file_list_counter] == "error_message.txt")
+            {
+                cout << "The error message file is missing.\nPlease ensure that all files are in the current working directory before using this system.";
+                cin.get();
+                return MISSING;
+            }
             error_message(3, file_list[file_list_counter]);
             return MISSING;
         }
         else
             in_file.close();
-        file_list_counter++;
     }
     return ALL_PRESENT;
-}
-
-int    exit_validation(string user_input, string exit_choice, string continue_choice = "")
-{
-    if (continue_choice != "") //there is an actual continue choice for user to select
-    {
-        if (user_input == continue_choice)
-            return 0;
-        else if (user_input == exit_choice)
-            return 1; 
-        else
-        {
-            error_message(2);
-            return ERROR;
-        }   
-    }
-    else if (continue_choice == "") // there is no correct choice 
-    {
-        if (user_input == exit_choice)
-            return 1; 
-        else
-            return 0;
-    }
-    return 0;
 }
 
 int exit_check(istream *cin)

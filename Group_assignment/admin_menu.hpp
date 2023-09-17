@@ -179,7 +179,7 @@ void    ogtt_update(user* patient, admin target_admin)
                         break;
                     else if (is_double(ogtt_str, &ogtt_double))
                     {
-                        if (ogtt_double < OGTT_IFG_MIN && ogtt_double > 0) //Normal 
+                        if (ogtt_double < OGTT_NORMAL_0HR_MAX && ogtt_double > 0) //Normal 
                         {
                             if (ogtt_double < HYPOGLYCAEMIA_LEVEL_MMOL) //hypoglycaemia
                             {
@@ -196,7 +196,7 @@ void    ogtt_update(user* patient, admin target_admin)
                             patient->medical.ogtt = ogtt_double;
                             return;
                         }
-                        else if (ogtt_double >= OGTT_IFG_MIN && ogtt_double <= OGTT_IFG_MAX) // IFG
+                        else if (ogtt_double >= OGTT_IFG_0HR_MIN && ogtt_double <= OGTT_IFG_0HR_MAX) // IFG
                         {
                             success_message(7);
                             patient->medical.current_state = "IMPAIRED GLUCOSE (IFG)";
@@ -207,7 +207,7 @@ void    ogtt_update(user* patient, admin target_admin)
                             patient->medical.diabetic_patient = true;
                             return;
                         }
-                        else if (ogtt_double > OGTT_IFG_MAX  && ogtt_double <= HYPERGLYCAEMIA_LEVEL_MMOL_MAX)
+                        else if (ogtt_double >= OGTT_DM_0HR_MIN)
                         {
                             if (ogtt_double < HYPERGLYCAEMIA_LEVEL_MMOL_MIN) // no hyper
                             {
@@ -243,7 +243,7 @@ void    ogtt_update(user* patient, admin target_admin)
                         break;
                     else if (is_double(ogtt_str, &ogtt_double))
                     {
-                        if (ogtt_double < 7.8 && ogtt_double > 0)
+                        if (ogtt_double < OGTT_NORMAL_2HR_MAX && ogtt_double > 0)
                         {
                             success_message(7);
                             patient->medical.ogtt_time = get_time();
@@ -251,7 +251,7 @@ void    ogtt_update(user* patient, admin target_admin)
                             patient->medical.diabetic_patient = false;
                             return;
                         }
-                        else if (ogtt_double >= 7.8 && ogtt_double <= 11.0)
+                        else if (ogtt_double >= OGTT_IGT_2HR_MIN && ogtt_double <= OGTT_IGT_2HR_MAX)
                         {
                             success_message(7);
                             patient->medical.current_state = "IMPAIRED GLUCOSE TOLERANCE (IGT)";
@@ -260,7 +260,7 @@ void    ogtt_update(user* patient, admin target_admin)
                             patient->medical.diabetic_patient = true;
                             return;
                         }
-                        else if (ogtt_double >= 11.1)
+                        else if (ogtt_double >= OGTT_DM_2HR_MIN)
                         {
                             success_message(7);
                             patient->medical.current_state = "DIABETES MELLITUS (DM)";

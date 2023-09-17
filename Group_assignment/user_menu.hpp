@@ -167,9 +167,9 @@ void    vpg_test(user *patient, admin target_admin)
                         break;
                     else if(is_double(vpg_str, &vpg_double))
                     {
-                        if (vpg_double < 7.00 && vpg_double > 0)
+                        if (vpg_double < VPG_FASTING_DIAGNOSIS && vpg_double > ERROR_INPUT_LESS_VPG)
                         {
-                            if (vpg_double < 3.9) // hypoglycaemia
+                            if (vpg_double < HYPO_VPG) // hypoglycaemia
                             {
                                 if(is_user)
                                     success_message(16);
@@ -195,11 +195,10 @@ void    vpg_test(user *patient, admin target_admin)
                                 patient->medical.vpg_fasting = true;
                                 return; 
                             }
-                            
                         }
-                        else if (vpg_double >= 7.00)
+                        else if (vpg_double >= VPG_FASTING_DIAGNOSIS && vpg_double <= ERROR_INPUT_MORE_VPG)
                         {
-                            if (vpg_double >= 10 && vpg_double <= 11.1) // hyperglycaemia
+                            if (vpg_double >= HYPER_VPG) // hyperglycaemia
                             {
                                 if(is_user)
                                     success_message(17);
@@ -247,7 +246,7 @@ void    vpg_test(user *patient, admin target_admin)
                         break;
                     else if(is_double(vpg_str, &vpg_double))
                     {
-                        if (vpg_double < 11.1 && vpg_double > 0)
+                        if (vpg_double < VPG_RANDOM_DIAGNOSIS && vpg_double > ERROR_INPUT_LESS_VPG) // normal
                         {
                             if(is_user)
                                 success_message(11);
@@ -260,7 +259,7 @@ void    vpg_test(user *patient, admin target_admin)
                             patient->medical.vpg_fasting = false;
                             return;
                         }
-                        else if (vpg_double >= 11.1) // add max here
+                        else if (vpg_double >= VPG_RANDOM_DIAGNOSIS && vpg_double <= ERROR_INPUT_MORE_VPG) // add max here
                         {
                             if(is_user)
                                 success_message(15);
@@ -310,9 +309,9 @@ void    hba1c_test(user *patient, admin target_admin)
             return; 
         else if(is_double(hba1c_str, &hba1c_double))
         {
-            if (hba1c_double < 5.7 && hba1c_double > 0)
+            if (hba1c_double < HBA1C_NORMAL_PERCENT_MAX && hba1c_double > ERROR_INPUT_LESS_HBA1C_PERCENT)
             {
-                if (hba1c_double < 4.1) //hypoglycaemia
+                if (hba1c_double < HYPO_HBA1C_PERCENT) //hypoglycaemia
                 {
                     if (is_user)
                         success_message(16);
@@ -334,7 +333,7 @@ void    hba1c_test(user *patient, admin target_admin)
                 patient->medical.hba1c = hba1c_double;
                 return;
             }
-            else if (hba1c_double >= 5.7 && hba1c_double < 6.3)
+            else if (hba1c_double >= HBA1C_PRE_DM_PERCENT_MIN && hba1c_double < HBA1C_PRE_DM_PERCENT_MAX) // Pre-DM
             {
                 if (is_user)
                     success_message(18);
@@ -347,9 +346,9 @@ void    hba1c_test(user *patient, admin target_admin)
                 patient->medical.diabetic_patient = true;
                 return;
             }
-            else if (hba1c_double >= 6.3) // add max
+            else if (hba1c_double >= HBA1C_DM_PERCENT_MIN && hba1c_double <= ERROR_INPUT_MORE_HBA1C_PERCENT) // add max DM
             {
-                if (hba1c_double >= 7.9)// hyper
+                if (hba1c_double >= HYPER_HBA1C_PERCENT)// hyper
                 {
                     if (is_user)
                         success_message(23);
@@ -623,9 +622,9 @@ void    target_for_control(user *patient)
                 menu(*patient, admin(), "TARGET LEVELS FOR VARIOUS MEDICAL PARAMETERS", "control_targets.txt");
             else if (choice_int == 2)
             {
-                if(stoi(patient->details.age) < 40)
+                if(stoi(patient->details.age) < YOUNG_AGE)
                     menu(*patient, admin(), "Individualised HbA1c targets", "Your HbA1c target is <= 6.5% (Tight)\nThis is because your fulfil the following conditions: ", "Press Enter to continue", false, "hba1c_tight.txt");
-                else if (stoi(patient->details.age) > 60)
+                else if (stoi(patient->details.age) > ELDERLY_AGE)
                     menu(*patient, admin(), "Individualised HbA1c targets", "Your HbA1c target is >= 7.0% (Less Tight)\nThis is because your fulfil the following conditions: ", "Press Enter to continue", false, "hba1c_less_tight.txt");
                 else
                     menu(*patient, admin(), "Individualised HbA1c targets", "Your HbA1c target is >= 6.6%% and <= 7.0% (Moderate)\nThis is because you are under normal circumstances.", "Press Enter to continue", false, "hba1c_less_tight.txt");

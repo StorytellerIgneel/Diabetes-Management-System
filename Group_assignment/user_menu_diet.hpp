@@ -116,7 +116,7 @@ void    add_meal(user *patient, string meal) //breakfast
                 getline(cin, patient->lunch.time);
                 if(exit_check(&cin))
                     return;
-                cout << "Fill in the level of food ingested for each food type ( ___ quantity of ___ food):\n";
+                cout << "Fill in the level of food ingested for each food type (None / Low / Medium / High):\n";
                 cout << "Carbohydrate: ";
                 getline(cin, patient->lunch.carbohydrate);
                 if(exit_check(&cin))
@@ -146,7 +146,7 @@ void    add_meal(user *patient, string meal) //breakfast
                 getline(cin, patient->dinner.time);
                 if(exit_check(&cin))
                     return;
-                cout << "Fill in the level of food ingested for each food type ( ___ quantity of ___ food):\n";
+                cout << "Fill in the level of food ingested for each food type (None / Low / Medium / High):\n";
                 cout << "Carbohydrate: ";
                 getline(cin, patient->dinner.carbohydrate);
                 if(exit_check(&cin))

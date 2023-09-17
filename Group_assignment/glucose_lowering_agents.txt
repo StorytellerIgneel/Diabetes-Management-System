@@ -1,3 +1,0 @@
-Biguanides|Metformin|500|mg|500|mg|OD|1000|mg|TDS|1000mg BD is usual maximum dose, but there is an exception of 1000 mg BD
-Biguanides|Metformin|1000|mg|500|mg|OD|1000|mg|TDS|1000mg BD is usual maximum dose, but there is an exception of 1000 mg BD
-Biguanides|Metformin SR|850|mg|850|mg|BD|850|mg|TDS|
