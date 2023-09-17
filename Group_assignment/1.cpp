@@ -38,7 +38,7 @@ int main(void) //initial access control
             export_user_data(user_list, admin_list);
             exit(0);
         }
-        if (choice_str != "")
+        else if (choice_str != "")
         {
             if(is_number(choice_str, &choice_int))
             {

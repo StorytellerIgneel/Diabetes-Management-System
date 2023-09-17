@@ -519,7 +519,7 @@ void    set_diet_control(user *patient, admin target_admin) //issue diet
             }
             else if (cancel_choice == "y" || choice == "Y")
             {
-                patient->medical.diet == false;
+                patient->medical.diet = false;
                 success_message(22);
                 return;
             }
@@ -558,7 +558,7 @@ void    insulin_issue(user *patient, admin target_admin) //issue insulin
         if (patient->medical.insulin == true) //cancel insulin
         {
             menu(*patient, target_admin, "INSULIN ISSUING", "Patient is already issued with insulin.\nDo you wish to cancel the insulin issued?", "Press y to continue or n to return: ");
-            cin >> cancel_choice;
+            getline(cin, cancel_choice);
             if (!cin || cancel_choice == "n" || cancel_choice == "N")
             {
                 cin.clear();
@@ -566,7 +566,7 @@ void    insulin_issue(user *patient, admin target_admin) //issue insulin
             }
             else if (cancel_choice == "y" || choice == "Y")
             {
-                patient->medical.insulin == false;
+                patient->medical.insulin = false;
                 success_message(20);
                 return;
             }
@@ -576,7 +576,7 @@ void    insulin_issue(user *patient, admin target_admin) //issue insulin
         else
         {   
             menu(*patient, target_admin, "INSULIN ISSUING", "You are about to issue insulin for the patient, continue?", "Press y to continue or n to return: ");
-            cin >> choice;
+            getline(cin, choice);
             if(!cin || choice == "n" || choice == "N")
             {
                 cin.clear();
