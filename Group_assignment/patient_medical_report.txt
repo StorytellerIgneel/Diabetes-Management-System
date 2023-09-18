@@ -1,0 +1,146 @@
+User Medical Report
+Requested by: admin1
+Date        : Mon Sep 18 06:49:26 2023
+
+
+Patient's Medical Condition
+1. Christina Teo
+Age          : 42
+Phone number : 01164738892
+Address      : 37, Jalan Penggawa 14/2, Bandar Mahkota Cheras, 43200 Cheras, Selangor
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  5        Fasting       Sun Sep 17 22:30:43 2023|  5          Sun Sep 17 22:31:01 2023|  No record                      
+
+2. Tan Chen Yen
+Age          : 45
+Phone number : 0134557213
+Address      : 9, Jalan Prima Saujana 1/2j, Prima Saujana, 43000 Kajang, Selangor
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  11       Fasting       Sun Sep 17 22:38:27 2023|  8          Sun Sep 17 22:38:40 2023|  No record                      
+
+3. Lim Xiao En
+Age          : 38
+Phone number : 0126358843
+Address      : 4, Jalan Jenaris D, Taman Jenaris, 43000 Kajang, Selangor
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  Yes      |  3        Fasting       Sun Sep 17 22:41:09 2023|  4          Sun Sep 17 22:41:12 2023|  No record                      
+
+4. Christina Yeo
+Age          : 58
+Phone number : 0189246743
+Address      : 25, Jalan Impian Murni 1/12, Taman Impian Murni, 43000 Kajang, Selangor
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  5        Fasting       Sun Sep 17 22:44:14 2023|  5          Sun Sep 17 22:44:20 2023|  No record                      
+
+5. Muhammad Ali
+Age          : 46
+Phone number : 0124768832
+Address      : 55, Jalan Delima 4, Taman Delima, 43000 Kajang, Selangor
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  12       Random        Sun Sep 17 22:46:48 2023|  6          Sun Sep 17 22:47:09 2023|  No record                      
+
+6. Loh Shi Han
+Age          : 39
+Phone number : 01117652249
+Address      : 23, Jalan Impian Murni 1/12, Taman Impian Murni, 43000 Kajang, Selangor
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  10       Random        Sun Sep 17 22:49:41 2023|  No record                          |  No record                      
+
+7. Lau Ke Xuan
+Age          : 25
+Phone number : 0137813396
+Address      : 7, Jalan Desa Ros 2,Taman Desa Ros, 43000 Kajang, Selangor
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  3        Fasting       Sun Sep 17 22:51:18 2023|  3          Sun Sep 17 22:51:22 2023|  No record                      
+
+8. Joseph Yong
+Age          : 56
+Phone number : 0132337589
+Address      : 6, Jalan Saga Emas 5, Tmn Kajang Mulia, 43000 Kajang, Selangor
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  11       Fasting       Sun Sep 17 22:53:32 2023|  7          Sun Sep 17 22:53:49 2023|  No record                      
+
+9. Lee Yen Kai
+Age          : 61
+Phone number : 0127356230
+Address      : 6, Jln Sutera 5, 43200 Cheras, Selangor
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  11       Fasting       Sun Sep 17 22:55:35 2023|  8          Sun Sep 17 22:56:25 2023|  No record                      
+
+10. Teoh Chen Xin
+Age          : 49
+Phone number : 01134627740
+Address      : 11, Jalan Cheras Utama 5, Taman Cheras Utama, 56100 Kuala Lumpur, Selangor
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  6        Random        Sun Sep 17 22:57:57 2023|  5          Sun Sep 17 22:58:55 2023|  No record                      
+
+11. Koh Shu Yang
+Age          : 48
+Phone number : 01116783527
+Address      : 17, Jalan Bunga Melati 15, Taman Seraya, 56100 Kuala Lumpur, Selangor
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  11       Fasting       Mon Sep 18 06:21:32 2023|  8          Mon Sep 18 06:22:53 2023|  No record                      
+
+12. Yap Yi Qian
+Age          : 48
+Phone number : 0125267730
+Address      : 35, Jln Teratai 1/2, Taman Seraya, 56100 Ampang, Selangor
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  4        Fasting       Mon Sep 18 06:24:57 2023|  5          Mon Sep 18 06:25:48 2023|  No record                      
+
+13. Ng Xiang Cheng
+Age          : 53
+Phone number : 0129420157
+Address      : 116, Jalan Bunga Tanjung 14, Taman Muda, 56100 Kuala Lumpur, Selangor
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  5        Fasting       Mon Sep 18 06:27:29 2023|  5          Mon Sep 18 06:27:33 2023|  No record                      
+
+14. Chang Jie Xing
+Age          : 52
+Phone number : 0127213380
+Address      : 7, Jalan Bunga Kemboja 11b, Taman Muda, 56100 Kuala Lumpur, Selangor
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  5        Fasting       Mon Sep 18 06:29:31 2023|  5          Mon Sep 18 06:29:34 2023|  No record                      
+
+15. Tay Jun Wei
+Age          : 60
+Phone number : 0126230428
+Address      : 3, Jalan Seri Merdeka 3, Taman Sri Merdeka, 68000 Ampang, Selangor
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  11       Fasting       Mon Sep 18 06:31:24 2023|  9          Mon Sep 18 06:31:34 2023|  No record                      
+
+16. Johnson Tan
+Age          : 43
+Phone number : 0129450276
+Address      : 47, Jalan SL 2/4, Bandar Sungai Long, 43000 Kajang, Selangor
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  7        Random        Mon Sep 18 06:33:26 2023|  5          Mon Sep 18 06:33:32 2023|  No record                      
+
+17. Tham Jia Xuan
+Age          : 37
+Phone number : 0122750062
+Address      : 25, Jalan SL 2/3, Bandar Sungai Long, 43000 Kajang, Selangor
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  7        Fasting       Mon Sep 18 06:35:52 2023|  8          Mon Sep 18 06:35:57 2023|  No record                      
+
+18. Tang Wei Zhang
+Age          : 45
+Phone number : 0127185526
+Address      : 21, Jalan SL 2/5a, Bandar Sungai Long, 43000 Kajang, Selangor
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  7        Random        Mon Sep 18 06:37:16 2023|  5          Mon Sep 18 06:37:19 2023|  No record                      
+
+19. Alice Yang
+Age          : 34
+Phone number : 0123355668
+Address      : 37, Jalan SL 2/3, Bandar Sungai Long, 43000 Kajang, Selangor
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  6        Random        Mon Sep 18 06:39:11 2023|  5          Mon Sep 18 06:39:14 2023|  No record                      
+
+20. Tan Ke Ling
+Age          : 34
+Phone number : 0124238520
+Address      : 9, Jalan SL 2/2, Bandar Sungai Long, 43000 Kajang, Selangor
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  No       |  6        Random        Mon Sep 18 06:40:52 2023|  5          Mon Sep 18 06:40:55 2023|  No record                      
+

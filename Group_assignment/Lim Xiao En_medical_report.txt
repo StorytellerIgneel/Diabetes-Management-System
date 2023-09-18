@@ -1,0 +1,16 @@
+Lim Xiao En's Medical Report
+Date        : Mon Sep 18 06:50:01 2023
+
+
+Lim Xiao En's Medical Condition
+Age          : 38
+Phone number : 0126358843
+Address      : 4, Jalan Jenaris D, Taman Jenaris, 43000 Kajang, Selangor
+Current state |  Insulin  |  VPG(%)   State         Time                    |  HBA1c(%)   Time                    |  OGTT(%)   Time
+Normal        |  Yes      |  3        Fasting       Sun Sep 17 22:41:09 2023|  4          Sun Sep 17 22:41:12 2023|  No record                      
+
+Diet details:
+          | Time       | Carbohydrate | Protein   | Vegetable | Fruit     | Fats
+Breakfast | No record
+Lunch     | 1200       | Medium       | Medium    | None      | Medium    | Low
+Dinner    | 1830       | Low          | Low       | Medium    | None      | Medium

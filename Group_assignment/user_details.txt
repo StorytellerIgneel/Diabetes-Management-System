@@ -1,40 +1,84 @@
-Kirigaya Kazuto
-15
-0143242668
-Tokyo
-Yuki Asuna
-16
-00
-Kyoto
-Suguha
-14
-0
-Shiguya
-Shi non
-15
-0
-Shiguya
-a
-c
-d
-s
-s
-s
-s
-s
-1
-2
-3
-4
-d
-d
-d
-d
-d
-d
-d
-d
-f
-3
-d
-d
+Christina Teo
+42
+01164738892
+37, Jalan Penggawa 14/2, Bandar Mahkota Cheras, 43200 Cheras, Selangor
+Tan Chen Yen
+45
+0134557213
+9, Jalan Prima Saujana 1/2j, Prima Saujana, 43000 Kajang, Selangor
+Lim Xiao En
+38
+0126358843
+4, Jalan Jenaris D, Taman Jenaris, 43000 Kajang, Selangor
+Christina Yeo
+58
+0189246743
+25, Jalan Impian Murni 1/12, Taman Impian Murni, 43000 Kajang, Selangor
+Muhammad Ali
+46
+0124768832
+55, Jalan Delima 4, Taman Delima, 43000 Kajang, Selangor
+Loh Shi Han
+39
+01117652249
+23, Jalan Impian Murni 1/12, Taman Impian Murni, 43000 Kajang, Selangor
+Lau Ke Xuan
+25
+0137813396
+7, Jalan Desa Ros 2,Taman Desa Ros, 43000 Kajang, Selangor
+Joseph Yong
+56
+0132337589
+6, Jalan Saga Emas 5, Tmn Kajang Mulia, 43000 Kajang, Selangor
+Lee Yen Kai
+61
+0127356230
+6, Jln Sutera 5, 43200 Cheras, Selangor
+Teoh Chen Xin
+49
+01134627740
+11, Jalan Cheras Utama 5, Taman Cheras Utama, 56100 Kuala Lumpur, Selangor
+Koh Shu Yang
+48
+01116783527
+17, Jalan Bunga Melati 15, Taman Seraya, 56100 Kuala Lumpur, Selangor
+Yap Yi Qian
+48
+0125267730
+35, Jln Teratai 1/2, Taman Seraya, 56100 Ampang, Selangor
+Ng Xiang Cheng
+53
+0129420157
+116, Jalan Bunga Tanjung 14, Taman Muda, 56100 Kuala Lumpur, Selangor
+Chang Jie Xing
+52
+0127213380
+7, Jalan Bunga Kemboja 11b, Taman Muda, 56100 Kuala Lumpur, Selangor
+Tay Jun Wei
+60
+0126230428
+3, Jalan Seri Merdeka 3, Taman Sri Merdeka, 68000 Ampang, Selangor
+Johnson Tan
+43
+0129450276
+47, Jalan SL 2/4, Bandar Sungai Long, 43000 Kajang, Selangor
+Tham Jia Xuan
+37
+0122750062
+25, Jalan SL 2/3, Bandar Sungai Long, 43000 Kajang, Selangor
+Tang Wei Zhang
+45
+0127185526
+21, Jalan SL 2/5a, Bandar Sungai Long, 43000 Kajang, Selangor
+Alice Yang
+34
+0123355668
+37, Jalan SL 2/3, Bandar Sungai Long, 43000 Kajang, Selangor
+Tan Ke Ling
+34
+0124238520
+9, Jalan SL 2/2, Bandar Sungai Long, 43000 Kajang, Selangor
+Lim Ah Beng
+34
+0123456789
+10, Jalan SL 2/2, Bandar Sungai Long, 43000 Kajang, Selangor

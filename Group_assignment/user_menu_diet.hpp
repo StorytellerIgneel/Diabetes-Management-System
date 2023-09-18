@@ -92,6 +92,7 @@ void    add_meal(user *patient, string meal)
                     return;
                 cout << "Fill in the level of food ingested for each food type (None / Low / Medium / High):\n";
                 cout << "Carbohydrate: ";
+                getline(cin, patient->breakfast.carbohydrate);
                 if(exit_check(&cin))
                     return;
                 cout << "Protein     : ";

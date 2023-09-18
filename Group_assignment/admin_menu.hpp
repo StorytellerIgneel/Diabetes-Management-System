@@ -323,7 +323,7 @@ bool    find_hyper_hypo(user patient_list[], string *for_noti, bool skip_notific
             count++;
         }
     }
-    *for_noti += "\nPlease check on their conditions as soon as possible.\nYou will also have to key in their blood glucose levels after you have checked on their conditions.";
+    *for_noti += "\n\nPlease check on their conditions as soon as possible.\nYou will also have to key in their blood glucose levels after you have checked on their conditions.";
     if (hyper == true || hypo == true)
     {
         if (skip_notification == false)

@@ -1,38 +1,24 @@
 true
-s
-s
-s
-s
-s
-s
-false
-No record
-No record
-No record
-No record
-No record
-No record
-false
-No record
-No record
-No record
-No record
-No record
-No record
-false
-No record
-No record
-No record
-No record
-No record
-No record
-false
-No record
-No record
-No record
-No record
-No record
-No record
+0730
+Medium
+Medium
+None
+None
+Low
+true
+1230
+High
+Low
+High
+Low
+Low
+true
+1830
+Medium
+Low
+Low
+Low
+None
 false
 No record
 No record
@@ -41,82 +27,19 @@ No record
 No record
 No record
 true
-No record
-No record
-No record
-No record
-No record
-No record
+1130
+High
+Low
+Low
+Low
+Low
 true
-No record
-No record
-No record
-No record
-No record
-No record
-true
-No record
-No record
-No record
-No record
-No record
-No record
-false
-No record
-No record
-No record
-No record
-No record
-No record
-false
-No record
-No record
-No record
-No record
-No record
-No record
-false
-No record
-No record
-No record
-No record
-No record
-No record
-false
-No record
-No record
-No record
-No record
-No record
-No record
-false
-No record
-No record
-No record
-No record
-No record
-No record
-false
-No record
-No record
-No record
-No record
-No record
-No record
-false
-No record
-No record
-No record
-No record
-No record
-No record
-false
-No record
-No record
-No record
-No record
-No record
-No record
+1930
+Medium
+Medium
+Low
+None
+Medium
 false
 No record
 No record
@@ -125,6 +48,83 @@ No record
 No record
 No record
 true
+1200
+Medium
+Medium
+None
+Medium
+Low
+true
+1830
+Low
+Low
+Medium
+None
+Medium
+true
+0800
+High
+Medium
+None
+Low
+Low
+true
+1300
+Medium
+High
+Medium
+None
+Low
+true
+1930
+Low
+Medium
+Low
+Low
+Medium
+true
+0730
+High
+Low
+None
+None
+Low
+true
+1230
+High
+Medium
+Low
+None
+Low
+true
+1830
+High
+Low
+None
+Low
+Medium
+true
+0800
+Medium
+Medium
+None
+Low
+Low
+true
+1330
+Medium
+Medium
+High
+Medium
+None
+true
+1830
+Low
+Medium
+Medium
+Low
+Low
+false
 No record
 No record
 No record
@@ -132,6 +132,104 @@ No record
 No record
 No record
 true
+1200
+Medium
+Medium
+Low
+Low
+Low
+true
+1900
+Low
+Medium
+Low
+None
+Medium
+true
+0700
+High
+Medium
+None
+None
+Medium
+true
+1300
+High
+Low
+Low
+Low
+Medium
+true
+1930
+High
+Medium
+Low
+None
+Low
+true
+0645
+High
+High
+None
+None
+Low
+true
+1200
+High
+Low
+Medium
+Medium
+High
+true
+1830
+Medium
+Low
+None
+High
+Low
+true
+0700
+Medium
+Medium
+None
+Medium
+Low
+true
+1230
+High
+Medium
+Medium
+None
+Low
+true
+1900
+Low
+Medium
+Medium
+Low
+None
+true
+0630
+High
+Low
+None
+None
+Low
+true
+1200
+High
+High
+Low
+Low
+Low
+true
+1800
+Medium
+Low
+Low
+None
+Medium
+false
 No record
 No record
 No record
@@ -139,54 +237,187 @@ No record
 No record
 No record
 true
-No record
-No record
-No record
-No record
-No record
-No record
-false
-No record
-No record
-No record
-No record
-No record
-No record
-false
-No record
-No record
-No record
-No record
-No record
-No record
-false
-No record
-No record
-No record
-No record
-No record
-No record
-false
-No record
-No record
-No record
-No record
-No record
-No record
-false
-No record
-No record
-No record
-No record
-No record
-No record
-false
-No record
-No record
-No record
-No record
-No record
-No record
+1230
+High
+Medium
+Medium
+None
+Low
+true
+1830
+Low
+Medium
+High
+Medium
+None
+true
+0700
+Medium
+Low
+None
+Low
+Medium
+true
+1230
+High
+Medium
+Low
+Medium
+Medium
+true
+1800
+Medium
+None
+Low
+Low
+None
+true
+0630
+High
+Low
+None
+Low
+Low
+true
+1200
+Medium
+None
+Medium
+Medium
+Medium
+true
+1800
+Low
+Medium
+Low
+None
+None
+true
+0730
+High
+High
+None
+None
+Medium
+true
+1300
+High
+Low
+Low
+Low
+Medium
+true
+1930
+High
+Low
+None
+High
+Low
+true
+0800
+Medium
+Medium
+None
+Low
+None
+true
+1330
+High
+Medium
+Medium
+Low
+Low
+true
+1930
+Low
+Medium
+Low
+Low
+None
+true
+0730
+High
+Low
+None
+None
+Low
+true
+1230
+High
+Low
+Low
+Low
+Low
+true
+1830
+High
+Low
+None
+None
+Medium
+true
+0700
+Medium
+Low
+None
+Medium
+None
+true
+1230
+Medium
+Medium
+Medium
+Low
+Medium
+true
+1800
+Low
+Low
+Low
+Low
+Low
+true
+0630
+Medium
+Low
+None
+Medium
+Low
+true
+1230
+High
+Medium
+Medium
+Medium
+Low
+true
+1830
+Low
+Low
+Low
+None
+None
+true
+0730
+Medium
+Low
+Low
+None
+Low
+true
+1230
+Medium
+Medium
+High
+High
+Low
+true
+1830
+Low
+Low
+Medium
+Low
+None
 false
 No record
 No record
