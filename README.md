@@ -13,14 +13,17 @@ A console-based C++ application designed to manage users and administrators in a
 
 ## 📂 Structure
 ```
-├── headers.hpp
-├── validation.hpp / .cpp
-├── access_control.hpp / .cpp
-├── file_handling.hpp / .cpp
-├── main.cpp
-├── users.txt
+├── access_control.cpp
+├── access_control.hpp
 ├── admins.txt
-└── ...
+├── file_handling.cpp
+├── file_handling.hpp
+├── headers.hpp
+├── main.cpp
+├── README.md
+├── users.txt
+├── validation.cpp
+├── validation.hpp
 ```
 ## 🛠️ Technologies
 
