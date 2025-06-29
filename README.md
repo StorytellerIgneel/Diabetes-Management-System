@@ -12,7 +12,7 @@ A console-based C++ application designed to manage users and administrators in a
 - Menu-driven interface using clean and organized code logic
 
 ## 📂 Structure
-
+```
 ├── headers.hpp
 ├── validation.hpp / .cpp
 ├── access_control.hpp / .cpp
@@ -21,11 +21,7 @@ A console-based C++ application designed to manage users and administrators in a
 ├── users.txt
 ├── admins.txt
 └── ...
-
-markdown
-复制
-编辑
-
+```
 ## 🛠️ Technologies
 
 - Language: **C++ (C++11 and above)**
